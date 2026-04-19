@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マリオ風ゲーム</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Courier New', monospace;
+    }
+    #ui {
+      display: flex;
+      gap: 40px;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    canvas {
+      border: 4px solid #fff;
+      border-radius: 4px;
+      display: block;
+    }
+    #message {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 12px;
+      text-shadow: 2px 2px 4px #000;
+      height: 30px;
+    }
+    #controls {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <span>スコア: <span id="score">0</span></span>
+    <span>コイン: <span id="coins">0</span></span>
+    <span>ライフ: <span id="lives">3</span></span>
+  </div>
+  <canvas id="gameCanvas" width="800" height="450"></canvas>
+  <div id="message"></div>
+  <div id="controls">← → で移動 ／ スペース or ↑ でジャンプ ／ R でリスタート</div>
+
+  <script src="game.js"></script>
+</body>
+</html>
