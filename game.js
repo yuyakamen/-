@@ -14,7 +14,7 @@ const ENEMY_H = 32;
 const COIN_R = 10;
 
 // ─── Game State ───────────────────────────────────────────────────────────────
-let state, score, coins, lives, cameraX, frameCount, gameOver, win;
+let score, coins, lives, cameraX, frameCount, gameOver, win;
 
 function initGame() {
   score = 0;
@@ -38,15 +38,11 @@ function buildLevel() {
   enemies = [];
   coinList = [];
 
-  // Ground
   for (let x = 0; x < 4800; x += TILE) {
-    platforms.push({ x, y: GROUND_Y, w: TILE, h: 60, color: '#5d4037' });
+    platforms.push({ x, y: GROUND_Y, w: TILE, h: 60 });
   }
-  // Dirt fill (visual only – one ground row is enough for collision)
 
-  // Floating platforms
   const layout = [
-    // x, y, tiles
     [200, GROUND_Y - 120, 4],
     [420, GROUND_Y - 200, 3],
     [640, GROUND_Y - 140, 3],
@@ -69,29 +65,20 @@ function buildLevel() {
   ];
   layout.forEach(([px, py, tiles]) => {
     for (let i = 0; i < tiles; i++) {
-      platforms.push({ x: px + i * TILE, y: py, w: TILE, h: TILE, color: '#388e3c', top: true });
+      platforms.push({ x: px + i * TILE, y: py, w: TILE, h: TILE, top: true });
     }
-    // Add coins above each platform
     const cx = px + Math.floor(tiles / 2) * TILE + TILE / 2;
     coinList.push({ x: cx, y: py - 30, r: COIN_R, collected: false });
   });
 
-  // Extra coins on ground level
   [150, 300, 500, 700, 950, 1200, 1450, 1680, 2100, 2350, 2600, 2850, 3050, 3350, 3600, 3800, 4050].forEach(cx => {
     coinList.push({ x: cx, y: GROUND_Y - 30, r: COIN_R, collected: false });
   });
 
-  // Enemies (Goombas)
   [350, 650, 950, 1350, 1750, 2050, 2450, 2800, 3100, 3500, 3900, 4200].forEach(ex => {
-    enemies.push({
-      x: ex, y: GROUND_Y - ENEMY_H,
-      w: ENEMY_W, h: ENEMY_H,
-      vx: -1.2, vy: 0,
-      alive: true,
-    });
+    enemies.push({ x: ex, y: GROUND_Y - ENEMY_H, w: ENEMY_W, h: ENEMY_H, vx: -1.2, vy: 0, alive: true });
   });
 
-  // Goal flag
   goal = { x: 4550, y: GROUND_Y - 180, w: 20, h: 180 };
 }
 
@@ -113,6 +100,8 @@ function spawnPlayer() {
 
 // ─── Input ────────────────────────────────────────────────────────────────────
 const keys = {};
+
+// Keyboard
 window.addEventListener('keydown', e => {
   keys[e.code] = true;
   if (e.code === 'KeyR') initGame();
@@ -120,7 +109,37 @@ window.addEventListener('keydown', e => {
 });
 window.addEventListener('keyup', e => { keys[e.code] = false; });
 
-// ─── Collision Helpers ───────────────────────────────────────────────────────
+// Touch buttons
+function setupTouchBtn(id, keyCode) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const press = e => {
+    e.preventDefault();
+    keys[keyCode] = true;
+    el.classList.add('pressed');
+  };
+  const release = e => {
+    e.preventDefault();
+    keys[keyCode] = false;
+    el.classList.remove('pressed');
+    // Restart on jump button double-tap when game over/win
+    if (keyCode === 'Space' && (gameOver || win)) initGame();
+  };
+
+  el.addEventListener('touchstart', press, { passive: false });
+  el.addEventListener('touchend', release, { passive: false });
+  el.addEventListener('touchcancel', release, { passive: false });
+  el.addEventListener('mousedown', press);
+  el.addEventListener('mouseup', release);
+  el.addEventListener('mouseleave', release);
+}
+
+setupTouchBtn('btn-left', 'ArrowLeft');
+setupTouchBtn('btn-right', 'ArrowRight');
+setupTouchBtn('btn-jump', 'Space');
+
+// ─── Collision ────────────────────────────────────────────────────────────────
 function rectsOverlap(a, b) {
   return a.x < b.x + b.w && a.x + a.w > b.x &&
          a.y < b.y + b.h && a.y + a.h > b.y;
@@ -129,7 +148,6 @@ function rectsOverlap(a, b) {
 function resolvePlayerPlatform(p, plat) {
   const prevBottom = p.y + p.h - p.vy;
   const curBottom = p.y + p.h;
-  // Landing on top
   if (p.vy >= 0 && prevBottom <= plat.y + 2 && curBottom >= plat.y) {
     if (p.x + p.w > plat.x + 4 && p.x < plat.x + plat.w - 4) {
       p.y = plat.y - p.h;
@@ -138,14 +156,9 @@ function resolvePlayerPlatform(p, plat) {
       return;
     }
   }
-  // Hitting from below
   if (p.vy < 0) {
-    const prevTop = p.y - p.vy;
-    if (prevTop >= plat.y + plat.h - 2) {
-      p.vy = 0;
-    }
+    if (p.y - p.vy >= plat.y + plat.h - 2) p.vy = 0;
   }
-  // Side collision
   if (p.vy >= 0) {
     const px = p.x + p.vx;
     if (px + p.w > plat.x && px < plat.x + plat.w &&
@@ -160,13 +173,12 @@ function update() {
   if (gameOver || win) return;
   frameCount++;
 
-  // Respawn delay
   if (player.dead) {
     player.respawnTimer--;
     if (player.respawnTimer <= 0) {
       if (lives <= 0) {
         gameOver = true;
-        document.getElementById('message').textContent = 'ゲームオーバー！ R でリスタート';
+        document.getElementById('message').textContent = 'ゲームオーバー！ もう一度？';
         return;
       }
       spawnPlayer();
@@ -174,7 +186,6 @@ function update() {
     return;
   }
 
-  // ── Player movement ──
   const SPEED = 4.5;
   const JUMP = -13;
   player.onGround = false;
@@ -191,29 +202,18 @@ function update() {
   player.x += player.vx;
   player.y += player.vy;
 
-  // Clamp left edge
   if (player.x < 0) { player.x = 0; player.vx = 0; }
 
-  // Platform collisions
   platforms.forEach(plat => {
     if (rectsOverlap(player, plat)) resolvePlayerPlatform(player, plat);
   });
 
-  // Fall death
-  if (player.y > H + 50) {
-    playerDie();
-    return;
-  }
+  if (player.y > H + 50) { playerDie(); return; }
 
-  // Walk animation
-  if (player.onGround && Math.abs(player.vx) > 0.3) {
-    player.walkFrame += 0.2;
-  }
+  if (player.onGround && Math.abs(player.vx) > 0.3) player.walkFrame += 0.2;
 
-  // ── Camera ──
   cameraX = Math.max(0, player.x - W / 3);
 
-  // ── Coins ──
   coinList.forEach(c => {
     if (c.collected) return;
     const dx = player.x + player.w / 2 - c.x;
@@ -226,15 +226,12 @@ function update() {
     }
   });
 
-  // ── Enemies ──
   enemies.forEach(e => {
     if (!e.alive) return;
-
     e.vy += GRAVITY;
     e.x += e.vx;
     e.y += e.vy;
 
-    // Enemy platform collision
     e.onGround = false;
     platforms.forEach(plat => {
       if (rectsOverlap(e, plat)) {
@@ -247,27 +244,16 @@ function update() {
       }
     });
 
-    // Reverse at edges/walls
     if (e.onGround) {
       const frontX = e.vx > 0 ? e.x + e.w : e.x;
-      const groundCheck = { x: frontX - 2, y: e.y + e.h + 2, w: 4, h: 4 };
-      const hasGround = platforms.some(p => rectsOverlap(groundCheck, p));
-      if (!hasGround) e.vx *= -1;
+      const gc = { x: frontX - 2, y: e.y + e.h + 2, w: 4, h: 4 };
+      if (!platforms.some(p => rectsOverlap(gc, p))) e.vx *= -1;
     }
-    const wallHit = platforms.some(p => {
-      return rectsOverlap(e, p) && !(e.y + e.h <= p.y + 4);
-    });
-    if (wallHit) e.vx *= -1;
-
-    // Enemy out of bounds
+    if (platforms.some(p => rectsOverlap(e, p) && !(e.y + e.h <= p.y + 4))) e.vx *= -1;
     if (e.y > H + 100) { e.alive = false; return; }
 
-    // Player vs Enemy
     if (!rectsOverlap(player, e)) return;
-    const playerBottom = player.y + player.h;
-    const prevPlayerBottom = playerBottom - player.vy;
-    if (prevPlayerBottom <= e.y + 8 && player.vy > 0) {
-      // Stomp
+    if (player.y + player.h - player.vy <= e.y + 8 && player.vy > 0) {
       e.alive = false;
       player.vy = -9;
       score += 200;
@@ -277,12 +263,11 @@ function update() {
     }
   });
 
-  // ── Goal ──
   if (rectsOverlap(player, goal)) {
     win = true;
     score += 1000;
     updateUI();
-    document.getElementById('message').textContent = 'クリア！ おめでとう！ 🎉  R でリスタート';
+    document.getElementById('message').textContent = 'クリア！ おめでとう！ 🎉';
   }
 }
 
@@ -291,9 +276,7 @@ function playerDie() {
   player.respawnTimer = 90;
   lives--;
   updateUI();
-  if (lives <= 0) {
-    document.getElementById('message').textContent = 'ゲームオーバー！ R でリスタート';
-  }
+  if (lives <= 0) document.getElementById('message').textContent = 'ゲームオーバー！ もう一度？';
 }
 
 function updateUI() {
@@ -304,76 +287,53 @@ function updateUI() {
 
 // ─── Draw ─────────────────────────────────────────────────────────────────────
 function draw() {
-  // Sky gradient
   const sky = ctx.createLinearGradient(0, 0, 0, H);
   sky.addColorStop(0, '#64b5f6');
   sky.addColorStop(1, '#bbdefb');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, W, H);
 
-  // Clouds
   drawClouds();
 
   ctx.save();
   ctx.translate(-cameraX, 0);
-
-  // Platforms
-  platforms.forEach(p => drawPlatform(p));
-
-  // Coins
+  platforms.forEach(drawPlatform);
   coinList.forEach(c => { if (!c.collected) drawCoin(c); });
-
-  // Goal flag
   drawGoal();
-
-  // Enemies
   enemies.forEach(e => { if (e.alive) drawEnemy(e); });
-
-  // Player
   if (!player.dead) drawPlayer();
-
   ctx.restore();
 }
 
 function drawClouds() {
   ctx.fillStyle = 'rgba(255,255,255,0.9)';
-  const cloudPositions = [100, 300, 550, 720, 200, 450];
-  cloudPositions.forEach((cx, i) => {
+  [100, 300, 550, 720, 200, 450].forEach((cx, i) => {
     const ox = ((cx - cameraX * 0.3) % (W + 200) + W + 200) % (W + 200) - 100;
     const cy = 60 + (i % 3) * 30;
-    drawCloud(ox, cy);
+    ctx.beginPath();
+    ctx.arc(ox, cy, 25, 0, Math.PI * 2);
+    ctx.arc(ox + 30, cy - 10, 30, 0, Math.PI * 2);
+    ctx.arc(ox + 60, cy, 25, 0, Math.PI * 2);
+    ctx.fill();
   });
-}
-
-function drawCloud(x, y) {
-  ctx.beginPath();
-  ctx.arc(x, y, 25, 0, Math.PI * 2);
-  ctx.arc(x + 30, y - 10, 30, 0, Math.PI * 2);
-  ctx.arc(x + 60, y, 25, 0, Math.PI * 2);
-  ctx.fill();
 }
 
 function drawPlatform(p) {
   if (p.top) {
-    // Grass block
     ctx.fillStyle = '#4caf50';
     ctx.fillRect(p.x, p.y, p.w, 12);
     ctx.fillStyle = '#388e3c';
     ctx.fillRect(p.x, p.y + 12, p.w, p.h - 12);
-    // Border
     ctx.strokeStyle = '#2e7d32';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(p.x, p.y, p.w, p.h);
   } else {
-    // Ground
     ctx.fillStyle = '#8d6e63';
     ctx.fillRect(p.x, p.y, p.w, p.h);
     ctx.fillStyle = '#5d4037';
     ctx.fillRect(p.x, p.y + 12, p.w, p.h - 12);
     ctx.strokeStyle = '#4e342e';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(p.x, p.y, p.w, p.h);
   }
+  ctx.lineWidth = 1;
+  ctx.strokeRect(p.x, p.y, p.w, p.h);
 }
 
 function drawCoin(c) {
@@ -392,17 +352,14 @@ function drawCoin(c) {
 }
 
 function drawGoal() {
-  // Pole
   ctx.fillStyle = '#bdbdbd';
   ctx.fillRect(goal.x, goal.y, 6, goal.h);
-  // Flag
   ctx.fillStyle = '#e53935';
   ctx.beginPath();
   ctx.moveTo(goal.x + 6, goal.y);
   ctx.lineTo(goal.x + 46, goal.y + 20);
   ctx.lineTo(goal.x + 6, goal.y + 40);
   ctx.fill();
-  // Base
   ctx.fillStyle = '#757575';
   ctx.fillRect(goal.x - 10, goal.y + goal.h - 8, 26, 8);
 }
@@ -410,123 +367,91 @@ function drawGoal() {
 function drawPlayer() {
   const px = player.x;
   const py = player.y;
-  const dir = player.facing;
 
   ctx.save();
-  if (dir === -1) {
+  if (player.facing === -1) {
     ctx.translate(px + player.w, py);
     ctx.scale(-1, 1);
     ctx.translate(0, -py);
   }
 
-  // Body (red overalls)
   ctx.fillStyle = '#e53935';
   ctx.fillRect(px + 4, py + 16, 24, 18);
-
-  // Shirt (blue)
   ctx.fillStyle = '#1565c0';
   ctx.fillRect(px + 2, py + 22, 28, 12);
-
-  // Head (skin)
   ctx.fillStyle = '#ffcc80';
   ctx.fillRect(px + 6, py + 2, 20, 16);
-
-  // Hat (red)
   ctx.fillStyle = '#e53935';
   ctx.fillRect(px + 4, py, 24, 8);
   ctx.fillRect(px + 2, py + 6, 28, 4);
-
-  // Eyes
   ctx.fillStyle = '#212121';
   ctx.fillRect(px + 18, py + 7, 4, 4);
-
-  // Mustache
   ctx.fillStyle = '#4e342e';
   ctx.fillRect(px + 12, py + 14, 12, 3);
-
-  // Legs
   ctx.fillStyle = '#1565c0';
-  const legOffset = player.onGround ? Math.sin(player.walkFrame) * 4 : 0;
-  ctx.fillRect(px + 5, py + 32, 10, 10 + legOffset);
-  ctx.fillRect(px + 17, py + 32, 10, 10 - legOffset);
-
-  // Shoes
+  const leg = player.onGround ? Math.sin(player.walkFrame) * 4 : 0;
+  ctx.fillRect(px + 5, py + 32, 10, 10 + leg);
+  ctx.fillRect(px + 17, py + 32, 10, 10 - leg);
   ctx.fillStyle = '#4e342e';
-  ctx.fillRect(px + 3, py + 38 + legOffset, 13, 4);
-  ctx.fillRect(px + 15, py + 38 - legOffset, 13, 4);
+  ctx.fillRect(px + 3, py + 38 + leg, 13, 4);
+  ctx.fillRect(px + 15, py + 38 - leg, 13, 4);
 
   ctx.restore();
 }
 
 function drawEnemy(e) {
   const wobble = Math.sin(frameCount * 0.15 + e.x * 0.1) * 2;
-  const ex = e.x;
-  const ey = e.y + wobble;
+  const ex = e.x, ey = e.y + wobble;
 
-  // Body (brown mushroom)
   ctx.fillStyle = '#6d4c41';
   ctx.beginPath();
   ctx.ellipse(ex + e.w / 2, ey + e.h * 0.7, e.w / 2, e.h * 0.35, 0, 0, Math.PI * 2);
   ctx.fill();
-
-  // Cap
   ctx.fillStyle = '#8b0000';
   ctx.beginPath();
   ctx.ellipse(ex + e.w / 2, ey + e.h * 0.4, e.w / 2 + 4, e.h * 0.45, 0, Math.PI, 0);
   ctx.fill();
-
-  // Cap dots
   ctx.fillStyle = '#ffccbc';
   ctx.beginPath();
   ctx.arc(ex + e.w / 2 - 8, ey + e.h * 0.25, 4, 0, Math.PI * 2);
   ctx.arc(ex + e.w / 2 + 8, ey + e.h * 0.2, 3, 0, Math.PI * 2);
   ctx.fill();
-
-  // Eyes
   ctx.fillStyle = '#fff';
   ctx.fillRect(ex + 7, ey + e.h * 0.55, 7, 7);
   ctx.fillRect(ex + e.w - 14, ey + e.h * 0.55, 7, 7);
   ctx.fillStyle = '#000';
   ctx.fillRect(ex + 8, ey + e.h * 0.58, 4, 4);
   ctx.fillRect(ex + e.w - 13, ey + e.h * 0.58, 4, 4);
-
-  // Eyebrows (angry)
-  ctx.fillStyle = '#000';
   ctx.save();
-  ctx.translate(ex + 10, ey + e.h * 0.52);
-  ctx.rotate(0.3);
+  ctx.translate(ex + 10, ey + e.h * 0.52); ctx.rotate(0.3);
   ctx.fillRect(-4, -2, 8, 2);
   ctx.restore();
   ctx.save();
-  ctx.translate(ex + e.w - 10, ey + e.h * 0.52);
-  ctx.rotate(-0.3);
+  ctx.translate(ex + e.w - 10, ey + e.h * 0.52); ctx.rotate(-0.3);
   ctx.fillRect(-4, -2, 8, 2);
   ctx.restore();
 }
 
 function drawHUD() {
-  if (gameOver) {
+  if (gameOver || win) {
     ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 48px Courier New';
     ctx.textAlign = 'center';
-    ctx.fillText('ゲームオーバー', W / 2, H / 2 - 20);
-    ctx.font = '24px Courier New';
-    ctx.fillText('R でリスタート', W / 2, H / 2 + 30);
-    ctx.textAlign = 'left';
-  }
-  if (win) {
-    ctx.fillStyle = 'rgba(0,0,0,0.4)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#ffd600';
-    ctx.font = 'bold 52px Courier New';
-    ctx.textAlign = 'center';
-    ctx.fillText('クリア！', W / 2, H / 2 - 30);
-    ctx.fillStyle = '#fff';
-    ctx.font = '24px Courier New';
-    ctx.fillText(`スコア: ${score}`, W / 2, H / 2 + 20);
-    ctx.fillText('R でリスタート', W / 2, H / 2 + 60);
+    if (win) {
+      ctx.fillStyle = '#ffd600';
+      ctx.font = 'bold 52px Courier New';
+      ctx.fillText('クリア！', W / 2, H / 2 - 30);
+      ctx.fillStyle = '#fff';
+      ctx.font = '24px Courier New';
+      ctx.fillText(`スコア: ${score}`, W / 2, H / 2 + 20);
+      ctx.fillText('ジャンプボタンで再開', W / 2, H / 2 + 60);
+    } else {
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 44px Courier New';
+      ctx.fillText('ゲームオーバー', W / 2, H / 2 - 20);
+      ctx.font = '22px Courier New';
+      ctx.fillText('ジャンプボタンで再開', W / 2, H / 2 + 30);
+    }
     ctx.textAlign = 'left';
   }
 }
