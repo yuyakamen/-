@@ -42,11 +42,9 @@ function buildLevel() {
   for (let x = 0; x < 4800; x += TILE) {
     platforms.push({ x, y: GROUND_Y, w: TILE, h: 60, color: '#5d4037' });
   }
-  // Dirt fill (visual only – one ground row is enough for collision)
 
   // Floating platforms
   const layout = [
-    // x, y, tiles
     [200, GROUND_Y - 120, 4],
     [420, GROUND_Y - 200, 3],
     [640, GROUND_Y - 140, 3],
@@ -71,7 +69,6 @@ function buildLevel() {
     for (let i = 0; i < tiles; i++) {
       platforms.push({ x: px + i * TILE, y: py, w: TILE, h: TILE, color: '#388e3c', top: true });
     }
-    // Add coins above each platform
     const cx = px + Math.floor(tiles / 2) * TILE + TILE / 2;
     coinList.push({ x: cx, y: py - 30, r: COIN_R, collected: false });
   });
@@ -129,7 +126,6 @@ function rectsOverlap(a, b) {
 function resolvePlayerPlatform(p, plat) {
   const prevBottom = p.y + p.h - p.vy;
   const curBottom = p.y + p.h;
-  // Landing on top
   if (p.vy >= 0 && prevBottom <= plat.y + 2 && curBottom >= plat.y) {
     if (p.x + p.w > plat.x + 4 && p.x < plat.x + plat.w - 4) {
       p.y = plat.y - p.h;
@@ -138,14 +134,12 @@ function resolvePlayerPlatform(p, plat) {
       return;
     }
   }
-  // Hitting from below
   if (p.vy < 0) {
     const prevTop = p.y - p.vy;
     if (prevTop >= plat.y + plat.h - 2) {
       p.vy = 0;
     }
   }
-  // Side collision
   if (p.vy >= 0) {
     const px = p.x + p.vx;
     if (px + p.w > plat.x && px < plat.x + plat.w &&
@@ -160,7 +154,6 @@ function update() {
   if (gameOver || win) return;
   frameCount++;
 
-  // Respawn delay
   if (player.dead) {
     player.respawnTimer--;
     if (player.respawnTimer <= 0) {
@@ -174,7 +167,6 @@ function update() {
     return;
   }
 
-  // ── Player movement ──
   const SPEED = 4.5;
   const JUMP = -13;
   player.onGround = false;
@@ -191,29 +183,23 @@ function update() {
   player.x += player.vx;
   player.y += player.vy;
 
-  // Clamp left edge
   if (player.x < 0) { player.x = 0; player.vx = 0; }
 
-  // Platform collisions
   platforms.forEach(plat => {
     if (rectsOverlap(player, plat)) resolvePlayerPlatform(player, plat);
   });
 
-  // Fall death
   if (player.y > H + 50) {
     playerDie();
     return;
   }
 
-  // Walk animation
   if (player.onGround && Math.abs(player.vx) > 0.3) {
     player.walkFrame += 0.2;
   }
 
-  // ── Camera ──
   cameraX = Math.max(0, player.x - W / 3);
 
-  // ── Coins ──
   coinList.forEach(c => {
     if (c.collected) return;
     const dx = player.x + player.w / 2 - c.x;
@@ -226,7 +212,6 @@ function update() {
     }
   });
 
-  // ── Enemies ──
   enemies.forEach(e => {
     if (!e.alive) return;
 
@@ -234,7 +219,6 @@ function update() {
     e.x += e.vx;
     e.y += e.vy;
 
-    // Enemy platform collision
     e.onGround = false;
     platforms.forEach(plat => {
       if (rectsOverlap(e, plat)) {
@@ -247,7 +231,6 @@ function update() {
       }
     });
 
-    // Reverse at edges/walls
     if (e.onGround) {
       const frontX = e.vx > 0 ? e.x + e.w : e.x;
       const groundCheck = { x: frontX - 2, y: e.y + e.h + 2, w: 4, h: 4 };
@@ -259,15 +242,12 @@ function update() {
     });
     if (wallHit) e.vx *= -1;
 
-    // Enemy out of bounds
     if (e.y > H + 100) { e.alive = false; return; }
 
-    // Player vs Enemy
     if (!rectsOverlap(player, e)) return;
     const playerBottom = player.y + player.h;
     const prevPlayerBottom = playerBottom - player.vy;
     if (prevPlayerBottom <= e.y + 8 && player.vy > 0) {
-      // Stomp
       e.alive = false;
       player.vy = -9;
       score += 200;
@@ -277,7 +257,6 @@ function update() {
     }
   });
 
-  // ── Goal ──
   if (rectsOverlap(player, goal)) {
     win = true;
     score += 1000;
@@ -304,32 +283,21 @@ function updateUI() {
 
 // ─── Draw ─────────────────────────────────────────────────────────────────────
 function draw() {
-  // Sky gradient
   const sky = ctx.createLinearGradient(0, 0, 0, H);
   sky.addColorStop(0, '#64b5f6');
   sky.addColorStop(1, '#bbdefb');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, W, H);
 
-  // Clouds
   drawClouds();
 
   ctx.save();
   ctx.translate(-cameraX, 0);
 
-  // Platforms
   platforms.forEach(p => drawPlatform(p));
-
-  // Coins
   coinList.forEach(c => { if (!c.collected) drawCoin(c); });
-
-  // Goal flag
   drawGoal();
-
-  // Enemies
   enemies.forEach(e => { if (e.alive) drawEnemy(e); });
-
-  // Player
   if (!player.dead) drawPlayer();
 
   ctx.restore();
@@ -355,17 +323,14 @@ function drawCloud(x, y) {
 
 function drawPlatform(p) {
   if (p.top) {
-    // Grass block
     ctx.fillStyle = '#4caf50';
     ctx.fillRect(p.x, p.y, p.w, 12);
     ctx.fillStyle = '#388e3c';
     ctx.fillRect(p.x, p.y + 12, p.w, p.h - 12);
-    // Border
     ctx.strokeStyle = '#2e7d32';
     ctx.lineWidth = 1;
     ctx.strokeRect(p.x, p.y, p.w, p.h);
   } else {
-    // Ground
     ctx.fillStyle = '#8d6e63';
     ctx.fillRect(p.x, p.y, p.w, p.h);
     ctx.fillStyle = '#5d4037';
@@ -392,17 +357,14 @@ function drawCoin(c) {
 }
 
 function drawGoal() {
-  // Pole
   ctx.fillStyle = '#bdbdbd';
   ctx.fillRect(goal.x, goal.y, 6, goal.h);
-  // Flag
   ctx.fillStyle = '#e53935';
   ctx.beginPath();
   ctx.moveTo(goal.x + 6, goal.y);
   ctx.lineTo(goal.x + 46, goal.y + 20);
   ctx.lineTo(goal.x + 6, goal.y + 40);
   ctx.fill();
-  // Base
   ctx.fillStyle = '#757575';
   ctx.fillRect(goal.x - 10, goal.y + goal.h - 8, 26, 8);
 }
@@ -419,38 +381,23 @@ function drawPlayer() {
     ctx.translate(0, -py);
   }
 
-  // Body (red overalls)
   ctx.fillStyle = '#e53935';
   ctx.fillRect(px + 4, py + 16, 24, 18);
-
-  // Shirt (blue)
   ctx.fillStyle = '#1565c0';
   ctx.fillRect(px + 2, py + 22, 28, 12);
-
-  // Head (skin)
   ctx.fillStyle = '#ffcc80';
   ctx.fillRect(px + 6, py + 2, 20, 16);
-
-  // Hat (red)
   ctx.fillStyle = '#e53935';
   ctx.fillRect(px + 4, py, 24, 8);
   ctx.fillRect(px + 2, py + 6, 28, 4);
-
-  // Eyes
   ctx.fillStyle = '#212121';
   ctx.fillRect(px + 18, py + 7, 4, 4);
-
-  // Mustache
   ctx.fillStyle = '#4e342e';
   ctx.fillRect(px + 12, py + 14, 12, 3);
-
-  // Legs
   ctx.fillStyle = '#1565c0';
   const legOffset = player.onGround ? Math.sin(player.walkFrame) * 4 : 0;
   ctx.fillRect(px + 5, py + 32, 10, 10 + legOffset);
   ctx.fillRect(px + 17, py + 32, 10, 10 - legOffset);
-
-  // Shoes
   ctx.fillStyle = '#4e342e';
   ctx.fillRect(px + 3, py + 38 + legOffset, 13, 4);
   ctx.fillRect(px + 15, py + 38 - legOffset, 13, 4);
@@ -463,34 +410,25 @@ function drawEnemy(e) {
   const ex = e.x;
   const ey = e.y + wobble;
 
-  // Body (brown mushroom)
   ctx.fillStyle = '#6d4c41';
   ctx.beginPath();
   ctx.ellipse(ex + e.w / 2, ey + e.h * 0.7, e.w / 2, e.h * 0.35, 0, 0, Math.PI * 2);
   ctx.fill();
-
-  // Cap
   ctx.fillStyle = '#8b0000';
   ctx.beginPath();
   ctx.ellipse(ex + e.w / 2, ey + e.h * 0.4, e.w / 2 + 4, e.h * 0.45, 0, Math.PI, 0);
   ctx.fill();
-
-  // Cap dots
   ctx.fillStyle = '#ffccbc';
   ctx.beginPath();
   ctx.arc(ex + e.w / 2 - 8, ey + e.h * 0.25, 4, 0, Math.PI * 2);
   ctx.arc(ex + e.w / 2 + 8, ey + e.h * 0.2, 3, 0, Math.PI * 2);
   ctx.fill();
-
-  // Eyes
   ctx.fillStyle = '#fff';
   ctx.fillRect(ex + 7, ey + e.h * 0.55, 7, 7);
   ctx.fillRect(ex + e.w - 14, ey + e.h * 0.55, 7, 7);
   ctx.fillStyle = '#000';
   ctx.fillRect(ex + 8, ey + e.h * 0.58, 4, 4);
   ctx.fillRect(ex + e.w - 13, ey + e.h * 0.58, 4, 4);
-
-  // Eyebrows (angry)
   ctx.fillStyle = '#000';
   ctx.save();
   ctx.translate(ex + 10, ey + e.h * 0.52);
@@ -531,7 +469,6 @@ function drawHUD() {
   }
 }
 
-// ─── Game Loop ────────────────────────────────────────────────────────────────
 function loop() {
   update();
   draw();
