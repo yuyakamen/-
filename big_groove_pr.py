@@ -309,6 +309,111 @@ add_text(s4, "Publicly available data / To be verified with latest screenshots f
 
 
 # ─────────────────────────────────────────────
+# SLIDE 4B — Audience Insights (Demographics)
+# ─────────────────────────────────────────────
+s4b = prs.slides.add_slide(BLANK)
+slide_bg(s4b, BLACK)
+add_accent_bar(s4b, GREEN)
+
+add_text(s4b, "AUDIENCE INSIGHTS", 0.4, 0.2, 12.5, 0.4,
+         font_size=11, bold=True, color=GREEN)
+add_text(s4b, "オーディエンス詳細データ", 0.4, 0.65, 12.5, 0.65,
+         font_size=34, bold=True, color=WHITE)
+add_rect(s4b, 0.4, 1.35, 5.5, 0.04, fill_color=YELLOW)
+
+# Warning banner
+add_rect(s4b, 0.4, 1.5, 12.5, 0.45, fill_color=RGBColor(0x3A, 0x2A, 0x00))
+add_rect(s4b, 0.4, 1.5, 0.08, 0.45, fill_color=YELLOW)
+add_text(s4b,
+    "⚠️  以下は公開情報・業界傾向に基づく推定値です。最終提案前に creator / マネージャーから最新インサイトのスクリーンショットを取得してください。",
+    0.6, 1.54, 12.1, 0.38,
+    font_size=9, color=YELLOW)
+
+# ── Section: Gender ──
+add_text(s4b, "GENDER  /  性別構成", 0.4, 2.1, 4.0, 0.35,
+         font_size=12, bold=True, color=YELLOW)
+add_rect(s4b, 0.4, 2.45, 4.0, 2.1, fill_color=MID_GRAY)
+add_rect(s4b, 0.4, 2.45, 4.0, 0.05, fill_color=YELLOW)
+
+gender_data = [("Male / 男性", "58%", YELLOW), ("Female / 女性", "38%", GREEN), ("Other / その他", "4%", RGBColor(0x99,0x99,0x99))]
+yg = 2.55
+for lbl, pct, col in gender_data:
+    add_text(s4b, lbl, 0.55, yg, 1.8, 0.3, font_size=10, color=WHITE)
+    bar_w = 1.9 * float(pct.strip('%')) / 100
+    add_rect(s4b, 2.2, yg+0.04, bar_w, 0.22, fill_color=col)
+    add_text(s4b, pct, 2.2 + bar_w + 0.08, yg, 0.5, 0.3, font_size=10, bold=True, color=col)
+    yg += 0.55
+add_text(s4b, "* Estimated / To be verified", 0.45, 4.3, 3.7, 0.2,
+         font_size=7, color=RGBColor(0x77,0x77,0x77))
+
+# ── Section: Age ──
+add_text(s4b, "AGE  /  年齢層", 4.7, 2.1, 4.2, 0.35,
+         font_size=12, bold=True, color=YELLOW)
+add_rect(s4b, 4.7, 2.45, 4.2, 2.1, fill_color=MID_GRAY)
+add_rect(s4b, 4.7, 2.45, 4.2, 0.05, fill_color=YELLOW)
+
+age_data = [
+    ("18–24歳", "32%", 0.32),
+    ("25–34歳", "38%", 0.38),
+    ("35–44歳", "18%", 0.18),
+    ("45歳以上",  "12%", 0.12),
+]
+ya = 2.55
+bar_max = 3.5
+for lbl, pct, ratio in age_data:
+    add_text(s4b, lbl, 4.85, ya, 1.1, 0.28, font_size=10, color=WHITE)
+    bw = bar_max * ratio
+    col = YELLOW if ratio >= 0.35 else (GREEN if ratio >= 0.25 else RGBColor(0x88,0x88,0x88))
+    add_rect(s4b, 5.9, ya+0.04, bw, 0.22, fill_color=col)
+    add_text(s4b, pct, 5.9 + bw + 0.08, ya, 0.5, 0.28, font_size=10, bold=True, color=col)
+    ya += 0.5
+add_text(s4b, "* Estimated / To be verified", 4.75, 4.3, 3.9, 0.2,
+         font_size=7, color=RGBColor(0x77,0x77,0x77))
+
+# ── Section: Top Countries ──
+add_text(s4b, "TOP COUNTRIES  /  国別オーディエンス", 9.2, 2.1, 4.0, 0.35,
+         font_size=12, bold=True, color=YELLOW)
+add_rect(s4b, 9.2, 2.45, 3.9, 2.1, fill_color=MID_GRAY)
+add_rect(s4b, 9.2, 2.45, 3.9, 0.05, fill_color=YELLOW)
+
+countries = [
+    ("🇳🇬  Nigeria",        "~28%", GREEN),
+    ("🇺🇸  United States",  "~22%", YELLOW),
+    ("🇬🇧  United Kingdom", "~8%",  RGBColor(0xCC,0xCC,0xFF)),
+    ("🇯🇵  Japan",          "~4%",  RGBColor(0xFF,0x66,0x66)),
+    ("🌏  Other (40+ countries)", "~38%", RGBColor(0x88,0x88,0x88)),
+]
+yc = 2.55
+for flag, pct, col in countries:
+    add_text(s4b, flag, 9.35, yc, 2.5, 0.28, font_size=10, color=WHITE)
+    add_text(s4b, pct, 12.4, yc, 0.6, 0.28, font_size=10, bold=True, color=col, align=PP_ALIGN.RIGHT)
+    yc += 0.42
+add_text(s4b, "* Estimated / To be verified", 9.25, 4.3, 3.7, 0.2,
+         font_size=7, color=RGBColor(0x77,0x77,0x77))
+
+# ── Section: Platform audience notes ──
+add_text(s4b, "PLATFORM AUDIENCE CHARACTERISTICS  /  プラットフォーム別傾向", 0.4, 4.75, 12.5, 0.35,
+         font_size=12, bold=True, color=YELLOW)
+
+platform_notes = [
+    ("TikTok\n4.6M", "Favikon Nigeria #18\n主に18–34歳層\nエンタメ・フード系コンテンツ中心", GREEN),
+    ("Instagram\n~2M", "フォロワーの多くが\n25–44歳のフード好き層\nReelによるリーチが特に高い", RGBColor(0xE1,0x30,0x6C)),
+    ("Facebook\n2M+ Likes", "273,673人がアクティブに言及\nナイジェリア・米国・英国が中心\n比較的高年齢層にもリーチ", RGBColor(0x18,0x77,0xF2)),
+]
+for i, (plat, note, col) in enumerate(platform_notes):
+    xl = 0.4 + i * 4.3
+    add_rect(s4b, xl, 5.15, 4.0, 1.8, fill_color=DARK_GRAY)
+    add_rect(s4b, xl, 5.15, 4.0, 0.05, fill_color=col)
+    add_text(s4b, plat, xl+0.15, 5.23, 1.5, 0.55, font_size=12, bold=True, color=col)
+    add_text(s4b, note, xl+0.15, 5.82, 3.7, 1.0, font_size=10, color=WHITE)
+
+add_text(s4b,
+    "⚠️  All demographic data is estimated from publicly available information. Actual insights must be verified directly with creator/manager before final proposal.",
+    0.4, 7.12, 12.5, 0.3, font_size=7.5,
+    color=RGBColor(0x88,0x88,0x88))
+
+
+# ─────────────────────────────────────────────
 # SLIDE 5 — Why Big Groove Works
 # ─────────────────────────────────────────────
 s5 = prs.slides.add_slide(BLANK)
