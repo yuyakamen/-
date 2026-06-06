@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Local Osaka DMC — 事業提案資料</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --navy:    #0D1B2A;
+    --gold:    #C9A84C;
+    --gold-lt: #E8C97A;
+    --green:   #1B4332;
+    --green-lt:#2D6A4F;
+    --white:   #F8F6F1;
+    --gray:    #8B8B8B;
+    --light:   #EDE8DE;
+    --accent:  #B7860A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 20px 0;
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 44px;
+    background: rgba(13,27,42,0.97);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    z-index: 1000;
+    flex-wrap: wrap;
+    padding: 0 12px;
+  }
+  .nav a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 7px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .nav a:hover { background: rgba(201,168,76,0.2); }
+
+  /* ── Slide base ── */
+  .slide {
+    width: 960px;
+    min-height: 540px;
+    position: relative;
+    overflow: hidden;
+    scroll-margin-top: 50px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 1 — Cover
+  ══════════════════════════════════ */
+  #s1 {
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 80px;
+  }
+  #s1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 85% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(27,67,50,0.4) 0%, transparent 60%);
+  }
+  #s1 .gold-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    margin-bottom: 24px;
+  }
+  #s1 .en-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    position: relative;
+  }
+  #s1 .en-title span { color: var(--gold); }
+  #s1 .ja-title {
+    font-size: 15px;
+    color: var(--light);
+    margin-top: 14px;
+    letter-spacing: 1px;
+    line-height: 1.7;
+    position: relative;
+    font-weight: 300;
+    max-width: 500px;
+  }
+  #s1 .tag-row {
+    display: flex; gap: 10px;
+    margin-top: 36px;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  #s1 .tag {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  #s1 .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--green-lt), var(--gold));
+  }
+  #s1 .side-deco {
+    position: absolute;
+    right: 60px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 16px;
+    opacity: 0.15;
+  }
+  #s1 .side-deco div {
+    width: 2px;
+    background: var(--gold);
+  }
+  #s1 .watermark {
+    position: absolute;
+    right: 60px; bottom: 30px;
+    font-size: 10px; color: var(--gray);
+    letter-spacing: 1px;
+  }
+
+  /* ══════════════════════════════════
+     Slide layout helpers
+  ══════════════════════════════════ */
+  .slide-header {
+    padding: 36px 60px 0;
+  }
+  .slide-number {
+    font-size: 10px; color: var(--gold);
+    letter-spacing: 2px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .slide-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 700;
+    line-height: 1.2;
+  }
+  .slide-title span { color: var(--gold); }
+  .slide-rule {
+    width: 40px; height: 2px;
+    background: var(--gold);
+    margin-top: 10px;
+  }
+  .slide-body {
+    padding: 24px 60px 36px;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 2 — Concept (dark)
+  ══════════════════════════════════ */
+  #s2 {
+    background: var(--navy);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+  }
+  #s2 .slide-title { color: var(--white); }
+  #s2 .concept-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 60px 36px;
+    text-align: center;
+    gap: 20px;
+  }
+  #s2 .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.5;
+    max-width: 700px;
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+    text-align: left;
+  }
+  #s2 .concept-desc {
+    font-size: 14px; line-height: 1.9;
+    color: var(--light); max-width: 680px;
+    text-align: left;
+  }
+  #s2 .concept-pillars {
+    display: flex; gap: 16px; margin-top: 8px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  #s2 .pillar {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 12px; color: var(--gold-lt);
+    font-weight: 500; letter-spacing: 0.3px;
+    text-align: center;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 3 — Market (light)
+  ══════════════════════════════════ */
+  #s3 {
+    background: var(--white);
+    color: var(--navy);
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .stat-card {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  }
+  .stat-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px; font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-card .unit { font-size: 16px; }
+  .stat-card .label {
+    font-size: 12px; color: var(--light);
+    margin-top: 8px; line-height: 1.5;
+  }
+  .trend-box {
+    background: var(--green);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-top: 16px;
+    color: var(--white);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .trend-box strong { color: var(--gold-lt); }
+  .trend-row {
+    display: flex; gap: 16px; margin-top: 16px;
+  }
+  .trend-item {
+    flex: 1;
+    background: var(--light);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: var(--navy);
+    line-height: 1.6;
+  }
+  .trend-item strong { color: var(--green); display: block; margin-bottom: 4px; }
+
+  /* ══════════════════════════════════
+     SLIDE 4 — Problem
+  ══════════════════════════════════ */
+  #s4 { background: #F2EEE6; color: var(--navy); }
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 8px;
+  }
+  .problem-card {
+    background: var(--white);
+    border-radius: 6px;
+    padding: 20px;
+    border-top: 3px solid #C0392B;
+  }
+  .problem-card .icon {
+    font-size: 28px; margin-bottom: 10px;
+  }
+  .problem-card h3 {
+    font-size: 14px; font-weight: 700;
+    color: #C0392B; margin-bottom: 8px;
+  }
+  .problem-card p {
+    font-size: 12px; line-height: 1.7; color: #444;
+  }
+  .insight-box {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 16px 24px;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-left: 4px solid var(--gold);
+  }
+  .insight-box strong { color: var(--gold); }
+
+  /* ══════════════════════════════════
+     SLIDE 5 — Solution
+  ══════════════════════════════════ */
+  #s5 { background: var(--green); color: var(--white); }
+  #s5 .slide-title { color: var(--white); }
+  #s5 .slide-rule { background: var(--gold-lt); }
+  .solution-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .flow-step {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    padding: 18px 14px;
+    text-align: center;
+    position: relative;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .flow-step:last-child { border-right: none; }
+  .flow-step::after {
+    content: '▶';
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 12px;
+    z-index: 2;
+  }
+  .flow-step:last-child::after { display: none; }
+  .flow-step .step-num {
+    font-size: 10px; color: var(--gold-lt);
+    font-weight: 700; letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .flow-step .step-icon { font-size: 22px; margin-bottom: 8px; }
+  .flow-step .step-title {
+    font-size: 12px; font-weight: 700;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .flow-step .step-desc {
+    font-size: 10px; color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .dmc-model {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 16px;
+  }
+  .dmc-item {
+    background: rgba(255,255,255,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--white);
+  }
+  .dmc-item strong { color: var(--gold-lt); display: block; margin-bottom: 4px; }
+
+  /* ══════════════════════════════════
+     SLIDE 6 — Target Market
+  ══════════════════════════════════ */
+  #s6 { background: var(--white); color: var(--navy); }
+  .target-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 14px; margin-top: 8px;
+  }
+  .target-card {
+    border-radius: 6px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .target-card.wealthy {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .target-card.edu {
+    background: var(--green);
+    color: var(--white);
+  }
+  .target-card.corp {
+    background: #2C3E50;
+    color: var(--white);
+  }
+  .target-card h3 {
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 4px; color: var(--gold-lt);
+    letter-spacing: 0.3px;
+  }
+  .target-card .sub {
+    font-size: 10px; color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+  }
+  .target-card ul {
+    list-style: none; font-size: 11px;
+    color: rgba(255,255,255,0.85); line-height: 1.8;
+  }
+  .target-card ul li::before {
+    content: '▸ '; color: var(--gold);
+  }
+  .target-note {
+    background: var(--light);
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin-top: 12px;
+    font-size: 12px; line-height: 1.7;
+    color: var(--navy);
+    border-left: 3px solid var(--gold);
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 7 — Areas
+  ══════════════════════════════════ */
+  #s7 { background: #0D1B2A; color: var(--white); }
+  #s7 .slide-title { color: var(--white); }
+  .area-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 14px; margin-top: 8px;
+  }
+  .area-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+  .area-header {
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .area-header .area-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--gold);
+    font-weight: 700;
+  }
+  .area-header .area-en {
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    margin-top: 2px; letter-spacing: 1px;
+  }
+  .area-body {
+    padding: 14px 16px;
+  }
+  .area-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-lt);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin: 2px 2px 2px 0;
+  }
+  .area-desc {
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    margin-top: 10px; line-height: 1.7;
+  }
+  .area-fit {
+    margin-top: 10px;
+    font-size: 10px; color: var(--gold-lt);
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 8 — Tour Products
+  ══════════════════════════════════ */
+  #s8 { background: var(--white); color: var(--navy); }
+  .tour-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-top: 8px;
+  }
+  .tour-card {
+    background: var(--navy);
+    border-radius: 8px;
+    overflow: hidden;
+    color: var(--white);
+    display: flex; flex-direction: column;
+  }
+  .tour-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #1a2f45, var(--navy));
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .tour-header .tour-num {
+    font-size: 10px; color: var(--gold);
+    letter-spacing: 2px; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .tour-header .tour-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--white); line-height: 1.3;
+  }
+  .tour-body {
+    padding: 12px 18px;
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 8px;
+  }
+  .tour-body ul {
+    list-style: none; font-size: 11px;
+    color: rgba(255,255,255,0.8); line-height: 1.7;
+  }
+  .tour-body ul li::before { content: '✓ '; color: var(--gold); }
+  .tour-target {
+    margin-top: auto;
+    padding: 6px 10px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 4px;
+    font-size: 10px; color: var(--gold-lt);
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 9 — Services
+  ══════════════════════════════════ */
+  #s9 { background: #F2EEE6; color: var(--navy); }
+  .service-list {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 8px;
+  }
+  .service-row {
+    display: flex; align-items: stretch; gap: 0;
+    background: var(--white);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .service-icon-col {
+    width: 80px;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 12px;
+    flex-shrink: 0;
+  }
+  .service-icon-col .svc-icon { font-size: 22px; }
+  .service-icon-col .svc-num {
+    font-size: 9px; color: var(--gold);
+    margin-top: 4px; letter-spacing: 1px; font-weight: 700;
+  }
+  .service-content {
+    padding: 12px 18px;
+    flex: 1;
+  }
+  .service-content h3 {
+    font-size: 13px; font-weight: 700;
+    color: var(--navy); margin-bottom: 4px;
+  }
+  .service-content p {
+    font-size: 11px; color: #555; line-height: 1.6;
+  }
+  .service-tags {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    margin-top: 6px;
+  }
+  .service-tag {
+    background: var(--light);
+    color: var(--green);
+    font-size: 10px; padding: 2px 8px;
+    border-radius: 20px; font-weight: 500;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 10 — Team
+  ══════════════════════════════════ */
+  #s10 { background: var(--navy); color: var(--white); }
+  #s10 .slide-title { color: var(--white); }
+  .team-grid {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 12px; margin-top: 8px;
+  }
+  .team-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .team-card .role-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .team-card .role-icon { font-size: 28px; margin-bottom: 8px; }
+  .team-card .role-name {
+    font-size: 13px; font-weight: 700;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .team-card ul {
+    list-style: none;
+    text-align: left;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+  }
+  .team-card ul li::before { content: '▸ '; color: var(--gold-lt); }
+  .partner-bar {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 12px 20px;
+    margin-top: 12px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  .partner-bar .pb-label {
+    font-size: 11px; color: var(--gold);
+    font-weight: 600; white-space: nowrap;
+  }
+  .partner-bar .pb-item {
+    background: rgba(201,168,76,0.1);
+    color: rgba(255,255,255,0.7);
+    font-size: 10px; padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 11 — Revenue
+  ══════════════════════════════════ */
+  #s11 { background: var(--white); color: var(--navy); }
+  .revenue-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .revenue-table thead tr {
+    background: var(--navy);
+    color: var(--gold);
+  }
+  .revenue-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+  .revenue-table th:last-child { text-align: right; }
+  .revenue-table tbody tr { border-bottom: 1px solid var(--light); }
+  .revenue-table tbody tr:hover { background: #faf8f4; }
+  .revenue-table td {
+    padding: 9px 14px;
+    color: var(--navy);
+    vertical-align: middle;
+  }
+  .revenue-table td:last-child {
+    text-align: right;
+    font-weight: 700;
+    color: var(--green);
+    font-size: 13px;
+  }
+  .revenue-table .bar-cell { width: 160px; }
+  .rev-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    border-radius: 3px;
+  }
+  .revenue-note {
+    background: var(--light);
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #555;
+    border-left: 3px solid var(--gold);
+  }
+  .revenue-note strong { color: var(--navy); }
+
+  /* ══════════════════════════════════
+     SLIDE 12 — Merits for Local
+  ══════════════════════════════════ */
+  #s12 { background: var(--green); color: var(--white); }
+  #s12 .slide-title { color: var(--white); }
+  #s12 .slide-rule { background: var(--gold-lt); }
+  .merit-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 12px; margin-top: 10px;
+  }
+  .merit-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 16px;
+    border-top: 3px solid var(--gold);
+  }
+  .merit-card .merit-icon { font-size: 24px; margin-bottom: 8px; }
+  .merit-card h3 {
+    font-size: 12px; font-weight: 700;
+    color: var(--gold-lt); margin-bottom: 6px;
+  }
+  .merit-card p {
+    font-size: 11px; color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+  .collab-bar {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 6px;
+    padding: 12px 20px;
+    margin-top: 12px;
+    font-size: 12px; color: var(--white);
+    line-height: 1.7;
+  }
+  .collab-bar strong { color: var(--gold-lt); }
+
+  /* ══════════════════════════════════
+     SLIDE 13 — Merits for Partners
+  ══════════════════════════════════ */
+  #s13 { background: #F2EEE6; color: var(--navy); }
+  .partner-merit-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 14px; margin-top: 10px;
+  }
+  .pm-section { }
+  .pm-section .pm-header {
+    background: var(--navy);
+    color: var(--gold);
+    font-size: 12px; font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 4px 4px 0 0;
+    letter-spacing: 0.5px;
+  }
+  .pm-body {
+    background: var(--white);
+    border-radius: 0 0 4px 4px;
+    padding: 14px;
+    border: 1px solid var(--light);
+    border-top: none;
+  }
+  .pm-body ul {
+    list-style: none; font-size: 11px;
+    color: #333; line-height: 1.9;
+  }
+  .pm-body ul li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+  .differentiator {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 8px; margin-top: 14px;
+  }
+  .diff-item {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .diff-item span { color: var(--gold); font-weight: 700; display: block; font-size: 13px; margin-bottom: 4px; }
+
+  /* ══════════════════════════════════
+     SLIDE 14 — Roadmap
+  ══════════════════════════════════ */
+  #s14 { background: var(--navy); color: var(--white); }
+  #s14 .slide-title { color: var(--white); }
+  .roadmap {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 14px; margin-top: 12px;
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    top: 32px; left: calc(33.3% - 2px);
+    width: calc(33.3% + 4px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    z-index: 0;
+  }
+  .phase-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  .phase-header {
+    background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.05));
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .phase-header .phase-num {
+    font-size: 10px; color: var(--gold);
+    font-weight: 700; letter-spacing: 1px;
+  }
+  .phase-header .phase-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--white); margin-top: 2px;
+  }
+  .phase-body {
+    padding: 14px 16px;
+  }
+  .phase-body ul {
+    list-style: none; font-size: 11px;
+    color: rgba(255,255,255,0.8); line-height: 1.9;
+  }
+  .phase-body ul li { display: flex; align-items: flex-start; gap: 6px; }
+  .phase-body ul li::before {
+    content: '▶';
+    color: var(--gold);
+    font-size: 8px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .phase-goal {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 4px;
+    font-size: 11px; color: var(--gold-lt);
+    font-weight: 600;
+    border-left: 2px solid var(--gold);
+  }
+  .kpi-row {
+    display: flex; gap: 10px; margin-top: 14px;
+  }
+  .kpi-item {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+  }
+  .kpi-item .kpi-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--gold);
+  }
+  .kpi-item .kpi-label {
+    font-size: 10px; color: rgba(255,255,255,0.6);
+    margin-top: 2px;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 15 — Summary / CTA
+  ══════════════════════════════════ */
+  #s15 {
+    background: var(--navy);
+    display: flex; flex-direction: column;
+  }
+  #s15::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(27,67,50,0.5) 0%, transparent 70%);
+  }
+  #s15 .slide-title { color: var(--white); }
+  .summary-content {
+    flex: 1;
+    padding: 10px 60px 30px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .summary-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--gold);
+    line-height: 1.4;
+    border-left: 3px solid var(--gold);
+    padding-left: 20px;
+  }
+  .summary-points {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .summary-point {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 12px; color: var(--white);
+    line-height: 1.6;
+  }
+  .summary-point .sp-icon { font-size: 18px; flex-shrink: 0; }
+  .next-actions {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 6px;
+    padding: 14px 20px;
+  }
+  .next-actions h3 {
+    font-size: 12px; color: var(--gold);
+    font-weight: 700; margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .next-actions ul {
+    list-style: none; display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .next-actions ul li {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--white);
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+  .contact-bar {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Print / page ── */
+  @media print {
+    body { background: white; padding: 0; }
+    .nav { display: none; }
+    .slide {
+      width: 100%;
+      page-break-after: always;
+      box-shadow: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a href="#s1">01 表紙</a>
+  <a href="#s2">02 コンセプト</a>
+  <a href="#s3">03 市場背景</a>
+  <a href="#s4">04 課題</a>
+  <a href="#s5">05 解決策</a>
+  <a href="#s6">06 ターゲット</a>
+  <a href="#s7">07 対象エリア</a>
+  <a href="#s8">08 商品例</a>
+  <a href="#s9">09 サービス</a>
+  <a href="#s10">10 チーム</a>
+  <a href="#s11">11 収益モデル</a>
+  <a href="#s12">12 地域メリット</a>
+  <a href="#s13">13 パートナーメリット</a>
+  <a href="#s14">14 実行計画</a>
+  <a href="#s15">15 Next Action</a>
+</nav>
+
+<div style="height:50px"></div>
+
+<!-- ═══════════════════════════════
+     SLIDE 01 — Cover
+════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="gold-line"></div>
+  <div class="en-title">
+    Deep Local<br><span>Osaka</span> DMC
+  </div>
+  <div class="ja-title">
+    大阪ローカル地域の観光資源を、<br>
+    海外富裕層・大学・企業向けに商品化する<br>
+    <strong style="color:var(--gold-lt)">地域共創型 Destination Management Company</strong>
+  </div>
+  <div class="tag-row">
+    <div class="tag">東大阪 × 八尾 × 蒲生四丁目</div>
+    <div class="tag">インバウンド高付加価値ツアー</div>
+    <div class="tag">地域共創型DMC</div>
+    <div class="tag">スタディツアー / MICE</div>
+  </div>
+  <div class="side-deco">
+    <div style="height:80px"></div>
+    <div style="height:40px"></div>
+    <div style="height:120px"></div>
+    <div style="height:60px"></div>
+  </div>
+  <div class="watermark">Confidential — Business Proposal 2025</div>
+  <div class="bottom-bar"></div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 02 — Concept
+════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="slide-header">
+    <div class="slide-number">02 / 15</div>
+    <div class="slide-title">事業<span>コンセプト</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="concept-center">
+    <div class="big-quote">
+      「まだ海外に知られていない大阪のローカルエリアを、<br>
+      訪日外国人向けの高付加価値体験に変える」
+    </div>
+    <div class="concept-desc">
+      大阪市内の有名観光地だけでなく、東大阪・八尾・蒲生四丁目などの"リアルな大阪"を舞台に、
+      ものづくり・商店街・古民家・ローカルフード・スポーツ・地域文化を、海外の富裕層・大学・企業が求める
+      <strong style="color:var(--gold-lt)">唯一無二の体験</strong>として商品化します。<br><br>
+      単なるツアー会社ではなく、<strong style="color:var(--gold-lt)">地域事業者・自治体・観光協会と連携したDMCとして</strong>、
+      体験造成から英語対応・予約管理・SNS発信・送客・レポートまで一気通貫で提供します。
+    </div>
+    <div class="concept-pillars">
+      <div class="pillar">🏭 ものづくり体験</div>
+      <div class="pillar">🏘 古民家・商店街</div>
+      <div class="pillar">🍜 ローカルフード</div>
+      <div class="pillar">🎓 スタディツアー</div>
+      <div class="pillar">🤝 地域共創</div>
+      <div class="pillar">📱 SNS発信力</div>
+      <div class="pillar">🌐 英語対応ガイド</div>
+      <div class="pillar">🏆 富裕層・企業MICE</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 03 — Market Background
+════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="slide-header">
+    <div class="slide-number">03 / 15</div>
+    <div class="slide-title">市場背景：訪日観光の拡大と<span>地方分散ニーズ</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">3<span class="unit">兆円+</span></div>
+        <div class="label">訪日外国人消費額（2024年）<br>過去最高水準を更新</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">3,687<span class="unit">万人</span></div>
+        <div class="label">2024年訪日外国人数<br>コロナ前を大幅超過</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">44<span class="unit">万円+</span></div>
+        <div class="label">富裕層インバウンドの<br>1人あたり消費単価（推計）</div>
+      </div>
+    </div>
+    <div class="trend-row">
+      <div class="trend-item">
+        <strong>オーバーツーリズムへの反応</strong>
+        京都・浅草・道頓堀などの定番スポットは混雑が深刻化。
+        「混んでいない本物の日本」を求める旅行者が急増。
+      </div>
+      <div class="trend-item">
+        <strong>教育旅行マーケットの拡大</strong>
+        海外大学のジャパンスタディツアー需要が増加。
+        中小企業・ものづくり・地域創生への学術的関心が高い。
+      </div>
+      <div class="trend-item">
+        <strong>富裕層のプレミアム体験志向</strong>
+        「モノ」から「コト・ヒト」へのシフト。
+        ローカル職人・地域文化との本物の交流に高い対価を払う。
+      </div>
+      <div class="trend-item">
+        <strong>大阪万博効果（2025）</strong>
+        大阪への注目が世界規模で高まり、府内各地への
+        分散観光の起爆剤として期待される。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 04 — Problem
+════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="slide-header">
+    <div class="slide-number">04 / 15</div>
+    <div class="slide-title">課題：有名観光地への集中と<span>ローカル地域の未活用資源</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="icon">🗺️</div>
+        <h3>観光客の一極集中</h3>
+        <p>道頓堀・心斎橋・USJなど限られたスポットに観光客が集中。
+        東大阪・八尾・蒲生四丁目などのローカルエリアは、魅力がありながら
+        海外からほぼ無名の状態が続いている。</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">🏭</div>
+        <h3>ものづくり資源の不可視化</h3>
+        <p>東大阪・八尾には世界水準の技術を持つ中小企業・町工場が集積しているが、
+        英語対応・受入体制・予約システムの欠如により海外向け体験商品として
+        まったく活用されていない。</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">🤝</div>
+        <h3>地域事業者の送客回路の欠如</h3>
+        <p>地域の飲食店・職人・古民家オーナーは、海外旅行会社・大学・企業と
+        直接つながる手段を持たない。適切な仲介機能がなく、
+        インバウンド需要を取り込めていない。</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">📣</div>
+        <h3>情報発信・PR機能の不在</h3>
+        <p>英語でのSNS発信、海外メディアへのPR、旅行会社へのBtoB営業など、
+        海外向け情報発信のノウハウと体制が地域側に存在しない。
+        コンテンツはあるのに、伝わっていない状態。</p>
+      </div>
+    </div>
+    <div class="insight-box">
+      <strong>→ ビジネスチャンス：</strong>
+      大阪のローカルエリアには「海外富裕層・大学・企業が求める本物の体験資源」が眠っている。
+      これを掘り起こし、商品化・送客・発信を担うDMCが存在しないことが、最大の参入機会である。
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 05 — Solution
+════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="slide-header">
+    <div class="slide-number">05 / 15</div>
+    <div class="slide-title" style="color:var(--white)">解決策：<span style="color:var(--gold-lt)">地域共創型DMCモデル</span></div>
+    <div class="slide-rule" style="background:var(--gold-lt)"></div>
+  </div>
+  <div class="slide-body">
+    <div class="solution-flow">
+      <div class="flow-step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">地域資源の発掘</div>
+        <div class="step-desc">町工場・商店街・古民家・職人・ローカルフードを掘り起こし</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-icon">✨</div>
+        <div class="step-title">体験商品の造成</div>
+        <div class="step-desc">英語対応・受入体制・旅程設計・品質管理</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-icon">📱</div>
+        <div class="step-title">海外向け発信</div>
+        <div class="step-desc">SNS・インフルエンサー・メディア・海外旅行会社へのPR</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 04</div>
+        <div class="step-icon">✈️</div>
+        <div class="step-title">送客・運営</div>
+        <div class="step-desc">予約管理・ガイド手配・安全管理・参加者対応</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">STEP 05</div>
+        <div class="step-icon">📊</div>
+        <div class="step-title">レポート・改善</div>
+        <div class="step-desc">KPI管理・自治体報告・体験の継続的改善</div>
+      </div>
+    </div>
+    <div class="dmc-model">
+      <div class="dmc-item">
+        <strong>🏛 自治体・観光協会との連携</strong>
+        実証事業・補助金活用・地域ブランディング支援。行政との信頼関係を軸に地域全体で取り組む。
+      </div>
+      <div class="dmc-item">
+        <strong>🏭 地域事業者のパートナー化</strong>
+        町工場・飲食店・職人を体験パートナーとして組織化。適切な報酬設計で継続的な関係を構築。
+      </div>
+      <div class="dmc-item">
+        <strong>🌐 海外旅行会社・大学との連携</strong>
+        BtoB営業により安定した送客を確保。教育機関との長期契約でリピート収益を確立。
+      </div>
+      <div class="dmc-item">
+        <strong>📣 DMC×SNS発信力の掛け合わせ</strong>
+        運営しながら発信する体制で、ブランド構築とマーケティングを同時に実現。差別化の核心。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 06 — Target Market
+════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="slide-header">
+    <div class="slide-number">06 / 15</div>
+    <div class="slide-title">ターゲット<span>市場</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="target-grid">
+      <div class="target-card wealthy">
+        <h3>💎 海外富裕層・ハイエンド旅行者</h3>
+        <div class="sub">HIGH-END & LUXURY TRAVELERS</div>
+        <ul>
+          <li>北米（米国・カナダ）</li>
+          <li>オセアニア（豪・NZ）</li>
+          <li>欧州（英・仏・独）</li>
+          <li>アジア富裕層（SG・HK・台湾）</li>
+          <li>中東富裕層（UAE・サウジ・カタール）</li>
+        </ul>
+      </div>
+      <div class="target-card edu">
+        <h3>🎓 海外大学・教育機関</h3>
+        <div class="sub">UNIVERSITIES & EDUCATIONAL INSTITUTIONS</div>
+        <ul>
+          <li>MBA・経営学部</li>
+          <li>デザインスクール</li>
+          <li>観光・都市計画学部</li>
+          <li>工学・製造系学部</li>
+          <li>日本文化・地域創生研究</li>
+        </ul>
+      </div>
+      <div class="target-card corp">
+        <h3>🏢 海外企業・MICE</h3>
+        <div class="sub">CORPORATE & MICE</div>
+        <ul>
+          <li>企業研修・視察ツアー</li>
+          <li>インセンティブ旅行</li>
+          <li>経営者向けビジネス視察</li>
+          <li>海外旅行会社・DMC</li>
+          <li>MICE事業者</li>
+        </ul>
+      </div>
+    </div>
+    <div class="target-note">
+      <strong style="color:var(--green)">市場規模の魅力：</strong>
+      富裕層インバウンドは単価が高く（1人あたり数十万〜数百万円）、教育機関・企業は団体での繰り返し利用が見込める。
+      「安く大量に」ではなく「高付加価値を少数に」提供するモデルで、持続可能な収益を確保する。
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 07 — Areas
+════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="slide-header">
+    <div class="slide-number">07 / 15</div>
+    <div class="slide-title" style="color:var(--white)">対象エリア：<span style="color:var(--gold)">東大阪・八尾・蒲生四丁目</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="area-grid">
+      <div class="area-card">
+        <div class="area-header">
+          <div class="area-name">東大阪市</div>
+          <div class="area-en">HIGASHI-OSAKA — Manufacturing Capital</div>
+        </div>
+        <div class="area-body">
+          <div class="area-tag">ものづくり</div>
+          <div class="area-tag">町工場</div>
+          <div class="area-tag">職人体験</div>
+          <div class="area-tag">ラグビー</div>
+          <div class="area-tag">地域企業交流</div>
+          <div class="area-desc">
+            日本有数の中小製造業の集積地。世界水準の技術を持つ町工場が密集し、
+            職人との体験・交流・見学は、ものづくり好きな海外旅行者や大学・企業研修に最適。
+            ラグビーの聖地としての文化的文脈も魅力。
+          </div>
+          <div class="area-fit">🎯 大学・企業研修・スタディツアーに最適</div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-header">
+          <div class="area-name">八尾市</div>
+          <div class="area-en">YAO — Craft & Local Industry</div>
+        </div>
+        <div class="area-body">
+          <div class="area-tag">中小製造業</div>
+          <div class="area-tag">工場体験</div>
+          <div class="area-tag">地域産業</div>
+          <div class="area-tag">クラフト</div>
+          <div class="area-tag">教育旅行</div>
+          <div class="area-desc">
+            多様な中小製造業が根付く八尾市。プロダクト制作体験や工場見学は、
+            デザインスクール・工学系学部・クリエイター向けに響くコンテンツ。
+            地域産業の学びと体験を融合した唯一無二の旅程が組める。
+          </div>
+          <div class="area-fit">🎯 デザイン・工学系大学・クリエイター旅行者に最適</div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-header">
+          <div class="area-name">蒲生四丁目</div>
+          <div class="area-en">GAMOYON — Deep Local Osaka</div>
+        </div>
+        <div class="area-body">
+          <div class="area-tag">古民家再生</div>
+          <div class="area-tag">商店街</div>
+          <div class="area-tag">レトロ街並み</div>
+          <div class="area-tag">ローカルフード</div>
+          <div class="area-tag">街歩き</div>
+          <div class="area-desc">
+            古民家再生プロジェクトが進む注目エリア。昭和レトロな商店街・地元の食・
+            リノベ建築が混在する「本物の大阪」の空気感。富裕層向けプライベートフードツアー・
+            欧米旅行者の「ディープ大阪」探求に最もマッチ。
+          </div>
+          <div class="area-fit">🎯 富裕層プライベートツアー・欧米旅行者に最適</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 08 — Tour Products
+════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="slide-header">
+    <div class="slide-number">08 / 15</div>
+    <div class="slide-title">具体的な<span>ツアー商品例</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="tour-grid">
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="tour-num">PRODUCT 01</div>
+          <div class="tour-name">Higashi-Osaka<br>Manufacturing Experience</div>
+        </div>
+        <div class="tour-body">
+          <ul>
+            <li>東大阪の町工場見学・職人との対話</li>
+            <li>ものづくり体験ワークショップ</li>
+            <li>地元ランチ（職人メシ）</li>
+            <li>地域中小企業経営者との意見交換</li>
+            <li>専門英語ガイド同行</li>
+          </ul>
+          <div class="tour-target">🎯 対象：海外大学、企業視察、海外旅行会社</div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="tour-num">PRODUCT 02</div>
+          <div class="tour-name">Yao Craft &<br>Local Industry Tour</div>
+        </div>
+        <div class="tour-body">
+          <ul>
+            <li>八尾ものづくり企業の訪問・工場見学</li>
+            <li>プロダクト制作体験</li>
+            <li>地域産業の現場学習</li>
+            <li>職人・経営者とのQ&Aセッション</li>
+            <li>参加証明レポート発行</li>
+          </ul>
+          <div class="tour-target">🎯 対象：デザインスクール、MBA、企業研修</div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="tour-num">PRODUCT 03</div>
+          <div class="tour-name">Gamoyon Deep Osaka<br>Food & Kominka Walk</div>
+        </div>
+        <div class="tour-body">
+          <ul>
+            <li>古民家再生エリアのプライベート散策</li>
+            <li>レトロ商店街の文化ガイド</li>
+            <li>地元シェフ・店主とのローカルフード体験</li>
+            <li>完全英語ガイド・少人数制</li>
+            <li>フォトジェニックな隠れスポット案内</li>
+          </ul>
+          <div class="tour-target">🎯 対象：富裕層、欧米旅行者、プライベートツアー</div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="tour-num">PRODUCT 04</div>
+          <div class="tour-name">Executive Local<br>Business Study Tour</div>
+        </div>
+        <div class="tour-body">
+          <ul>
+            <li>大阪ローカル企業のトップとの対談</li>
+            <li>地域課題とビジネス創出の現場学習</li>
+            <li>中小企業イノベーション視察</li>
+            <li>地域創生プロジェクトのケーススタディ</li>
+            <li>ディナー付き・完全カスタマイズ旅程</li>
+          </ul>
+          <div class="tour-target">🎯 対象：海外企業幹部、MBA、経営者団体</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 09 — Services
+════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="slide-header">
+    <div class="slide-number">09 / 15</div>
+    <div class="slide-title">提供<span>サービス一覧</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="service-list">
+      <div class="service-row">
+        <div class="service-icon-col">
+          <div class="svc-icon">💎</div>
+          <div class="svc-num">SVC 01</div>
+        </div>
+        <div class="service-content">
+          <h3>高付加価値プライベートツアー</h3>
+          <p>富裕層向け・1組限定・英語ガイド付き・オーダーメイド旅程。ローカル飲食店・職人・地域事業者との特別体験を提供。</p>
+          <div class="service-tags">
+            <span class="service-tag">富裕層</span>
+            <span class="service-tag">1組限定</span>
+            <span class="service-tag">完全カスタマイズ</span>
+            <span class="service-tag">英語ガイド</span>
+          </div>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-icon-col">
+          <div class="svc-icon">🎓</div>
+          <div class="svc-num">SVC 02</div>
+        </div>
+        <div class="service-content">
+          <h3>大学・教育機関向けスタディツアー</h3>
+          <p>ものづくり視察・地域創生学習・中小企業経営・空き家活用・古民家再生・日本のローカルビジネス研究。学術的価値の高い体験プログラム。</p>
+          <div class="service-tags">
+            <span class="service-tag">MBA</span>
+            <span class="service-tag">デザインスクール</span>
+            <span class="service-tag">工学系</span>
+            <span class="service-tag">地域創生</span>
+          </div>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-icon-col">
+          <div class="svc-icon">🏢</div>
+          <div class="svc-num">SVC 03</div>
+        </div>
+        <div class="service-content">
+          <h3>企業向け視察・研修ツアー / MICE</h3>
+          <p>町工場視察・経営者交流・イノベーション視察・地域課題解決ツアー・インセンティブ旅行。PM体制により大型団体案件にも完全対応。</p>
+          <div class="service-tags">
+            <span class="service-tag">企業研修</span>
+            <span class="service-tag">インセンティブ</span>
+            <span class="service-tag">MICE</span>
+            <span class="service-tag">経営者視察</span>
+          </div>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-icon-col">
+          <div class="svc-icon">🏛</div>
+          <div class="svc-num">SVC 04</div>
+        </div>
+        <div class="service-content">
+          <h3>自治体・観光協会向けコンサルティング支援</h3>
+          <p>観光コンテンツ造成・英語LP制作・海外向けSNS発信・インフルエンサーキャスティング・海外旅行会社への営業支援・実証事業の設計・運営・レポート。</p>
+          <div class="service-tags">
+            <span class="service-tag">コンテンツ造成</span>
+            <span class="service-tag">英語LP</span>
+            <span class="service-tag">SNS発信</span>
+            <span class="service-tag">実証事業</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 10 — Team
+════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="slide-header">
+    <div class="slide-number">10 / 15</div>
+    <div class="slide-title" style="color:var(--white)">チーム<span>体制</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="role-badge">PRODUCER</div>
+        <div class="role-icon">🎯</div>
+        <div class="role-name">事業責任者</div>
+        <ul>
+          <li>事業設計・商品企画</li>
+          <li>インバウンドマーケティング</li>
+          <li>SNS発信・海外向けPR</li>
+          <li>地域事業者・自治体連携</li>
+          <li>戦略的パートナーシップ構築</li>
+        </ul>
+      </div>
+      <div class="team-card">
+        <div class="role-badge">PROJECT MGR</div>
+        <div class="role-icon">⚙️</div>
+        <div class="role-name">プロジェクトマネージャー</div>
+        <ul>
+          <li>プロジェクト進行管理</li>
+          <li>スケジュール・予算管理</li>
+          <li>品質管理・リスク管理</li>
+          <li>旅行会社・自治体との窓口</li>
+          <li>大型・団体案件の統括</li>
+        </ul>
+      </div>
+      <div class="team-card">
+        <div class="role-badge">GUIDE</div>
+        <div class="role-icon">🌐</div>
+        <div class="role-name">専門ガイド</div>
+        <ul>
+          <li>全国通訳案内士</li>
+          <li>総合旅程管理主任者</li>
+          <li>英語での専門的案内</li>
+          <li>安全管理・参加者対応</li>
+          <li>教育旅行・企業視察対応</li>
+        </ul>
+      </div>
+      <div class="team-card">
+        <div class="role-badge">PARTNERS</div>
+        <div class="role-icon">🤝</div>
+        <div class="role-name">外部パートナー</div>
+        <ul>
+          <li>地域事業者・町工場</li>
+          <li>飲食店・古民家オーナー</li>
+          <li>自治体・観光協会</li>
+          <li>交通事業者</li>
+          <li>インフルエンサー/クリエイター</li>
+        </ul>
+      </div>
+    </div>
+    <div class="partner-bar">
+      <div class="pb-label">🔗 連携先</div>
+      <div class="pb-item">東大阪市観光協会</div>
+      <div class="pb-item">八尾市商工会議所</div>
+      <div class="pb-item">大阪府観光局</div>
+      <div class="pb-item">海外DMC・旅行会社</div>
+      <div class="pb-item">海外大学・教育機関</div>
+      <div class="pb-item">SNSインフルエンサー</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 11 — Revenue Model
+════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="slide-header">
+    <div class="slide-number">11 / 15</div>
+    <div class="slide-title">収益<span>モデル</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <table class="revenue-table">
+      <thead>
+        <tr>
+          <th>サービス区分</th>
+          <th>対象</th>
+          <th class="bar-cell">収益規模感</th>
+          <th>単価レンジ（1件）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>富裕層プライベートツアー</strong></td>
+          <td>海外富裕層・個人</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:20%"></div></td>
+          <td>80,000 〜 300,000円</td>
+        </tr>
+        <tr>
+          <td><strong>大学・教育スタディツアー</strong></td>
+          <td>海外大学・教育機関</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:45%"></div></td>
+          <td>200,000 〜 800,000円</td>
+        </tr>
+        <tr>
+          <td><strong>企業視察・研修ツアー</strong></td>
+          <td>海外企業・MICE</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:70%"></div></td>
+          <td>300,000 〜 1,500,000円</td>
+        </tr>
+        <tr>
+          <td><strong>自治体・観光協会向けコンサル</strong></td>
+          <td>自治体・観光協会</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:85%"></div></td>
+          <td>300,000 〜 2,000,000円</td>
+        </tr>
+        <tr>
+          <td><strong>SNS/PR/インフルエンサー施策</strong></td>
+          <td>自治体・地域事業者</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:100%"></div></td>
+          <td>300,000 〜 3,000,000円</td>
+        </tr>
+        <tr>
+          <td><strong>旅行会社向け手配手数料</strong></td>
+          <td>海外旅行会社・DMC</td>
+          <td class="bar-cell"><div class="rev-bar" style="width:35%"></div></td>
+          <td>販売価格の 10 〜 30%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="revenue-note">
+      <strong>収益の特徴：</strong>
+      高単価×少数のBtoB型収益（大学・企業・自治体）を主力軸とし、BtoC富裕層ツアーで付加収益を積む。
+      自治体・観光協会案件は補助金・実証事業とも紐づき、安定した収益基盤を形成する。
+      複数の収益チャネルを持つことで、季節変動リスクを低減する設計。
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 12 — Local Merits
+════════════════════════════════ -->
+<section class="slide" id="s12">
+  <div class="slide-header">
+    <div class="slide-number">12 / 15</div>
+    <div class="slide-title" style="color:var(--white)">自治体・地域事業者への<span style="color:var(--gold-lt)">メリット</span></div>
+    <div class="slide-rule" style="background:var(--gold-lt)"></div>
+  </div>
+  <div class="slide-body">
+    <div class="merit-grid">
+      <div class="merit-card">
+        <div class="merit-icon">💰</div>
+        <h3>新たな収益機会の創出</h3>
+        <p>これまで海外旅行者と接点のなかった町工場・飲食店・職人が、
+        高付加価値な体験コンテンツとして収益化。適切な報酬設計でWin-Winの関係を構築。</p>
+      </div>
+      <div class="merit-card">
+        <div class="merit-icon">🌍</div>
+        <h3>地域ブランドの海外発信</h3>
+        <p>SNS・インフルエンサー・メディアを通じて、東大阪・八尾・蒲生四丁目が
+        世界に知られるエリアへ。地域全体の認知度向上・移住・投資促進にも貢献。</p>
+      </div>
+      <div class="merit-card">
+        <div class="merit-icon">🤝</div>
+        <h3>ゼロリスクでの参入</h3>
+        <p>英語対応・予約管理・ガイド手配・安全管理はすべてDMC側が担当。
+        地域事業者は本業を続けながら、インバウンド収益を得ることができる。</p>
+      </div>
+      <div class="merit-card">
+        <div class="merit-icon">📈</div>
+        <h3>インバウンド実証事業への活用</h3>
+        <p>自治体・観光協会の実証事業・補助金事業として組み込み可能。
+        実績データ・レポートを提供し、次年度以降の予算獲得を支援。</p>
+      </div>
+      <div class="merit-card">
+        <div class="merit-icon">🎓</div>
+        <h3>地域の誇りと担い手育成</h3>
+        <p>海外の大学生・企業人が地域を訪れることで、地元事業者の自信と誇りを回復。
+        若い世代の地域への関心・UIターン促進にも効果的。</p>
+      </div>
+      <div class="merit-card">
+        <div class="merit-icon">🔗</div>
+        <h3>広域ネットワークへの接続</h3>
+        <p>海外大学・海外旅行会社・企業とのネットワークに地域が接続される。
+        将来的な国際連携・共同研究・ビジネスマッチングの起点になる。</p>
+      </div>
+    </div>
+    <div class="collab-bar">
+      <strong>地域共創のビジョン：</strong>
+      DMCが商業的な架け橋となり、「外から選ばれ続けるローカル大阪」を一緒に作る。関係者全員が「主役」になれる仕組みを設計します。
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 13 — Partner Merits
+════════════════════════════════ -->
+<section class="slide" id="s13">
+  <div class="slide-header">
+    <div class="slide-number">13 / 15</div>
+    <div class="slide-title">海外旅行会社・大学・企業への<span>メリット</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="partner-merit-grid">
+      <div class="pm-section">
+        <div class="pm-header">🌐 海外旅行会社・DMC</div>
+        <div class="pm-body">
+          <ul>
+            <li>大阪ローカルの独自コンテンツを独占的に仕入れ可能</li>
+            <li>英語対応・旅程管理は当社が完全サポート</li>
+            <li>手配手数料による安定収益（10〜30%）</li>
+            <li>他社と差別化できる"本物の日本体験"を商品化</li>
+            <li>継続的な新コンテンツ供給による商品ラインナップ拡充</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pm-section">
+        <div class="pm-header">🎓 海外大学・教育機関</div>
+        <div class="pm-body">
+          <ul>
+            <li>オーダーメイドのスタディプログラム設計</li>
+            <li>中小企業経営・地域創生・ものづくりの現場学習</li>
+            <li>英語ガイドによる専門解説・学術的サポート</li>
+            <li>修了レポート・参加証明書の発行</li>
+            <li>毎年継続利用できる安定した受入体制</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pm-section">
+        <div class="pm-header">🏢 海外企業・MICE事業者</div>
+        <div class="pm-body">
+          <ul>
+            <li>PM体制により大型団体案件も安心して依頼可能</li>
+            <li>経営視察・企業研修・インセンティブを一括手配</li>
+            <li>大阪の経営者・地域企業とのネットワーク提供</li>
+            <li>イノベーション・地域課題解決の現場視察</li>
+            <li>ランチ・ディナー・送迎まで含む完全パッケージ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="differentiator">
+      <div class="diff-item"><span>📱</span>SNS発信力を<br>持つDMC</div>
+      <div class="diff-item"><span>🤝</span>地域事業者との<br>深い関係</div>
+      <div class="diff-item"><span>🌐</span>英語対応<br>ガイド体制</div>
+      <div class="diff-item"><span>⚙️</span>PM体制で<br>大型案件対応</div>
+      <div class="diff-item"><span>🎓</span>教育・研修・<br>地域創生対応</div>
+      <div class="diff-item"><span>🗺️</span>未知エリアの<br>商品化力</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 14 — Roadmap
+════════════════════════════════ -->
+<section class="slide" id="s14">
+  <div class="slide-header">
+    <div class="slide-number">14 / 15</div>
+    <div class="slide-title" style="color:var(--white)">初期<span>3ヶ月の実行計画</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="slide-body">
+    <div class="roadmap">
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-num">PHASE 01 / MONTH 1</div>
+          <div class="phase-title">基盤構築</div>
+        </div>
+        <div class="phase-body">
+          <ul>
+            <li>地域事業者のリサーチ・ヒアリング開始</li>
+            <li>自治体・観光協会へのアプローチ</li>
+            <li>英語ガイドのアサイン・体制整備</li>
+            <li>パイロットツアー旅程の設計</li>
+            <li>英語LP・SNSアカウント開設</li>
+            <li>海外旅行会社リストアップ・営業準備</li>
+          </ul>
+          <div class="phase-goal">📌 ゴール：パートナー事業者3〜5社確保、ツアー商品1本完成</div>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-num">PHASE 02 / MONTH 2</div>
+          <div class="phase-title">実証・発信</div>
+        </div>
+        <div class="phase-body">
+          <ul>
+            <li>パイロットツアーの実施（招待・モニター）</li>
+            <li>写真・動画コンテンツの制作</li>
+            <li>SNS発信・海外向けPR開始</li>
+            <li>インフルエンサー招聘キャンペーン</li>
+            <li>海外旅行会社への提案営業</li>
+            <li>大学・教育機関へのプレゼン</li>
+          </ul>
+          <div class="phase-goal">📌 ゴール：モニターツアー実施、海外向けコンテンツ10本以上</div>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-num">PHASE 03 / MONTH 3</div>
+          <div class="phase-title">商業化・拡大</div>
+        </div>
+        <div class="phase-body">
+          <ul>
+            <li>有料ツアーの受付・販売開始</li>
+            <li>海外旅行会社との業務提携契約</li>
+            <li>大学スタディツアーの受注</li>
+            <li>自治体との実証事業提案・採択</li>
+            <li>収益実績の整理・投資家報告</li>
+            <li>次フェーズ（6ヶ月計画）の策定</li>
+          </ul>
+          <div class="phase-goal">📌 ゴール：有料ツアー初受注、旅行会社2社以上と提携</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-item">
+        <div class="kpi-val">3+</div>
+        <div class="kpi-label">パートナー事業者（月1）</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-val">1本</div>
+        <div class="kpi-label">完成ツアー商品（月1）</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-val">10本+</div>
+        <div class="kpi-label">海外向けSNSコンテンツ（月2）</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-val">2社+</div>
+        <div class="kpi-label">旅行会社提携（月3）</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-val">初</div>
+        <div class="kpi-label">有料ツアー受注（月3）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SLIDE 15 — Summary / CTA
+════════════════════════════════ -->
+<section class="slide" id="s15">
+  <div class="slide-header" style="position:relative">
+    <div class="slide-number">15 / 15</div>
+    <div class="slide-title" style="color:var(--white)">まとめ / <span>Next Action</span></div>
+    <div class="slide-rule"></div>
+  </div>
+  <div class="summary-content">
+    <div class="summary-tagline">
+      大阪のローカルエリアには、<br>
+      まだ世界が知らない"本物の体験"がある。
+    </div>
+    <div class="summary-points">
+      <div class="summary-point">
+        <div class="sp-icon">🗺️</div>
+        <div>東大阪・八尾・蒲生四丁目のローカル資源を、海外富裕層・大学・企業が求める高付加価値体験として商品化する。</div>
+      </div>
+      <div class="summary-point">
+        <div class="sp-icon">⚙️</div>
+        <div>事業責任者×PM×英語ガイドの運営体制と、地域事業者・自治体との連携により、品質と信頼性を担保する。</div>
+      </div>
+      <div class="summary-point">
+        <div class="sp-icon">📱</div>
+        <div>SNS発信力×DMC機能の掛け合わせで、発信しながら運営する独自のビジネスモデルを確立する。</div>
+      </div>
+      <div class="summary-point">
+        <div class="sp-icon">💰</div>
+        <div>富裕層ツアー・大学・企業・自治体の複数収益チャネルで、安定した高付加価値ビジネスを構築する。</div>
+      </div>
+    </div>
+    <div class="next-actions">
+      <h3>→ NEXT ACTION — まず、ここから始めましょう</h3>
+      <ul>
+        <li>① 地域パートナー事業者の選定・ヒアリング</li>
+        <li>② 自治体・観光協会への提案アポイント</li>
+        <li>③ パイロットツアーの旅程設計・実施</li>
+        <li>④ 英語LP・SNS発信の立ち上げ</li>
+        <li>⑤ 海外旅行会社へのBtoB営業開始</li>
+      </ul>
+    </div>
+  </div>
+  <div class="contact-bar">
+    Deep Local Osaka DMC — ご連絡・ご提案・パートナーシップのご相談はお気軽にどうぞ
+  </div>
+</section>
+
+<div style="height:40px"></div>
+
+</body>
+</html>
