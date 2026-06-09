@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEXCスナイパー セットアップガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; background: #0f1117; color: #e0e0e0; line-height: 1.7; }
+  h1 { text-align: center; padding: 40px 20px 10px; font-size: 2rem; color: #fff; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+  .steps { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .step { background: #1a1d27; border-radius: 14px; margin-bottom: 28px; overflow: hidden; border: 1px solid #2a2d3a; }
+  .step-header { display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: #1f2235; border-bottom: 1px solid #2a2d3a; }
+  .step-num { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0; }
+  .step-title { font-size: 1.15rem; font-weight: bold; color: #fff; }
+  .step-body { padding: 22px 24px; }
+
+  .s1 .step-num { background: #3b5bdb; }
+  .s2 .step-num { background: #2b8a3e; }
+  .s3 .step-num { background: #e67700; }
+  .s4 .step-num { background: #862e9c; }
+  .s5 .step-num { background: #c92a2a; }
+  .s6 .step-num { background: #1864ab; }
+
+  /* Screen mockup */
+  .screen { background: #12131a; border-radius: 10px; border: 1px solid #333; overflow: hidden; margin: 14px 0; font-size: 0.88rem; }
+  .screen-bar { background: #2c2f3e; padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .screen-title { color: #aaa; font-size: 0.78rem; margin-left: 6px; }
+  .screen-body { padding: 16px 18px; font-family: 'Courier New', monospace; }
+
+  .cmd { background: #0d1117; border-radius: 8px; padding: 14px 18px; font-family: 'Courier New', monospace; font-size: 0.9rem; color: #7ee787; border: 1px solid #30363d; margin: 10px 0; position: relative; white-space: pre-wrap; word-break: break-all; }
+  .cmd .comment { color: #8b949e; }
+  .cmd .var { color: #79c0ff; }
+  .cmd .val { color: #ffa657; }
+
+  .os-tabs { display: flex; gap: 8px; margin-bottom: 0; }
+  .os-tab { padding: 6px 16px; border-radius: 6px 6px 0 0; font-size: 0.82rem; cursor: pointer; background: #252836; color: #888; border: 1px solid #333; border-bottom: none; }
+  .os-tab.active { background: #1a1d27; color: #fff; border-color: #444; }
+  .os-content { display: none; border: 1px solid #333; border-radius: 0 8px 8px 8px; padding: 14px; background: #0d1117; }
+  .os-content.active { display: block; }
+
+  .arrow-list { list-style: none; }
+  .arrow-list li { padding: 6px 0 6px 22px; position: relative; color: #ccc; }
+  .arrow-list li::before { content: '→'; position: absolute; left: 0; color: #3b5bdb; font-weight: bold; }
+
+  .warn { background: #2d1f00; border-left: 4px solid #e67700; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; color: #ffd8a8; font-size: 0.9rem; }
+  .info { background: #0c1f3a; border-left: 4px solid #3b5bdb; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; color: #a5c8ff; font-size: 0.9rem; }
+  .success { background: #0d2b1a; border-left: 4px solid #2b8a3e; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; color: #8ce99a; font-size: 0.9rem; }
+
+  /* MEXC UI mockup */
+  .mexc-ui { background: #1a1d27; border: 1px solid #333; border-radius: 10px; padding: 20px; margin: 14px 0; }
+  .mexc-header { background: #090a0f; padding: 10px 16px; border-radius: 8px; display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .mexc-logo { background: #1a73e8; color: #fff; font-weight: bold; font-size: 0.85rem; padding: 4px 10px; border-radius: 4px; }
+  .mexc-nav { color: #aaa; font-size: 0.8rem; display: flex; gap: 16px; }
+  .mexc-nav span { cursor: pointer; }
+  .mexc-nav span.active { color: #fff; border-bottom: 2px solid #1a73e8; padding-bottom: 2px; }
+  .form-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .form-label { color: #888; font-size: 0.82rem; width: 130px; flex-shrink: 0; }
+  .form-input { background: #0d1117; border: 1px solid #444; border-radius: 6px; padding: 7px 12px; color: #fff; font-size: 0.85rem; flex: 1; font-family: 'Courier New', monospace; }
+  .form-input.highlight { border-color: #3b5bdb; box-shadow: 0 0 0 2px rgba(59,91,219,0.25); }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+  .fake-checkbox { width: 16px; height: 16px; border: 2px solid #3b5bdb; border-radius: 3px; background: #3b5bdb; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+  .fake-btn { background: #1a73e8; color: #fff; border: none; border-radius: 6px; padding: 8px 20px; font-size: 0.85rem; cursor: pointer; display: inline-block; margin-top: 8px; }
+
+  /* File editor mockup */
+  .editor { background: #1e1e1e; border-radius: 10px; overflow: hidden; margin: 14px 0; border: 1px solid #333; }
+  .editor-tabs { background: #252526; display: flex; }
+  .editor-tab { padding: 8px 18px; font-size: 0.8rem; color: #ccc; border-right: 1px solid #1e1e1e; }
+  .editor-tab.active { background: #1e1e1e; color: #fff; border-top: 2px solid #007acc; }
+  .editor-body { padding: 0; }
+  .code-line { display: flex; font-family: 'Courier New', monospace; font-size: 0.83rem; }
+  .line-num { width: 40px; text-align: right; padding: 2px 10px 2px 0; color: #555; flex-shrink: 0; user-select: none; }
+  .line-code { padding: 2px 8px; flex: 1; }
+  .line-code.hl { background: #2a2a00; }
+  .kw { color: #c586c0; }
+  .str { color: #ce9178; }
+  .num { color: #b5cea8; }
+  .comment-code { color: #6a9955; }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-left: 8px; }
+  .tag.win { background: #1864ab; color: #a5c8ff; }
+  .tag.mac { background: #2b4a1f; color: #8ce99a; }
+
+  p { color: #bbb; margin-bottom: 10px; }
+  strong { color: #fff; }
+</style>
+</head>
+<body>
+
+<h1>🎯 MEXCスナイパー セットアップガイド</h1>
+<p class="subtitle">新規上場を自動検出して即座に買い注文を発注するボット</p>
+
+<div class="steps">
+
+  <!-- STEP 1 -->
+  <div class="step s1">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">Pythonをインストールする</div>
+    </div>
+    <div class="step-body">
+      <p>まずPythonが入っているか確認します。</p>
+
+      <div class="os-tabs">
+        <div class="os-tab active" onclick="switchTab(this,'win1')">🪟 Windows</div>
+        <div class="os-tab" onclick="switchTab(this,'mac1')">🍎 Mac</div>
+      </div>
+      <div class="os-content active" id="win1">
+        <p style="margin-bottom:8px">① <strong>Win + R</strong> を押して「cmd」と入力してEnter</p>
+        <div class="screen">
+          <div class="screen-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="screen-title">コマンドプロンプト</span></div>
+          <div class="screen-body">
+            <span style="color:#aaa">C:\Users\you&gt;</span> <span style="color:#7ee787">python --version</span><br>
+            <span style="color:#fff">Python 3.12.0</span> <span style="color:#2b8a3e">← こう表示されればOK ✓</span><br><br>
+            <span style="color:#aaa">C:\Users\you&gt;</span> <span style="color:#7ee787">python --version</span><br>
+            <span style="color:#c92a2a">'python' は認識されていません</span> <span style="color:#e67700">← この場合はインストールが必要</span>
+          </div>
+        </div>
+        <p>インストールが必要な場合は <strong>https://python.org</strong> →「Download Python 3.x.x」をクリック。</p>
+        <div class="info">インストーラーを実行するとき <strong>「Add Python to PATH」</strong> のチェックボックスを必ずオンにしてください！</div>
+      </div>
+      <div class="os-content" id="mac1">
+        <p style="margin-bottom:8px">① <strong>Cmd + Space</strong> →「ターミナル」を開く</p>
+        <div class="cmd">python3 --version</div>
+        <p>表示されない場合は Homebrew でインストール：</p>
+        <div class="cmd">brew install python3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step s2">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">ファイルをダウンロードする</div>
+    </div>
+    <div class="step-body">
+      <p>GitHubからコードをダウンロードします。</p>
+
+      <div class="os-tabs">
+        <div class="os-tab active" onclick="switchTab(this,'win2')">🪟 Windows</div>
+        <div class="os-tab" onclick="switchTab(this,'mac2')">🍎 Mac</div>
+      </div>
+      <div class="os-content active" id="win2">
+        <p>コマンドプロンプトで以下を実行：</p>
+        <div class="cmd"><span class="comment">rem デスクトップに移動してクローン</span>
+cd %USERPROFILE%\Desktop
+git clone https://github.com/yuyakamen/-.git
+cd -</div>
+        <div class="info">git コマンドが使えない場合は https://git-scm.com からGitをインストールしてください。</div>
+      </div>
+      <div class="os-content" id="mac2">
+        <div class="cmd">cd ~/Desktop
+git clone https://github.com/yuyakamen/-.git
+cd -</div>
+      </div>
+
+      <p style="margin-top:14px">フォルダの中に <strong>mexc_sniper.py</strong> があれば成功です。</p>
+      <div class="screen">
+        <div class="screen-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="screen-title">フォルダ構成</span></div>
+        <div class="screen-body">
+          <span style="color:#79c0ff">📁 -</span><br>
+          <span style="color:#aaa">  ├─ </span><span style="color:#7ee787">mexc_sniper.py</span>  <span style="color:#2b8a3e">← これがボット本体</span><br>
+          <span style="color:#aaa">  ├─ game.js</span><br>
+          <span style="color:#aaa">  └─ index.html</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step s3">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">MEXCでAPIキーを発行する</div>
+    </div>
+    <div class="step-body">
+      <p>MEXCにログインしてAPIキーを作成します。</p>
+      <ul class="arrow-list">
+        <li>MEXCにログイン → 右上のアカウントアイコン</li>
+        <li>「<strong>APIキー管理</strong>」をクリック</li>
+        <li>「<strong>APIキーを作成</strong>」ボタンを押す</li>
+        <li>名前を入力（例: sniper）</li>
+        <li>権限の設定（下記参照）</li>
+      </ul>
+
+      <!-- MEXC APIキー設定の模擬UI -->
+      <div class="mexc-ui">
+        <div class="mexc-header">
+          <div class="mexc-logo">MEXC</div>
+          <div class="mexc-nav">
+            <span>アカウント</span>
+            <span class="active">APIキー管理</span>
+            <span>セキュリティ</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <span class="form-label">APIキー名</span>
+          <div class="form-input">sniper_bot</div>
+        </div>
+
+        <p style="color:#888; font-size:0.82rem; margin-bottom:10px;">権限を選択してください：</p>
+        <div class="checkbox-row">
+          <div class="fake-checkbox">✓</div>
+          <span style="font-size:0.88rem;">読み取り (残高・注文状況の確認)</span>
+          <span style="color:#2b8a3e; font-size:0.78rem;">必須</span>
+        </div>
+        <div class="checkbox-row">
+          <div class="fake-checkbox">✓</div>
+          <span style="font-size:0.88rem;">スポット取引 (買い・売り注文)</span>
+          <span style="color:#2b8a3e; font-size:0.78rem;">必須</span>
+        </div>
+        <div class="checkbox-row">
+          <div style="width:16px; height:16px; border: 2px solid #555; border-radius:3px;"></div>
+          <span style="font-size:0.88rem; color:#666;">出金 (不要なのでオフのまま)</span>
+          <span style="color:#c92a2a; font-size:0.78rem;">チェック不要</span>
+        </div>
+
+        <div style="margin-top:16px; background:#0d1117; border-radius:8px; padding:14px;">
+          <p style="font-size:0.82rem; color:#888; margin-bottom:8px;">発行されたキー（例）：</p>
+          <div class="form-row" style="margin-bottom:8px;">
+            <span class="form-label" style="color:#aaa; font-size:0.8rem;">APIキー</span>
+            <div class="form-input highlight" style="font-size:0.78rem; color:#79c0ff;">mx0vABCDEFGH12345678...</div>
+          </div>
+          <div class="form-row">
+            <span class="form-label" style="color:#aaa; font-size:0.8rem;">シークレットキー</span>
+            <div class="form-input highlight" style="font-size:0.78rem; color:#ffa657;">a1b2c3d4e5f6g7h8i9j0...</div>
+          </div>
+        </div>
+        <div class="warn" style="margin-top:10px;">シークレットキーは発行時の1回しか表示されません。必ずメモしてください！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step s4">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-title">購入金額などを設定する（任意）</div>
+    </div>
+    <div class="step-body">
+      <p><strong>mexc_sniper.py</strong> をメモ帳やVS Codeで開いて、冒頭の数値を変更します。</p>
+
+      <div class="editor">
+        <div class="editor-tabs">
+          <div class="editor-tab active">mexc_sniper.py</div>
+        </div>
+        <div class="editor-body" style="padding:12px 0;">
+          <div class="code-line"><span class="line-num">12</span><span class="line-code"><span class="comment-code"># 購入に使うクォート通貨</span></span></div>
+          <div class="code-line"><span class="line-num">13</span><span class="line-code"><span class="var" style="color:#9cdcfe;">QUOTE_CURRENCY</span> = <span class="str">"USDT"</span></span></div>
+          <div class="code-line"><span class="line-num">14</span><span class="line-code"></span></div>
+          <div class="code-line hl"><span class="line-num">15</span><span class="line-code"><span class="comment-code"># ← ここを変える！1回の購入金額 (USDT)</span></span></div>
+          <div class="code-line hl"><span class="line-num">16</span><span class="line-code"><span class="var" style="color:#9cdcfe;">BUY_AMOUNT_USDT</span> = <span class="num">10.0</span>  <span class="comment-code"># 例: 50.0 に変えると50ドル分買う</span></span></div>
+          <div class="code-line"><span class="line-num">17</span><span class="line-code"></span></div>
+          <div class="code-line"><span class="line-num">18</span><span class="line-code"><span class="comment-code"># 監視間隔 (秒) — 2未満はレート制限に注意</span></span></div>
+          <div class="code-line"><span class="line-num">19</span><span class="line-code"><span class="var" style="color:#9cdcfe;">POLL_INTERVAL_SEC</span> = <span class="num">2</span></span></div>
+          <div class="code-line"><span class="line-num">20</span><span class="line-code"></span></div>
+          <div class="code-line"><span class="line-num">21</span><span class="line-code"><span class="comment-code"># 検出後の待機秒数 (0=即時)</span></span></div>
+          <div class="code-line"><span class="line-num">22</span><span class="line-code"><span class="var" style="color:#9cdcfe;">ORDER_DELAY_SEC</span> = <span class="num">0</span></span></div>
+        </div>
+      </div>
+
+      <div class="info">変更したらファイルを保存（Ctrl+S）するだけでOKです。</div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step s5">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div class="step-title">ドライランで動作確認する</div>
+    </div>
+    <div class="step-body">
+      <p>まず実際には注文を出さない「ドライラン」で動作確認します。</p>
+
+      <div class="os-tabs">
+        <div class="os-tab active" onclick="switchTab(this,'win5')">🪟 Windows</div>
+        <div class="os-tab" onclick="switchTab(this,'mac5')">🍎 Mac</div>
+      </div>
+      <div class="os-content active" id="win5">
+        <div class="cmd"><span class="comment">rem APIキーをセット（YOUR_KEY_HERE を実際のキーに変える）</span>
+set <span class="var">MEXC_API_KEY</span>=<span class="val">YOUR_KEY_HERE</span>
+set <span class="var">MEXC_API_SECRET</span>=<span class="val">YOUR_SECRET_HERE</span>
+
+<span class="comment">rem ドライランで起動（デフォルトなのでそのまま実行）</span>
+python mexc_sniper.py</div>
+      </div>
+      <div class="os-content" id="mac5">
+        <div class="cmd">export <span class="var">MEXC_API_KEY</span>=<span class="val">"YOUR_KEY_HERE"</span>
+export <span class="var">MEXC_API_SECRET</span>=<span class="val">"YOUR_SECRET_HERE"</span>
+python3 mexc_sniper.py</div>
+      </div>
+
+      <p style="margin-top:14px;">以下のようなログが流れれば正常です：</p>
+      <div class="screen">
+        <div class="screen-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="screen-title">ターミナル出力</span></div>
+        <div class="screen-body">
+          <span style="color:#888">[2026-06-09 12:00:00.123]</span> <span style="color:#fff">MEXC スナイパー起動 | クォート=USDT 購入額=10.0 USDT | DRY_RUN=True</span><br>
+          <span style="color:#888">[2026-06-09 12:00:01.456]</span> <span style="color:#fff">現在の全シンボルを取得中...</span><br>
+          <span style="color:#888">[2026-06-09 12:00:02.789]</span> <span style="color:#7ee787">監視開始: 1234 ペアを把握済み (間隔=2秒)</span><br>
+          <br>
+          <span style="color:#888">↓ 新規上場を検出したとき（ドライランなので注文は出ない）</span><br>
+          <span style="color:#888">[2026-06-09 12:05:11.001]</span> <span style="color:#ffd600">★ 新規上場検出: XYZUSDT</span><br>
+          <span style="color:#888">[2026-06-09 12:05:11.002]</span> <span style="color:#aaa">[DRY RUN] 買い注文スキップ: XYZUSDT 現在価格=0.0052 購入予定=10.0 USDT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step s6">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <div class="step-title">本番モードで起動する</div>
+    </div>
+    <div class="step-body">
+      <p>動作確認できたら <strong>DRY_RUN=false</strong> を追加して実際に注文が出るモードにします。</p>
+
+      <div class="os-tabs">
+        <div class="os-tab active" onclick="switchTab(this,'win6')">🪟 Windows</div>
+        <div class="os-tab" onclick="switchTab(this,'mac6')">🍎 Mac</div>
+      </div>
+      <div class="os-content active" id="win6">
+        <div class="cmd">set <span class="var">DRY_RUN</span>=<span class="val">false</span>
+python mexc_sniper.py</div>
+      </div>
+      <div class="os-content" id="mac6">
+        <div class="cmd"><span class="var">DRY_RUN</span>=<span class="val">false</span> python3 mexc_sniper.py</div>
+      </div>
+
+      <div class="screen" style="margin-top:14px;">
+        <div class="screen-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="screen-title">本番モードのログ例</span></div>
+        <div class="screen-body">
+          <span style="color:#888">[2026-06-09 12:00:00.123]</span> <span style="color:#fff">MEXC スナイパー起動 | クォート=USDT 購入額=10.0 USDT | <span style="color:#c92a2a">DRY_RUN=False</span></span><br>
+          <span style="color:#888">[2026-06-09 12:05:11.001]</span> <span style="color:#ffd600">★ 新規上場検出: XYZUSDT</span><br>
+          <span style="color:#888">[2026-06-09 12:05:11.120]</span> <span style="color:#7ee787">注文完了: {"orderId": "12345678", "status": "FILLED", ...}</span>
+        </div>
+      </div>
+
+      <div class="warn">
+        <strong>⚠️ 注意事項</strong><br>
+        ・新規上場直後は価格変動が非常に激しいです<br>
+        ・損失が出る可能性があります。余裕資金のみで運用してください<br>
+        ・PCがスリープ・シャットダウンするとボットが停止します<br>
+        ・ボットを止めるには <strong>Ctrl + C</strong> を押してください
+      </div>
+    </div>
+  </div>
+
+</div><!-- /steps -->
+
+<script>
+function switchTab(el, targetId) {
+  const parent = el.closest('.step-body');
+  parent.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+  parent.querySelectorAll('.os-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(targetId).classList.add('active');
+}
+</script>
+</body>
+</html>
