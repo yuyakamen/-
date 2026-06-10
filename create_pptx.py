@@ -163,7 +163,74 @@ for i, (n, l, c) in enumerate(kpi_data):
 bottom_bar(sl, ACCENT_B)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# SLIDE 2  Concept
+# SLIDE 2  About the Organizer
+# ─────────────────────────────────────────────────────────────────────────────
+sl = prs.slides.add_slide(BLANK)
+white_bg(sl)
+slide_header(sl, "私たちについて",
+             subtitle="About Us — 主催者・コミュニティ紹介", title_size=30)
+
+# Left column: company / person profile
+add_rect(sl, Inches(0.55), Inches(1.6), Inches(5.7), Inches(5.5),
+         fill=OFF_WHITE, line_color=LIGHT_GRAY)
+add_rect(sl, Inches(0.55), Inches(1.6), Inches(5.7), Inches(0.42), fill=ACCENT_B)
+add_text(sl, "主催", Inches(0.75), Inches(1.62), Inches(5.3), Inches(0.35),
+         size=12, bold=True, color=WHITE)
+
+org_lines = [
+    ("会社名",     "株式会社 Mr.sasuke"),
+    ("担当者",     "西村 雄矢"),
+    ("Instagram", "@mr.sasuke_japan"),
+    ("活動拠点",   "大阪・関西エリア"),
+    ("設立背景",   "関西在住のグローバルクリエイターが\n「つながれる場所がない」という課題から\nコミュニティ立ち上げを決意"),
+]
+for i, (k, v) in enumerate(org_lines):
+    by = Inches(2.18 + i * 0.95)
+    add_text(sl, k, Inches(0.75), by, Inches(1.5), Inches(0.38),
+             size=10.5, color=MID_GRAY, bold=True)
+    add_text(sl, v, Inches(0.75), by + Inches(0.32), Inches(5.2), Inches(0.6),
+             size=13.5, color=NAVY)
+
+# Right column: what we do / mission
+add_rect(sl, Inches(6.55), Inches(1.6), Inches(6.25), Inches(5.5),
+         fill=WHITE, line_color=LIGHT_GRAY)
+add_rect(sl, Inches(6.55), Inches(1.6), Inches(6.25), Inches(0.42), fill=NAVY)
+add_text(sl, "ミッションとコミュニティ", Inches(6.75), Inches(1.62),
+         Inches(5.85), Inches(0.35), size=12, bold=True, color=WHITE)
+
+mission = (
+    "「関西から世界へ」をテーマに、日本のグルメ・観光・"
+    "文化・ローカル体験を海外向けに発信するグローバル"
+    "クリエイターが集まるコミュニティを運営しています。\n\n"
+    "SNSで海外に届く発信力を持つクリエイターをつなぎ、"
+    "関西インバウンドPRの接点ハブとして機能する場を"
+    "オフラインイベントを通じて構築しています。"
+)
+add_text(sl, mission, Inches(6.75), Inches(2.18), Inches(5.85), Inches(2.4),
+         size=13.5, color=DARK_GRAY)
+
+# Activity tags
+add_rect(sl, Inches(6.75), Inches(4.62), Inches(5.85), Pt(1.5), fill=LIGHT_GRAY)
+add_text(sl, "主な活動", Inches(6.75), Inches(4.78), Inches(5.85), Inches(0.38),
+         size=11, bold=True, color=MID_GRAY)
+
+activities = [
+    "グローバルクリエイターのオフ会開催",
+    "インバウンド向けSNS発信支援",
+    "スポンサー企業 × クリエイターのマッチング",
+    "関西観光・グルメ・文化のインバウンドPR",
+]
+for i, act in enumerate(activities):
+    bx = Inches(6.75 + (i % 2) * 3.0)
+    by = Inches(5.22 + (i // 2) * 0.68)
+    add_rect(sl, bx, by + Inches(0.12), Inches(0.18), Inches(0.18), fill=ACCENT_B)
+    add_text(sl, act, bx + Inches(0.28), by, Inches(2.65), Inches(0.6),
+             size=12, color=DARK_GRAY)
+
+bottom_bar(sl)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SLIDE 2  Concept (renumbered → SLIDE 3)
 # ─────────────────────────────────────────────────────────────────────────────
 sl = prs.slides.add_slide(BLANK)
 white_bg(sl)
