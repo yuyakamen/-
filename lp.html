@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>事務職専門の転職エージェント｜女性のための転職サポート</title>
-  <meta name="description" content="女性のための事務職専門転職エージェント。未経験・ブランクOK。あなたのライフスタイルに合った事務職をご紹介します。">
+  <title>事務職専門の転職エージェント｜女性のための転職サポート OfficeColor</title>
+  <meta name="description" content="女性のための事務職専門転職エージェント。未経験・ブランクOK。専任女性アドバイザーがあなたのライフスタイルに合った事務職をご紹介します。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -36,122 +36,142 @@
       font-size: 15px;
     }
 
-    /* ===== HEADER ===== */
+    /* HEADER */
     header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(8px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--pink-lt);
-      padding: 12px 24px;
+      padding: 13px 24px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-family: 'Noto Serif JP', serif; font-size: 18px; color: var(--pink); font-weight: 700; letter-spacing: .04em; }
+    .logo { font-family: 'Noto Serif JP', serif; font-size: 18px; color: var(--pink); font-weight: 700; letter-spacing: .04em; text-decoration: none; }
     .logo span { color: var(--brown); }
     .header-cta {
-      background: var(--pink); color: var(--white);
-      border: none; padding: 10px 22px;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: var(--white);
+      border: none; padding: 10px 24px;
       border-radius: 50px; font-size: 13px; font-weight: 700;
       cursor: pointer; letter-spacing: .06em;
-      transition: background .2s, transform .15s;
+      transition: transform .2s, box-shadow .2s;
       text-decoration: none; display: inline-block;
+      box-shadow: 0 3px 12px rgba(244,116,138,.35);
     }
-    .header-cta:hover { background: var(--rose); transform: translateY(-1px); }
+    .header-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(244,116,138,.45); }
 
-    /* ===== HERO ===== */
+    /* HERO */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(145deg, #FFF0F3 0%, #FFF8F5 40%, #F9F3EE 100%);
-      display: flex; align-items: center;
-      padding: 100px 24px 60px;
+      background: linear-gradient(135deg, #FFF0F3 0%, #FFF8F5 45%, #F9F3EE 100%);
+      display: flex; align-items: stretch;
       position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: -80px; right: -80px;
-      width: 480px; height: 480px;
-      background: radial-gradient(circle, rgba(244,116,138,.18) 0%, transparent 70%);
-      border-radius: 50%; pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -60px; left: -60px;
-      width: 360px; height: 360px;
-      background: radial-gradient(circle, rgba(201,169,110,.14) 0%, transparent 70%);
-      border-radius: 50%; pointer-events: none;
     }
     .hero-inner {
       max-width: 1100px; margin: 0 auto; width: 100%;
-      display: flex; align-items: center; gap: 48px;
+      display: flex; align-items: center;
+      padding: 100px 24px 60px;
+      gap: 0;
       position: relative; z-index: 1;
     }
-    .hero-text { flex: 1; }
+    .hero-text {
+      flex: 0 0 60%; padding-right: 52px;
+    }
     .hero-badge {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: 6px;
       background: var(--pink-lt); color: var(--pink);
-      border: 1px solid rgba(244,116,138,.3);
-      border-radius: 50px; padding: 6px 18px;
+      border: 1px solid rgba(244,116,138,.35);
+      border-radius: 50px; padding: 7px 18px;
       font-size: 12px; font-weight: 700; letter-spacing: .1em;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .hero-title {
       font-family: 'Noto Serif JP', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      line-height: 1.45;
+      font-size: clamp(26px, 3.6vw, 46px);
+      line-height: 1.5;
       color: var(--dark);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .hero-title em { color: var(--pink); font-style: normal; }
     .hero-sub {
-      font-size: 15px; color: var(--gray);
-      line-height: 1.9; margin-bottom: 32px;
+      font-size: clamp(14px, 1.5vw, 15px); color: var(--gray);
+      line-height: 2; margin-bottom: 36px;
     }
-    .hero-cta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-cta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 36px; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg, var(--pink) 0%, var(--rose) 100%);
       color: var(--white); border: none;
-      padding: 18px 40px; border-radius: 50px;
-      font-size: 16px; font-weight: 700;
+      padding: 18px 42px; border-radius: 50px;
+      font-size: clamp(14px, 1.6vw, 16px); font-weight: 700;
       cursor: pointer; letter-spacing: .06em;
       transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 6px 24px rgba(244,116,138,.4);
+      box-shadow: 0 8px 28px rgba(244,116,138,.42);
       text-decoration: none;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,116,138,.5); }
-    .btn-primary svg { width: 18px; height: 18px; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(244,116,138,.52); }
+    .btn-primary svg { width: 18px; height: 18px; flex-shrink: 0; }
     .hero-note { font-size: 12px; color: var(--gray); }
+    .hero-scarcity {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #FFF0F3, #FFF8EE);
+      border: 1.5px solid rgba(244,116,138,.3);
+      border-radius: 10px; padding: 12px 18px;
+      font-size: 13px; font-weight: 700; color: var(--dark);
+    }
+    .hero-scarcity .dot { width: 8px; height: 8px; border-radius: 50%; background: #E8527A; display: inline-block; animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
     .hero-img {
-      flex: 0 0 420px; max-width: 420px;
+      flex: 0 0 40%;
+      display: flex; align-items: stretch;
+      position: relative;
     }
     .hero-img-box {
-      width: 100%; aspect-ratio: 4/5;
-      border-radius: 32px;
+      width: 100%; min-height: 480px;
+      border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(244,116,138,.25);
+      box-shadow: 0 24px 72px rgba(244,116,138,.28);
       position: relative;
     }
     .hero-img-box img {
       width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      display: block;
     }
     .hero-img-box::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 60%, rgba(244,116,138,.18) 100%);
+      background: linear-gradient(180deg, transparent 55%, rgba(58,46,42,.12) 100%);
       pointer-events: none;
     }
-    .hero-stats {
-      display: flex; gap: 24px; margin-top: 36px;
-    }
-    .stat-item {
-      background: var(--white); border-radius: 12px;
-      padding: 14px 18px; box-shadow: var(--shadow);
-      text-align: center; flex: 1;
-    }
-    .stat-num { font-family: 'Noto Serif JP', serif; font-size: 22px; color: var(--pink); font-weight: 700; }
-    .stat-label { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
-    /* ===== SECTION BASE ===== */
-    section { padding: 80px 24px; }
+    /* TRUST BADGE STRIP */
+    .trust-strip {
+      background: var(--white);
+      padding: 36px 24px;
+      border-bottom: 1px solid var(--beige-dk);
+    }
+    .trust-strip-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .trust-item {
+      text-align: center;
+      padding: 24px 16px;
+      border-radius: var(--radius);
+      background: var(--beige);
+      border: 1.5px solid var(--beige-dk);
+    }
+    .trust-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      color: var(--pink); font-weight: 700;
+      line-height: 1.1;
+    }
+    .trust-unit { font-size: 14px; }
+    .trust-label { font-size: 12px; color: var(--gray); margin-top: 6px; line-height: 1.5; }
+
+    /* SECTION BASE */
+    section { padding: 88px 24px; }
     .section-title {
       text-align: center;
       font-family: 'Noto Serif JP', serif;
@@ -162,10 +182,9 @@
     .section-sub {
       text-align: center; color: var(--gray);
       font-size: 14px; margin-bottom: 52px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
     .section-label {
-      text-align: center;
       display: inline-block;
       background: var(--pink-lt); color: var(--pink);
       border-radius: 50px; padding: 4px 16px;
@@ -174,48 +193,55 @@
     }
     .section-header { text-align: center; }
 
-    /* ===== WORRIES ===== */
+    /* WORRIES */
     .worries { background: var(--beige); }
     .worries-grid {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
     }
     .worry-card {
       background: var(--white); border-radius: var(--radius);
-      padding: 24px; display: flex; align-items: flex-start; gap: 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      padding: 26px 24px; display: flex; align-items: flex-start; gap: 16px;
+      box-shadow: 0 2px 14px rgba(0,0,0,.06);
     }
-    .worry-icon { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; overflow: hidden; background: var(--beige); }
-    .worry-icon img { width: 100%; height: 100%; object-fit: cover; }
-    .worry-card p { font-size: 14px; line-height: 1.7; color: var(--dark); }
-    .worry-card p strong { color: var(--pink); font-weight: 700; display: block; margin-bottom: 4px; }
+    .worry-num {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--pink-lt), #FFF0F3);
+      border: 2px solid rgba(244,116,138,.3);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; line-height: 1;
+    }
+    .worry-card p { font-size: 14px; line-height: 1.75; color: var(--dark); }
+    .worry-card p strong { color: var(--pink); font-weight: 700; display: block; margin-bottom: 4px; font-size: 15px; }
 
-    /* ===== SOLUTION ===== */
+    /* SOLUTION */
     .solution { background: var(--white); }
     .solution-inner { max-width: 900px; margin: 0 auto; text-align: center; }
     .solution-box {
       background: linear-gradient(135deg, #FFF0F3 0%, #FFF8F0 100%);
-      border: 1.5px solid rgba(244,116,138,.2);
-      border-radius: 24px; padding: 40px;
-      font-size: 18px; line-height: 1.9;
+      border: 1.5px solid rgba(244,116,138,.22);
+      border-radius: 24px; padding: 44px 48px;
+      font-size: clamp(15px, 1.8vw, 18px); line-height: 2;
       color: var(--dark);
-      margin-bottom: 40px;
+      margin-bottom: 44px;
     }
     .solution-box em { color: var(--pink); font-style: normal; font-weight: 700; }
 
-    /* ===== FEATURES ===== */
+    /* FEATURES */
     .features { background: var(--pink-pale); }
     .features-grid {
       max-width: 1000px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
       gap: 28px;
     }
     .feature-card {
       background: var(--white); border-radius: 20px;
       padding: 36px 28px; text-align: center;
       box-shadow: var(--shadow);
-      transition: transform .2s;
+      transition: transform .22s, box-shadow .22s;
       position: relative; overflow: hidden;
     }
     .feature-card::before {
@@ -223,150 +249,50 @@
       position: absolute; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, var(--pink), var(--gold));
     }
-    .feature-card:hover { transform: translateY(-4px); }
-    .feature-num {
-      width: 48px; height: 48px; border-radius: 50%;
-      background: var(--pink-lt); color: var(--pink);
-      font-weight: 700; font-size: 18px;
+    .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(244,116,138,.18); }
+    .feature-svg-wrap {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-lt), #FFF0F3);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 16px rgba(244,116,138,.2);
     }
-    .feature-icon { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; margin: 0 auto 16px; box-shadow: 0 4px 14px rgba(244,116,138,.2); }
-    .feature-icon img { width: 100%; height: 100%; object-fit: cover; }
-    .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+    .feature-svg-wrap svg { width: 32px; height: 32px; stroke: var(--pink); }
+    .feature-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
     .feature-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
 
-    /* ===== JOB TYPES ===== */
+    /* JOB TYPES */
     .jobtypes { background: var(--beige); }
     .jobtypes-grid {
-      max-width: 960px; margin: 0 auto;
+      max-width: 1000px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
     .jobtype-card {
       background: var(--white); border-radius: var(--radius);
-      padding: 28px 20px; text-align: center;
-      box-shadow: 0 2px 16px rgba(0,0,0,.07);
-      transition: transform .2s, box-shadow .2s;
+      padding: 26px 18px; text-align: center;
+      box-shadow: 0 2px 14px rgba(0,0,0,.06);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
       border: 2px solid transparent;
     }
     .jobtype-card:hover {
       transform: translateY(-3px);
-      border-color: var(--pink-lt);
+      border-color: rgba(244,116,138,.3);
       box-shadow: var(--shadow);
     }
-    .jobtype-icon { width: 64px; height: 64px; border-radius: 16px; overflow: hidden; margin: 0 auto 14px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
-    .jobtype-icon img { width: 100%; height: 100%; object-fit: cover; }
-    .jobtype-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .jobtype-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
     .jobtype-tag {
       display: inline-block;
       background: var(--pink-lt); color: var(--pink);
-      font-size: 11px; padding: 3px 10px; border-radius: 50px;
+      font-size: 11px; padding: 4px 12px; border-radius: 50px; font-weight: 700;
     }
+    .jobtype-tag.gold { background: #FBF3E4; color: var(--gold); }
+    .jobtype-tag.teal { background: #E4F6F5; color: #2AA09A; }
 
-    /* ===== VOICES ===== */
-    .voices { background: var(--white); }
-    .voices-grid {
-      max-width: 960px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
-    .voice-card {
-      background: var(--beige); border-radius: 20px;
-      padding: 28px; position: relative;
-    }
-    .voice-card::before {
-      content: '"';
-      font-family: Georgia, serif;
-      font-size: 80px; color: var(--pink-lt);
-      position: absolute; top: 8px; left: 16px;
-      line-height: 1;
-    }
-    .voice-profile {
-      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
-    }
-    .voice-avatar {
-      width: 56px; height: 56px; border-radius: 50%;
-      overflow: hidden; flex-shrink: 0;
-      box-shadow: 0 2px 10px rgba(244,116,138,.25);
-      border: 3px solid var(--pink-lt);
-    }
-    .voice-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .voice-name { font-weight: 700; font-size: 14px; }
-    .voice-info { font-size: 12px; color: var(--gray); margin-top: 2px; }
-    .voice-text { font-size: 13px; line-height: 1.8; color: var(--dark); position: relative; z-index: 1; }
-    .stars { color: #F4C430; font-size: 14px; margin-top: 12px; }
-
-    /* ===== FLOW ===== */
-    .flow { background: var(--pink-pale); }
-    .flow-steps {
-      max-width: 700px; margin: 0 auto;
-      display: flex; flex-direction: column; gap: 0;
-    }
-    .flow-step {
-      display: flex; align-items: flex-start; gap: 24px;
-      position: relative;
-    }
-    .flow-step:not(:last-child)::after {
-      content: '';
-      position: absolute; left: 27px; top: 56px;
-      width: 2px; height: calc(100% - 16px);
-      background: linear-gradient(180deg, var(--pink) 0%, var(--pink-lt) 100%);
-    }
-    .flow-step-num {
-      width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--pink), var(--rose));
-      color: var(--white); font-weight: 700; font-size: 20px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 16px rgba(244,116,138,.35);
-      position: relative; z-index: 1;
-    }
-    .flow-step-body {
-      background: var(--white); border-radius: var(--radius);
-      padding: 24px 28px; flex: 1; margin-bottom: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
-    }
-    .flow-step-title { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-    .flow-step-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
-    .flow-step-time {
-      display: inline-block; background: var(--pink-lt); color: var(--pink);
-      font-size: 11px; padding: 3px 10px; border-radius: 50px;
-      margin-top: 8px; font-weight: 700;
-    }
-
-    /* ===== FAQ ===== */
-    .faq { background: var(--white); }
-    .faq-list {
-      max-width: 800px; margin: 0 auto;
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .faq-item {
-      border: 1.5px solid var(--beige-dk);
-      border-radius: var(--radius); overflow: hidden;
-    }
-    .faq-q {
-      display: flex; align-items: center; gap: 14px;
-      padding: 20px 24px; cursor: pointer;
-      background: var(--white);
-      transition: background .15s;
-    }
-    .faq-q:hover { background: var(--pink-pale); }
-    .faq-q-icon {
-      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-      background: var(--pink); color: var(--white);
-      font-weight: 700; font-size: 14px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .faq-q-text { font-size: 14px; font-weight: 700; flex: 1; }
-    .faq-a {
-      padding: 0 24px 20px 66px;
-      font-size: 13px; color: var(--gray); line-height: 1.8;
-    }
-
-    /* ===== CTA SECTION ===== */
+    /* CTA MID */
     .cta-section {
       background: linear-gradient(135deg, #F4748A 0%, #E8527A 50%, #C9A96E 100%);
-      padding: 80px 24px;
+      padding: 88px 24px;
       text-align: center;
       position: relative; overflow: hidden;
     }
@@ -381,50 +307,160 @@
       font-size: clamp(22px, 3.5vw, 38px);
       color: var(--white); margin-bottom: 16px; line-height: 1.5;
     }
-    .cta-sub { color: rgba(255,255,255,.85); font-size: 14px; margin-bottom: 36px; line-height: 1.8; }
+    .cta-sub { color: rgba(255,255,255,.88); font-size: 15px; margin-bottom: 38px; line-height: 1.9; }
     .btn-white {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--white);
       color: var(--pink); border: none;
-      padding: 20px 48px; border-radius: 50px;
+      padding: 20px 52px; border-radius: 50px;
       font-size: 17px; font-weight: 700;
       cursor: pointer; letter-spacing: .06em;
       transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
       text-decoration: none;
     }
-    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.2); }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(0,0,0,.22); }
     .cta-note { color: rgba(255,255,255,.7); font-size: 12px; margin-top: 16px; }
     .cta-badges {
-      display: flex; justify-content: center; gap: 24px;
+      display: flex; justify-content: center; gap: 18px;
       margin-top: 36px; flex-wrap: wrap;
     }
     .cta-badge {
       background: rgba(255,255,255,.18); border-radius: 50px;
       padding: 8px 20px; color: var(--white);
       font-size: 12px; font-weight: 700; letter-spacing: .06em;
-      border: 1px solid rgba(255,255,255,.3);
+      border: 1px solid rgba(255,255,255,.32);
     }
 
-    /* ===== FORM ===== */
-    .form-section { background: var(--beige); padding: 80px 24px; }
-    .form-inner { max-width: 600px; margin: 0 auto; }
+    /* VOICES */
+    .voices { background: var(--white); }
+    .voices-grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 28px;
+    }
+    .voice-card {
+      background: var(--beige); border-radius: 20px;
+      padding: 32px 28px; position: relative;
+    }
+    .voice-card::before {
+      content: '\201C';
+      font-family: Georgia, serif;
+      font-size: 88px; color: rgba(244,116,138,.18);
+      position: absolute; top: 4px; left: 14px;
+      line-height: 1; pointer-events: none;
+    }
+    .voice-profile {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
+    }
+    .voice-avatar {
+      width: 58px; height: 58px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+      box-shadow: 0 3px 12px rgba(244,116,138,.28);
+      border: 3px solid var(--pink-lt);
+    }
+    .voice-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .voice-name { font-weight: 700; font-size: 14px; }
+    .voice-info { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .voice-text { font-size: 13px; line-height: 1.85; color: var(--dark); position: relative; z-index: 1; }
+    .stars { color: #F4C430; font-size: 15px; margin-top: 14px; letter-spacing: 2px; }
+
+    /* FLOW */
+    .flow { background: var(--pink-pale); }
+    .flow-steps {
+      max-width: 720px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 26px;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute; left: 27px; top: 56px;
+      width: 2px; height: calc(100% - 16px);
+      background: linear-gradient(180deg, var(--pink) 0%, rgba(244,116,138,.2) 100%);
+    }
+    .flow-step-num {
+      width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: var(--white); font-weight: 700; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(244,116,138,.38);
+      position: relative; z-index: 1;
+    }
+    .flow-step-body {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 28px; flex: 1; margin-bottom: 24px;
+      box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    }
+    .flow-step-title { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .flow-step-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
+    .flow-step-time {
+      display: inline-block; background: var(--pink-lt); color: var(--pink);
+      font-size: 11px; padding: 3px 12px; border-radius: 50px;
+      margin-top: 10px; font-weight: 700;
+    }
+
+    /* FAQ */
+    .faq { background: var(--white); }
+    .faq-list {
+      max-width: 820px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .faq-item {
+      border: 1.5px solid var(--beige-dk);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .faq-q {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 24px;
+      background: var(--white);
+    }
+    .faq-q-icon {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: var(--white);
+      font-weight: 700; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .faq-q-text { font-size: 14px; font-weight: 700; flex: 1; line-height: 1.6; }
+    .faq-a {
+      padding: 0 24px 22px 68px;
+      font-size: 13px; color: var(--gray); line-height: 1.9;
+      background: #FAFAFA;
+    }
+
+    /* FORM */
+    .form-section { background: var(--beige); padding: 88px 24px; }
+    .form-inner { max-width: 620px; margin: 0 auto; }
+    .form-free-note {
+      text-align: center; margin-bottom: 24px;
+    }
+    .form-free-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--pink-lt), #FFF0E4);
+      border: 1.5px solid rgba(244,116,138,.3);
+      border-radius: 50px; padding: 8px 24px;
+      font-size: 13px; font-weight: 700; color: var(--dark);
+    }
     .form-card {
       background: var(--white); border-radius: 24px;
-      padding: 48px 40px; box-shadow: 0 8px 40px rgba(0,0,0,.1);
+      padding: 48px 44px; box-shadow: 0 10px 48px rgba(0,0,0,.1);
+      border: 1.5px solid rgba(244,116,138,.12);
     }
     .form-title {
       font-family: 'Noto Serif JP', serif;
       font-size: 22px; text-align: center;
-      margin-bottom: 8px; color: var(--dark);
+      margin-bottom: 8px; color: var(--dark); line-height: 1.5;
     }
-    .form-sub { text-align: center; font-size: 13px; color: var(--gray); margin-bottom: 32px; }
-    .form-group { margin-bottom: 20px; }
+    .form-sub { text-align: center; font-size: 13px; color: var(--gray); margin-bottom: 34px; line-height: 1.8; }
+    .form-group { margin-bottom: 22px; }
     .form-group label {
       display: block; font-size: 13px; font-weight: 700;
-      color: var(--dark); margin-bottom: 6px;
+      color: var(--dark); margin-bottom: 7px;
     }
-    .form-group label span { color: var(--pink); margin-left: 4px; font-size: 11px; }
+    .form-group label span { color: var(--pink); margin-left: 4px; font-size: 11px; background: var(--pink-lt); padding: 1px 6px; border-radius: 4px; }
     .form-group input,
     .form-group select {
       width: 100%; padding: 14px 16px;
@@ -445,45 +481,68 @@
       width: 100%;
       background: linear-gradient(135deg, var(--pink), var(--rose));
       color: var(--white); border: none;
-      padding: 18px; border-radius: 50px;
+      padding: 20px; border-radius: 50px;
       font-size: 16px; font-weight: 700;
       cursor: pointer; letter-spacing: .06em;
       transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 6px 24px rgba(244,116,138,.4);
+      box-shadow: 0 8px 28px rgba(244,116,138,.42);
       margin-top: 8px;
+      font-family: 'Noto Sans JP', sans-serif;
     }
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,116,138,.5); }
-    .form-privacy { text-align: center; font-size: 11px; color: var(--gray); margin-top: 12px; }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(244,116,138,.52); }
+    .form-privacy { text-align: center; font-size: 11px; color: var(--gray); margin-top: 14px; line-height: 1.8; }
     .form-privacy a { color: var(--pink); }
 
-    /* ===== FOOTER ===== */
+    /* FOOTER */
     footer {
       background: var(--dark); color: rgba(255,255,255,.6);
-      padding: 40px 24px;
-      text-align: center; font-size: 12px; line-height: 2;
+      padding: 44px 24px;
+      text-align: center; font-size: 12px; line-height: 2.2;
     }
-    footer .footer-logo { font-family: 'Noto Serif JP', serif; font-size: 20px; color: var(--pink); margin-bottom: 12px; }
+    footer .footer-logo { font-family: 'Noto Serif JP', serif; font-size: 20px; color: var(--pink); margin-bottom: 10px; font-weight: 700; }
     footer a { color: rgba(255,255,255,.5); text-decoration: none; }
     footer a:hover { color: var(--pink); }
 
-    /* ===== FIXED CTA ===== */
+    /* FIXED CTA */
     .fixed-cta {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
-      background: var(--white);
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(8px);
       border-top: 1px solid var(--pink-lt);
-      padding: 12px 24px;
-      display: flex; justify-content: center;
-      box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+      padding: 10px 24px 14px;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.08);
     }
-    .fixed-cta .btn-primary { font-size: 14px; padding: 14px 36px; }
+    .fixed-cta-scarcity {
+      font-size: 12px; font-weight: 700; color: var(--rose);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .fixed-cta-scarcity .sdot { width: 7px; height: 7px; border-radius: 50%; background: var(--rose); display: inline-block; animation: pulse 1.6s ease-in-out infinite; }
+    .fixed-cta .btn-primary { font-size: 14px; padding: 14px 38px; }
 
-    /* ===== RESPONSIVE ===== */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .hero-inner { flex-direction: column; }
-      .hero-img { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
-      .hero-stats { flex-wrap: wrap; }
+      .hero-inner {
+        flex-direction: column-reverse;
+        padding: 80px 20px 60px;
+        gap: 28px;
+      }
+      .hero-text { flex: none; width: 100%; padding-right: 0; }
+      .hero-img { flex: none; width: 100%; max-width: 340px; margin: 0 auto; }
+      .hero-img-box { min-height: 300px; }
+      .trust-strip-inner { grid-template-columns: repeat(2, 1fr); }
       .header-cta { display: none; }
       .form-card { padding: 32px 24px; }
+      .solution-box { padding: 28px 24px; }
+      .features-grid, .worries-grid, .voices-grid { grid-template-columns: 1fr; }
+      .jobtypes-grid { grid-template-columns: repeat(2, 1fr); }
+      .fixed-cta-scarcity { display: none; }
+      .cta-badges { gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 64px 16px; }
+      .trust-strip { padding: 28px 16px; }
+      .jobtypes-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -491,22 +550,25 @@
 
 <!-- HEADER -->
 <header>
-  <div class="logo">Office<span>Color</span></div>
-  <a href="#form" class="header-cta">無料登録はこちら</a>
+  <a href="#" class="logo">Office<span>Color</span></a>
+  <a href="#form" class="header-cta">無料で登録する</a>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-badge">✨ 女性のための事務職専門エージェント</div>
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        女性のための事務職専門エージェント
+      </div>
       <h1 class="hero-title">
         「自分らしく働きたい」<br>
-        その気持ちに<em>寄り添う</em>、<br>
+        その思いに<em>寄り添う</em>、<br>
         事務職転職サポート。
       </h1>
       <p class="hero-sub">
-        未経験・ブランクOK。残業少なめ・在宅OK・産育休取得実績あり。<br>
+        未経験・ブランクOK。残業少なめ・在宅OK・産育休実績あり。<br>
         あなたのライフスタイルに合った事務職を、<br>
         専任の女性アドバイザーが一緒に探します。
       </p>
@@ -517,28 +579,43 @@
         </a>
         <p class="hero-note">登録無料・最短30秒・しつこい営業なし</p>
       </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">98%</div>
-          <div class="stat-label">利用者満足度</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">3,200<small style="font-size:14px">件+</small></div>
-          <div class="stat-label">事務職専門求人</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">女性<small style="font-size:14px">特化</small></div>
-          <div class="stat-label">専任アドバイザー</div>
-        </div>
+      <div class="hero-scarcity">
+        <span class="dot"></span>
+        今月の残り相談枠：あと<strong style="color:var(--rose);margin:0 3px;">7名</strong>で締め切り
       </div>
     </div>
     <div class="hero-img">
       <div class="hero-img-box">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=840&q=80&auto=format&fit=crop" alt="笑顔の女性オフィスワーカー">
+        <img
+          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=900&q=85&auto=format&fit=crop&crop=entropy"
+          alt="笑顔で働く女性"
+        >
       </div>
     </div>
   </div>
 </section>
+
+<!-- TRUST BADGE STRIP -->
+<div class="trust-strip">
+  <div class="trust-strip-inner">
+    <div class="trust-item">
+      <div class="trust-num">32,000<span class="trust-unit">名+</span></div>
+      <div class="trust-label">累計利用者数</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">3,200<span class="trust-unit">件+</span></div>
+      <div class="trust-label">事務職専門求人数</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">98<span class="trust-unit">%</span></div>
+      <div class="trust-label">利用者満足度</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">10<span class="trust-unit">年+</span></div>
+      <div class="trust-label">女性転職支援実績</div>
+    </div>
+  </div>
+</div>
 
 <!-- WORRIES -->
 <section class="worries">
@@ -549,27 +626,27 @@
   </div>
   <div class="worries-grid">
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1541199249251-f713e6145474?w=96&q=80&auto=format&fit=crop" alt="疲れた女性"></div>
+      <div class="worry-num">①</div>
       <p><strong>残業が多すぎる…</strong>毎日終電で帰宅。自分の時間が全くない。もっとゆとりを持って働きたい。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1586374579358-9d19d632b6df?w=96&q=80&auto=format&fit=crop" alt="パソコン操作"></div>
+      <div class="worry-num">②</div>
       <p><strong>事務職は未経験でも大丈夫？</strong>パソコンはある程度使えるけど、資格がないと採用されないのかな…</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=96&q=80&auto=format&fit=crop" alt="育児と仕事"></div>
+      <div class="worry-num">③</div>
       <p><strong>ブランクがあって不安…</strong>育児・介護でブランクがある。今さら転職できるか自信がない。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=96&q=80&auto=format&fit=crop" alt="在宅ワーク"></div>
+      <div class="worry-num">④</div>
       <p><strong>在宅・時短勤務できる会社はある？</strong>家庭との両立を考えると、柔軟に働ける職場を探したい。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=96&q=80&auto=format&fit=crop" alt="履歴書"></div>
+      <div class="worry-num">⑤</div>
       <p><strong>転職活動の進め方がわからない</strong>履歴書の書き方、面接対策、何から始めればいいかわからない。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=96&q=80&auto=format&fit=crop" alt="悩む女性"></div>
+      <div class="worry-num">⑥</div>
       <p><strong>本当に転職していいのか迷っている</strong>今の会社を辞めることへの不安と、もっとよくなりたい気持ちが葛藤。</p>
     </div>
   </div>
@@ -589,7 +666,7 @@
       事務職求人を一緒に探します。<br><br>
       未経験・ブランクがある方も、<em>毎年多数の方が内定獲得</em>しています。
     </div>
-    <a href="#form" class="btn-primary" style="margin: 0 auto;">
+    <a href="#form" class="btn-primary" style="margin: 0 auto; display: inline-flex;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       無料で相談してみる
     </a>
@@ -604,33 +681,73 @@
     <p class="section-sub">女性が転職で感じる不安を、一つひとつ解消する仕組みがあります。</p>
   </div>
   <div class="features-grid">
+    <!-- 1: person -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=144&q=80&auto=format&fit=crop&crop=face" alt="女性アドバイザー"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
       <div class="feature-title">女性専任アドバイザーが担当</div>
       <p class="feature-desc">同じ女性として、ライフイベントや職場環境への不安を共感しながらサポート。転職後のキャリアまで一緒に考えます。</p>
     </div>
+    <!-- 2: search -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=144&q=80&auto=format&fit=crop" alt="オフィス求人"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </div>
       <div class="feature-title">事務職求人3,200件以上</div>
       <p class="feature-desc">一般事務・医療事務・経理事務など幅広い事務職に特化。残業少なめ・在宅・時短求人を豊富にご用意。</p>
     </div>
+    <!-- 3: document -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=144&q=80&auto=format&fit=crop" alt="書類サポート"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2"/>
+          <line x1="9" y1="8" x2="15" y2="8"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="12" y2="16"/>
+        </svg>
+      </div>
       <div class="feature-title">書類〜面接まで完全サポート</div>
       <p class="feature-desc">履歴書・職務経歴書の添削から面接練習まで、内定まで二人三脚でサポート。一人で悩まなくてOK。</p>
     </div>
+    <!-- 4: home -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=144&q=80&auto=format&fit=crop" alt="在宅ワーク"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12L12 3l9 9"/>
+          <path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
+        </svg>
+      </div>
       <div class="feature-title">在宅・時短・産育休取得実績求人多数</div>
       <p class="feature-desc">フレックス・時短・リモートOKなど、家庭と両立しやすい環境の職場に絞って提案します。</p>
     </div>
+    <!-- 5: heart -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=144&q=80&auto=format&fit=crop&crop=face" alt="内定取得"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+      </div>
       <div class="feature-title">未経験・ブランクOK</div>
       <p class="feature-desc">育児・介護でのブランクや職種未経験でも多数の方が内定取得。あなたの強みを一緒に見つけます。</p>
     </div>
+    <!-- 6: gift -->
     <div class="feature-card">
-      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=144&q=80&auto=format&fit=crop" alt="無料サポート"></div>
+      <div class="feature-svg-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="4" rx="1"/>
+          <path d="M21 12v8a1 1 0 01-1 1H4a1 1 0 01-1-1v-8"/>
+          <line x1="12" y1="8" x2="12" y2="21"/>
+          <path d="M12 8c0-2 1.5-4 4-4s3 2.5 0 4"/>
+          <path d="M12 8c0-2-1.5-4-4-4s-3 2.5 0 4"/>
+        </svg>
+      </div>
       <div class="feature-title">完全無料・しつこい連絡なし</div>
       <p class="feature-desc">サービス利用は完全無料。ペースはあなた主導で進められます。無理な求人紹介は一切しません。</p>
     </div>
@@ -642,48 +759,40 @@
   <div class="section-header">
     <span class="section-label">JOB TYPES</span>
     <h2 class="section-title">取り扱い<em>事務職</em>の種類</h2>
-    <p class="section-sub">あなたに合った事務職のカテゴリをご紹介します。</p>
+    <p class="section-sub">あなたに合った事務職カテゴリをご紹介します。</p>
   </div>
   <div class="jobtypes-grid">
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=128&q=80&auto=format&fit=crop" alt="一般事務"></div>
       <div class="jobtype-name">一般事務</div>
       <span class="jobtype-tag">未経験OK</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=128&q=80&auto=format&fit=crop" alt="医療事務"></div>
       <div class="jobtype-name">医療事務</div>
-      <span class="jobtype-tag">資格サポートあり</span>
+      <span class="jobtype-tag gold">資格サポートあり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=128&q=80&auto=format&fit=crop" alt="経理事務"></div>
       <div class="jobtype-name">経理・財務事務</div>
-      <span class="jobtype-tag">スキルアップ</span>
+      <span class="jobtype-tag teal">スキルアップ</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=128&q=80&auto=format&fit=crop" alt="営業事務"></div>
       <div class="jobtype-name">営業事務</div>
       <span class="jobtype-tag">未経験OK</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=128&q=80&auto=format&fit=crop" alt="総務人事"></div>
       <div class="jobtype-name">総務・人事事務</div>
-      <span class="jobtype-tag">正社員多数</span>
+      <span class="jobtype-tag teal">正社員多数</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=128&q=80&auto=format&fit=crop" alt="調剤薬局"></div>
       <div class="jobtype-name">調剤薬局事務</div>
-      <span class="jobtype-tag">資格サポートあり</span>
+      <span class="jobtype-tag gold">資格サポートあり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=128&q=80&auto=format&fit=crop" alt="金融事務"></div>
       <div class="jobtype-name">金融・保険事務</div>
-      <span class="jobtype-tag">高収入あり</span>
+      <span class="jobtype-tag gold">高収入あり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=128&q=80&auto=format&fit=crop" alt="英語事務"></div>
       <div class="jobtype-name">貿易・英語事務</div>
-      <span class="jobtype-tag">スキル活用</span>
+      <span class="jobtype-tag teal">スキル活用</span>
     </div>
   </div>
 </section>
@@ -695,14 +804,14 @@
     <p class="cta-sub">「転職するか迷っている」という段階でも大丈夫。<br>
     女性アドバイザーが、あなたの状況を丁寧にお聞きします。</p>
     <a href="#form" class="btn-white">
-      ✨ 無料で相談する（登録30秒）
+      無料で相談する（登録1分）
     </a>
     <p class="cta-note">しつこい連絡・営業は一切行いません</p>
     <div class="cta-badges">
-      <span class="cta-badge">✅ 完全無料</span>
-      <span class="cta-badge">✅ 未経験OK</span>
-      <span class="cta-badge">✅ ブランクOK</span>
-      <span class="cta-badge">✅ 在宅・時短求人あり</span>
+      <span class="cta-badge">完全無料</span>
+      <span class="cta-badge">未経験OK</span>
+      <span class="cta-badge">ブランクOK</span>
+      <span class="cta-badge">在宅・時短求人あり</span>
     </div>
   </div>
 </section>
@@ -717,7 +826,9 @@
   <div class="voices-grid">
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=112&q=80&auto=format&fit=crop&crop=face" alt="Aさん"></div>
+        <div class="voice-avatar">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=112&q=80&auto=format&fit=crop&crop=face" alt="Aさん">
+        </div>
         <div>
           <div class="voice-name">Aさん（29歳）</div>
           <div class="voice-info">飲食業 → 一般事務｜未経験転職</div>
@@ -728,7 +839,9 @@
     </div>
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=112&q=80&auto=format&fit=crop&crop=face" alt="Bさん"></div>
+        <div class="voice-avatar">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=112&q=80&auto=format&fit=crop&crop=face" alt="Bさん">
+        </div>
         <div>
           <div class="voice-name">Bさん（34歳）</div>
           <div class="voice-info">3年のブランク → 医療事務</div>
@@ -739,7 +852,9 @@
     </div>
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=112&q=80&auto=format&fit=crop&crop=face" alt="Cさん"></div>
+        <div class="voice-avatar">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=112&q=80&auto=format&fit=crop&crop=face" alt="Cさん">
+        </div>
         <div>
           <div class="voice-name">Cさん（26歳）</div>
           <div class="voice-info">販売職 → 営業事務（在宅勤務）</div>
@@ -762,7 +877,7 @@
     <div class="flow-step">
       <div class="flow-step-num">1</div>
       <div class="flow-step-body">
-        <div class="flow-step-title">📋 無料登録（30秒）</div>
+        <div class="flow-step-title">無料登録（30秒）</div>
         <p class="flow-step-desc">フォームに入力するだけで登録完了。費用は一切かかりません。</p>
         <span class="flow-step-time">所要時間：約30秒</span>
       </div>
@@ -770,7 +885,7 @@
     <div class="flow-step">
       <div class="flow-step-num">2</div>
       <div class="flow-step-body">
-        <div class="flow-step-title">👩‍💼 女性アドバイザーとのヒアリング</div>
+        <div class="flow-step-title">女性アドバイザーとのヒアリング</div>
         <p class="flow-step-desc">あなたの希望・状況・不安を丁寧にお聞きします。電話・オンラインどちらでもOK。</p>
         <span class="flow-step-time">所要時間：約30〜60分</span>
       </div>
@@ -778,7 +893,7 @@
     <div class="flow-step">
       <div class="flow-step-num">3</div>
       <div class="flow-step-body">
-        <div class="flow-step-title">🔍 求人提案・応募</div>
+        <div class="flow-step-title">求人提案・応募</div>
         <p class="flow-step-desc">希望に合った事務職求人を厳選してご提案。興味のある求人に応募します。</p>
         <span class="flow-step-time">期間：数日〜1週間</span>
       </div>
@@ -786,7 +901,7 @@
     <div class="flow-step">
       <div class="flow-step-num">4</div>
       <div class="flow-step-body">
-        <div class="flow-step-title">📝 書類・面接サポート</div>
+        <div class="flow-step-title">書類・面接サポート</div>
         <p class="flow-step-desc">履歴書添削・面接対策を徹底サポート。本番前に自信をつけましょう。</p>
         <span class="flow-step-time">期間：1〜2週間</span>
       </div>
@@ -794,7 +909,7 @@
     <div class="flow-step">
       <div class="flow-step-num">5</div>
       <div class="flow-step-body">
-        <div class="flow-step-title">🎉 内定・入社</div>
+        <div class="flow-step-title">内定・入社</div>
         <p class="flow-step-desc">給与交渉・入社日の調整もサポート。新しいステージへ羽ばたいてください！</p>
         <span class="flow-step-time">最短2週間で内定も</span>
       </div>
@@ -851,9 +966,15 @@
 <!-- FORM -->
 <section class="form-section" id="form">
   <div class="form-inner">
+    <div class="form-free-note">
+      <span class="form-free-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        完全無料・1分で完了・しつこい営業なし
+      </span>
+    </div>
     <div class="form-card">
-      <h2 class="form-title">✨ 無料で転職相談する</h2>
-      <p class="form-sub">30秒で登録完了。女性アドバイザーが丁寧にサポートします。</p>
+      <h2 class="form-title">無料で転職相談する</h2>
+      <p class="form-sub">女性アドバイザーが丁寧にサポートします。<br>まずはお気軽にご登録ください。</p>
       <form>
         <div class="form-group">
           <label>お名前 <span>必須</span></label>
@@ -907,17 +1028,20 @@
 <footer>
   <div class="footer-logo">OfficeColor</div>
   <p>女性のための事務職専門転職エージェント</p>
-  <p style="margin-top: 8px;">
+  <p style="margin-top:10px;">
     <a href="#">プライバシーポリシー</a> ｜
     <a href="#">利用規約</a> ｜
     <a href="#">会社情報</a> ｜
     <a href="#">お問い合わせ</a>
   </p>
-  <p style="margin-top: 16px;">© 2024 OfficeColor. All Rights Reserved.</p>
+  <p style="margin-top:18px;">© 2025 OfficeColor. All Rights Reserved.</p>
 </footer>
 
-<!-- FIXED CTA -->
+<!-- FIXED CTA BAR -->
 <div class="fixed-cta">
+  <div class="fixed-cta-scarcity">
+    <span class="sdot"></span>今月残り<strong style="margin:0 3px;">7名</strong>
+  </div>
   <a href="#form" class="btn-primary">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     今すぐ無料で転職相談する
