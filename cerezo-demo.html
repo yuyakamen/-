@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>セレッソ大阪 アプリ デモ</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
     body{
       background:linear-gradient(160deg,#0f0f1a 0%,#1a0a25 50%,#0f1a0f 100%);
       min-height:100vh;display:flex;flex-direction:column;
@@ -443,7 +443,7 @@
     }
   </style>
 </head>
-<body>
+<body ontouchstart="">
 
 <div class="demo-header">
   <strong>セレッソ大阪 アプリ — インタラクティブ デモ</strong><br>
@@ -643,7 +643,7 @@
 
         <div class="screen-body">
           <!-- Hero -->
-          <div class="hero-banner" onclick="goto('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
+          <div class="hero-banner" onclick="navTo('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
             <div class="hero-bg-decor">🌸</div>
             <div class="hero-content">
               <div class="hero-tag">INSIDE CEREZO</div>
@@ -659,19 +659,19 @@
             <div class="sec-more" onclick="toast('最新コンテンツ一覧')">もっと見る ›</div>
           </div>
           <div class="scroll-row" style="padding-bottom:12px;">
-            <div class="scroll-card" onclick="goto('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
+            <div class="scroll-card" onclick="navTo('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
               <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#050515,#150530)">✈️</div><div class="sc-play">▶</div><div class="sc-dur">12:34</div></div>
               <div class="sc-ttl">アウェイ遠征の裏側</div><div class="sc-series">INSIDE CEREZO</div>
             </div>
-            <div class="scroll-card" onclick="goto('player','練習の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','CEREZO LABO')">
+            <div class="scroll-card" onclick="navTo('player','練習の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','CEREZO LABO')">
               <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play">▶</div><div class="sc-dur">09:50</div></div>
               <div class="sc-ttl">練習の舞台裏</div><div class="sc-series">CEREZO LABO</div>
             </div>
-            <div class="scroll-card" onclick="goto('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
+            <div class="scroll-card" onclick="navTo('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
               <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎙️</div><div class="sc-play">▶</div><div class="sc-dur">24:10</div></div>
               <div class="sc-ttl">ポッドキャスト #42</div><div class="sc-series">PODCAST</div>
             </div>
-            <div class="scroll-card" onclick="goto('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
+            <div class="scroll-card" onclick="navTo('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
               <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">⚽</div><div class="sc-play">▶</div><div class="sc-dur">18:20</div></div>
               <div class="sc-ttl">第12節マッチレビュー</div><div class="sc-series">MATCH</div>
             </div>
@@ -682,37 +682,37 @@
             <div class="sec-title">チャンネル</div>
           </div>
           <div class="ch-list">
-            <div class="ch-item" onclick="goto('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
+            <div class="ch-item" onclick="navTo('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#080820,#1a0535)">INSIDE<br>CEREZO</div>
               <div class="ch-info"><div class="ch-name">INSIDE CEREZO</div><div class="ch-desc">選手・スタッフに密着した本格ドキュメント</div></div>
               <div class="ch-new">NEW</div><div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','CEREZO LABO','linear-gradient(160deg,#051505,#0a3510)')">
+            <div class="ch-item" onclick="navTo('episodes','CEREZO LABO','linear-gradient(160deg,#051505,#0a3510)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">CEREZO<br>LABO</div>
               <div class="ch-info"><div class="ch-name">CEREZO LABO</div><div class="ch-desc">戦術・技術を深掘り解説</div></div>
               <div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','PODCAST','linear-gradient(160deg,#1f0505,#4a0a0a)')">
+            <div class="ch-item" onclick="navTo('episodes','PODCAST','linear-gradient(160deg,#1f0505,#4a0a0a)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#2a0505,#6a1010)">POD<br>CAST</div>
               <div class="ch-info"><div class="ch-name">PODCAST</div><div class="ch-desc">選手・スタッフが語る音声コンテンツ</div></div>
               <div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','TOPICS','linear-gradient(160deg,#101005,#2a2a00)')">
+            <div class="ch-item" onclick="navTo('episodes','TOPICS','linear-gradient(160deg,#101005,#2a2a00)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#1a1a05,#4a4a00)">TOPICS</div>
               <div class="ch-info"><div class="ch-name">TOPICS</div><div class="ch-desc">クラブのトピックスをいち早くお届け</div></div>
               <div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','MATCH','linear-gradient(160deg,#050f1f,#0a1f40)')">
+            <div class="ch-item" onclick="navTo('episodes','MATCH','linear-gradient(160deg,#050f1f,#0a1f40)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#05101f,#0a2040)">MATCH</div>
               <div class="ch-info"><div class="ch-name">MATCH</div><div class="ch-desc">試合のマッチレビューをお届け</div></div>
               <div class="ch-new">NEW</div><div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','CEREZO CLASSICS','linear-gradient(160deg,#1f0f05,#4a2a10)')">
+            <div class="ch-item" onclick="navTo('episodes','CEREZO CLASSICS','linear-gradient(160deg,#1f0f05,#4a2a10)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#1f0f05,#4a2a10)">CLASSICS</div>
               <div class="ch-info"><div class="ch-name">CEREZO CLASSICS</div><div class="ch-desc">名試合・名場面を厳選アーカイブ</div></div>
               <div class="ch-arr">›</div>
             </div>
-            <div class="ch-item" onclick="goto('episodes','ACADEMY','linear-gradient(160deg,#05151f,#0a3040)')">
+            <div class="ch-item" onclick="navTo('episodes','ACADEMY','linear-gradient(160deg,#05151f,#0a3040)')">
               <div class="ch-icon" style="background:linear-gradient(135deg,#05151f,#0a3040)">ACADEMY</div>
               <div class="ch-info"><div class="ch-name">ACADEMY</div><div class="ch-desc">育成組織の活躍・練習に密着</div></div>
               <div class="ch-arr">›</div>
@@ -854,7 +854,7 @@
             <div class="ep-tab" onclick="toast('関連コンテンツ')">関連コンテンツ</div>
           </div>
 
-          <div class="ep-item" onclick="goto('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
+          <div class="ep-item" onclick="navTo('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
             <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#050515,#150530)">✈️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">12:34</div></div>
             <div class="ep-info">
               <div class="ep-title">アウェイ遠征の裏側</div>
@@ -863,7 +863,7 @@
             </div>
           </div>
 
-          <div class="ep-item" onclick="goto('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
+          <div class="ep-item" onclick="navTo('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
             <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">09:50</div></div>
             <div class="ep-info">
               <div class="ep-title">練習試合の舞台裏</div>
@@ -872,7 +872,7 @@
             </div>
           </div>
 
-          <div class="ep-item" onclick="goto('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
+          <div class="ep-item" onclick="navTo('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
             <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎤</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">15:22</div></div>
             <div class="ep-info">
               <div class="ep-title">選手インタビュー特集</div>
@@ -881,7 +881,7 @@
             </div>
           </div>
 
-          <div class="ep-item" onclick="goto('player','ドキュメント「いのちの日」の記録','linear-gradient(135deg,#05101f,#0a2040)','22:10','INSIDE CEREZO')">
+          <div class="ep-item" onclick="navTo('player','ドキュメント「いのちの日」の記録','linear-gradient(135deg,#05101f,#0a2040)','22:10','INSIDE CEREZO')">
             <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">📽️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">22:10</div></div>
             <div class="ep-info">
               <div class="ep-title">ドキュメント「いのちの日」の記録</div>
@@ -890,7 +890,7 @@
             </div>
           </div>
 
-          <div class="ep-item" onclick="goto('player','シーズン開幕直前特集','linear-gradient(135deg,#05150a,#0a3515)','18:45','INSIDE CEREZO')">
+          <div class="ep-item" onclick="navTo('player','シーズン開幕直前特集','linear-gradient(135deg,#05150a,#0a3515)','18:45','INSIDE CEREZO')">
             <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#05150a,#0a3515)">🌸</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">18:45</div></div>
             <div class="ep-info">
               <div class="ep-title">シーズン開幕直前特集</div>
@@ -946,19 +946,19 @@
           <div class="sec-hdr">
             <div class="sec-title">関連動画</div>
           </div>
-          <div class="rel-item" onclick="goto('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
+          <div class="rel-item" onclick="navTo('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
             <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
             <div class="rel-info"><div class="rel-title">練習試合の舞台裏</div><div class="rel-meta">INSIDE CEREZO · 09:50</div></div>
           </div>
-          <div class="rel-item" onclick="goto('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
+          <div class="rel-item" onclick="navTo('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
             <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎤</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
             <div class="rel-info"><div class="rel-title">選手インタビュー特集</div><div class="rel-meta">INSIDE CEREZO · 15:22</div></div>
           </div>
-          <div class="rel-item" onclick="goto('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
+          <div class="rel-item" onclick="navTo('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
             <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">⚽</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
             <div class="rel-info"><div class="rel-title">第12節マッチレビュー</div><div class="rel-meta">MATCH · 18:20</div></div>
           </div>
-          <div class="rel-item" onclick="goto('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
+          <div class="rel-item" onclick="navTo('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
             <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎙️</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
             <div class="rel-info"><div class="rel-title">ポッドキャスト #42</div><div class="rel-meta">PODCAST · 24:10</div></div>
           </div>
@@ -1059,7 +1059,7 @@
   }
 
   // ── Navigate to sub-screen ──
-  function goto(target, title, bg, dur, series) {
+  function navTo(target, title, bg, dur, series) {
     stopVid();
     if (target === 'episodes') {
       document.getElementById('ep-title').textContent = title;
