@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人材紹介事業 成長支援のご提案 | 株式会社Mr.sasuke</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E45;
+    --navy-light: #243B55;
+    --blue: #2563EB;
+    --blue-light: #3B82F6;
+    --blue-pale: #EFF6FF;
+    --white: #FFFFFF;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 40px 20px;
+  }
+
+  .slide-wrapper {
+    width: 100%;
+    max-width: 960px;
+    position: relative;
+  }
+
+  .slide-number {
+    color: rgba(255,255,255,0.4);
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding-left: 2px;
+  }
+
+  .slide {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--white);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== COMMON ELEMENTS ===== */
+  .slide-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--blue) 60%, var(--blue-light) 100%);
+  }
+
+  .logo-mark {
+    position: absolute;
+    bottom: 18px;
+    right: 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+  }
+
+  .page-num {
+    position: absolute;
+    bottom: 14px;
+    left: 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+  }
+
+  /* ===== COVER SLIDE ===== */
+  #slide-cover {
+    background: var(--navy);
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .cover-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 80% 50%, rgba(37,99,235,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(37,99,235,0.06) 0%, transparent 50%);
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cover-accent-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--blue) 0%, transparent 100%);
+  }
+
+  .cover-content {
+    position: relative;
+    z-index: 1;
+    padding: 0 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cover-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 28px;
+  }
+
+  .cover-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .cover-title span {
+    display: block;
+    font-size: 28px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  .cover-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--blue);
+    margin: 28px 0;
+  }
+
+  .cover-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.5px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .cover-presenter {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cover-presenter .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+
+  .cover-presenter .company {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.5px;
+  }
+
+  .cover-presenter .name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .cover-right-deco {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 38%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-circle-outer {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 1px solid rgba(37,99,235,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .cover-circle-inner {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 1px solid rgba(37,99,235,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-circle-core {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(37,99,235,0.08);
+    border: 1px solid rgba(37,99,235,0.3);
+  }
+
+  /* ===== COMMON SLIDE LAYOUT ===== */
+  .slide-inner {
+    flex: 1;
+    padding: 44px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .slide-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .slide-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    margin-bottom: 32px;
+  }
+
+  .slide-title .highlight {
+    color: var(--blue);
+  }
+
+  /* ===== SLIDE 1 — PURPOSE ===== */
+  .purpose-layout {
+    display: flex;
+    gap: 48px;
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  .purpose-left {
+    flex: 1;
+  }
+
+  .purpose-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .purpose-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--gray-50);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .purpose-list .li-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--blue-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .purpose-list .li-icon::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--blue);
+    border-radius: 50%;
+  }
+
+  .purpose-list li span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+
+  .purpose-right {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  .flow-step {
+    width: 100%;
+    padding: 12px 16px;
+    text-align: center;
+    border-radius: 6px;
+    position: relative;
+  }
+
+  .flow-step.current {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+  }
+
+  .flow-step.target {
+    background: var(--blue);
+    border: 1px solid var(--blue);
+  }
+
+  .flow-step .step-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .flow-step.current .step-label { color: var(--gray-600); }
+  .flow-step.target .step-label { color: var(--white); }
+
+  .flow-step .step-desc {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+  .flow-step.current .step-desc { color: var(--gray-400); }
+  .flow-step.target .step-desc { color: rgba(255,255,255,0.7); }
+
+  .flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    gap: 2px;
+  }
+
+  .flow-arrow .arr-line {
+    width: 2px;
+    height: 12px;
+    background: var(--gray-200);
+  }
+
+  .flow-arrow .arr-head {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--gray-200);
+  }
+
+  .flow-arrow.blue .arr-line { background: var(--blue-light); }
+  .flow-arrow.blue .arr-head { border-top-color: var(--blue-light); }
+
+  /* ===== SLIDE 2 — MARKET ===== */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .market-card {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 28px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .market-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .market-card.c1::before { background: #64748B; }
+  .market-card.c2::before { background: var(--blue-light); }
+  .market-card.c3::before { background: var(--navy); }
+
+  .market-card .card-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .market-card.c1 .card-number { color: #94A3B8; }
+  .market-card.c2 .card-number { color: var(--blue-light); }
+  .market-card.c3 .card-number { color: var(--navy); }
+
+  .market-card .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .market-card .card-desc {
+    font-size: 11px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .market-card .card-tag {
+    margin-top: 16px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .market-card.c1 .card-tag { background: #F1F5F9; color: #64748B; }
+  .market-card.c2 .card-tag { background: var(--blue-pale); color: var(--blue); }
+  .market-card.c3 .card-tag { background: #EFF2F7; color: var(--navy); }
+
+  /* ===== SLIDE 3 — CHALLENGES ===== */
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .challenge-box {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .challenge-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .challenge-box.b1::after { background: #94A3B8; }
+  .challenge-box.b2::after { background: var(--blue-light); }
+  .challenge-box.b3::after { background: var(--navy); }
+
+  .challenge-box .box-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    font-size: 16px;
+  }
+
+  .challenge-box.b1 .box-icon { background: #F1F5F9; }
+  .challenge-box.b2 .box-icon { background: var(--blue-pale); }
+  .challenge-box.b3 .box-icon { background: #EFF2F7; }
+
+  .challenge-box .box-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .challenge-box .box-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .challenge-box .box-list li {
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .challenge-box .box-list li::before {
+    content: '—';
+    font-size: 10px;
+    color: var(--gray-400);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ===== SLIDE 4 — FUNNEL ===== */
+  .funnel-layout {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  .funnel-left {
+    flex: 0 0 220px;
+  }
+
+  .funnel-left .funnel-label {
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .funnel-top-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .funnel-top-item {
+    flex: 1;
+    padding: 8px 6px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+
+  .funnel-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .funnel-item {
+    width: 100%;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+
+  .funnel-item .fi-label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .funnel-item .fi-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .funnel-item.f1 { background: #EFF6FF; }
+  .funnel-item.f1 .fi-label { color: #1D4ED8; }
+  .funnel-item.f1 .fi-badge { background: #DBEAFE; color: #1D4ED8; }
+
+  .funnel-item.f2 { background: #EEF2FF; }
+  .funnel-item.f2 .fi-label { color: #3730A3; }
+  .funnel-item.f2 .fi-badge { background: #E0E7FF; color: #3730A3; }
+
+  .funnel-item.f3 { background: #F0FDF4; }
+  .funnel-item.f3 .fi-label { color: #166534; }
+  .funnel-item.f3 .fi-badge { background: #DCFCE7; color: #166534; }
+
+  .funnel-item.f4 { background: #FFFBEB; }
+  .funnel-item.f4 .fi-label { color: #92400E; }
+  .funnel-item.f4 .fi-badge { background: #FEF3C7; color: #92400E; }
+
+  .funnel-item.f5 { background: var(--navy); }
+  .funnel-item.f5 .fi-label { color: var(--white); }
+  .funnel-item.f5 .fi-badge { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+
+  .funnel-arrow-small {
+    text-align: center;
+    color: var(--gray-300);
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px 0;
+  }
+
+  .funnel-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .funnel-insight {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 22px 24px;
+    color: var(--white);
+  }
+
+  .funnel-insight .insight-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 8px;
+  }
+
+  .funnel-insight .insight-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .kpi-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .kpi-card .kpi-label {
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .kpi-card .kpi-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.4;
+  }
+
+  /* ===== SLIDE 5 — HYPOTHESIS 1 ===== */
+  .hypo-layout {
+    display: flex;
+    gap: 36px;
+    flex: 1;
+  }
+
+  .hypo-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hypo-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .hf-step {
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    position: relative;
+  }
+
+  .hf-step.hf-start {
+    background: var(--blue-pale);
+    border-color: #BFDBFE;
+  }
+
+  .hf-step.hf-end {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .hf-step .hf-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .hf-step.hf-end .hf-label { color: var(--white); }
+
+  .hf-step .hf-sub {
+    font-size: 10px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .hf-step.hf-end .hf-sub { color: rgba(255,255,255,0.6); }
+
+  .hf-arrow {
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+  }
+
+  .hf-arrow::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 14px;
+    background: var(--gray-200);
+    margin: 0 auto;
+  }
+
+  .hf-arrow-down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px 0;
+  }
+
+  .hf-arrow-down .ad-line {
+    width: 2px;
+    height: 10px;
+    background: var(--gray-200);
+  }
+
+  .hf-arrow-down .ad-head {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--gray-200);
+  }
+
+  .hypo-right {
+    flex: 0 0 220px;
+  }
+
+  .sector-label {
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .sector-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sector-tag {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--gray-200);
+  }
+
+  .sector-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sector-tag.s1 { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+  .sector-tag.s1::before { background: #2563EB; }
+  .sector-tag.s2 { background: #F0FDF4; color: #166534; border-color: #BBF7D0; }
+  .sector-tag.s2::before { background: #22C55E; }
+  .sector-tag.s3 { background: #FFF7ED; color: #9A3412; border-color: #FED7AA; }
+  .sector-tag.s3::before { background: #F97316; }
+  .sector-tag.s4 { background: #F5F3FF; color: #5B21B6; border-color: #DDD6FE; }
+  .sector-tag.s4::before { background: #7C3AED; }
+  .sector-tag.s5 { background: #0D1B2A; color: var(--white); border-color: var(--navy-mid); }
+  .sector-tag.s5::before { background: var(--blue-light); }
+
+  /* ===== SLIDE 6 — HYPOTHESIS 2 ===== */
+  .line-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex: 1;
+    margin-top: 4px;
+  }
+
+  .line-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .line-step-box {
+    width: 100%;
+    padding: 14px 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .line-step-box.ls-active {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .line-step-box.ls-blue {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+
+  .line-step-box .ls-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .line-step-box.ls-active .ls-label,
+  .line-step-box.ls-blue .ls-label { color: var(--white); }
+
+  .line-step-box .ls-sub {
+    font-size: 9px;
+    color: var(--gray-400);
+    margin-top: 3px;
+  }
+
+  .line-step-box.ls-active .ls-sub { color: rgba(255,255,255,0.55); }
+  .line-step-box.ls-blue .ls-sub { color: rgba(255,255,255,0.7); }
+
+  .line-connector {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    margin-top: -35px;
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+    margin-top: 35px;
+  }
+
+  .line-conn-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .lc-line {
+    height: 2px;
+    width: 20px;
+    background: var(--gray-200);
+  }
+
+  .lc-head {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid var(--gray-200);
+  }
+
+  .line-benefits {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .line-benefit {
+    flex: 1;
+    padding: 14px 16px;
+    background: var(--blue-pale);
+    border-radius: 6px;
+    border: 1px solid #BFDBFE;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .lb-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lb-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1D4ED8;
+  }
+
+  /* ===== SLIDE 7 — HYPOTHESIS 3 ===== */
+  .compare-layout {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .compare-col {
+    flex: 1;
+    border-radius: 10px;
+    padding: 24px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-col.col-left {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    opacity: 0.7;
+  }
+
+  .compare-col.col-right {
+    background: var(--navy);
+    border: 1px solid var(--navy);
+  }
+
+  .compare-col .col-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .col-left .col-badge { background: var(--gray-200); color: var(--gray-600); }
+  .col-right .col-badge { background: rgba(37,99,235,0.3); color: var(--blue-light); }
+
+  .compare-col .col-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .col-left .col-title { color: var(--gray-600); }
+  .col-right .col-title { color: var(--white); }
+
+  .compare-col .col-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .compare-col .col-list li {
+    font-size: 12px;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .col-left .col-list li { color: var(--gray-400); }
+  .col-right .col-list li { color: rgba(255,255,255,0.8); }
+
+  .col-left .col-list li::before { content: '×'; color: #94A3B8; font-weight: 700; }
+  .col-right .col-list li::before { content: '✓'; color: var(--blue-light); font-weight: 700; }
+
+  .compare-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  .compare-vs-inner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-400);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ===== SLIDE 8 — HYPOTHESIS 4 ===== */
+  .transform-layout {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+    align-items: center;
+  }
+
+  .transform-flow {
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .tf-box {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .tf-box.tf-from {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+  }
+
+  .tf-box.tf-mid {
+    background: var(--blue-pale);
+    border: 1px solid #BFDBFE;
+  }
+
+  .tf-box.tf-to {
+    background: var(--navy);
+    border: 1px solid var(--navy);
+  }
+
+  .tf-box .tf-label {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .tf-box.tf-from .tf-label { color: var(--gray-600); }
+  .tf-box.tf-mid .tf-label { color: var(--blue); }
+  .tf-box.tf-to .tf-label { color: var(--white); }
+
+  .tf-box .tf-sub {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .tf-box.tf-from .tf-sub { color: var(--gray-400); }
+  .tf-box.tf-mid .tf-sub { color: #3B82F6; }
+  .tf-box.tf-to .tf-sub { color: rgba(255,255,255,0.6); }
+
+  .tf-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+  }
+
+  .tf-arrow .ta-line {
+    width: 2px;
+    height: 16px;
+    background: var(--gray-200);
+  }
+
+  .tf-arrow .ta-head {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--gray-200);
+  }
+
+  .transform-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .infra-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .infra-card .ic-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .infra-card .ic-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .infra-card .ic-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .infra-card .ic-desc {
+    font-size: 11px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  /* ===== SLIDE 9 — HYPOTHESIS 5 ===== */
+  .efficiency-layout {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+  }
+
+  .eff-left {
+    flex: 0 0 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .eff-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 6px;
+  }
+
+  .eff-row.er-before { background: var(--gray-50); border: 1px solid var(--gray-200); }
+  .eff-row.er-after { background: var(--navy); }
+
+  .eff-row .er-icon {
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+  }
+
+  .eff-row .er-text {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .eff-row.er-before .er-text { color: var(--gray-600); }
+  .eff-row.er-after .er-text { color: var(--white); }
+
+  .eff-arrow-h {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+  }
+
+  .eff-arrow-h .eah-text {
+    font-size: 10px;
+    color: var(--blue);
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-left: 3px solid var(--blue);
+    padding-left: 8px;
+  }
+
+  .eff-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .eff-card {
+    flex: 1;
+    padding: 16px 20px;
+    border-radius: 8px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eff-card .ec-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .eff-card .ec-content {}
+
+  .eff-card .ec-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .eff-card .ec-desc {
+    font-size: 11px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ===== SLIDE 10 — PHASES ===== */
+  .phases-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .phase-timeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex: 1;
+    position: relative;
+  }
+
+  .phase-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .phase-connector {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .pc-arrow {
+    display: flex;
+    align-items: center;
+  }
+
+  .pc-line {
+    width: 20px;
+    height: 2px;
+    background: var(--gray-200);
+  }
+
+  .pc-head {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid var(--gray-200);
+  }
+
+  .phase-head {
+    padding: 16px 20px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+  }
+
+  .phase-block.ph1 .phase-head { background: #94A3B8; }
+  .phase-block.ph2 .phase-head { background: var(--blue); }
+  .phase-block.ph3 .phase-head { background: var(--navy); }
+
+  .phase-head .ph-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 4px;
+  }
+
+  .phase-head .ph-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .phase-body {
+    flex: 1;
+    padding: 18px 20px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .phase-body .pb-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .phase-body .pb-list li {
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .phase-body .pb-list li::before {
+    content: '·';
+    font-size: 16px;
+    color: var(--gray-400);
+    line-height: 1.1;
+    flex-shrink: 0;
+  }
+
+  .phase-duration {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 10px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ===== SLIDE 11 — DIAGNOSTIC ===== */
+  .diag-layout {
+    display: flex;
+    gap: 28px;
+    flex: 1;
+  }
+
+  .diag-left {
+    flex: 1;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 24px 24px;
+  }
+
+  .diag-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .diag-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .diag-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+  }
+
+  .diag-item .di-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    background: var(--blue-pale);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .diag-item .di-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+
+  .diag-right {
+    flex: 1;
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 24px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .diag-output-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .diag-output-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .diag-output-item {
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .doi-icon {
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .doi-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+  }
+
+  /* ===== SLIDE 12 — HEARING ===== */
+  .hearing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .hearing-item {
+    padding: 16px 20px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .hi-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue-pale);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  .hi-content {}
+
+  .hi-question {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .hi-sub {
+    font-size: 11px;
+    color: var(--gray-400);
+    line-height: 1.5;
+  }
+
+  .hearing-item.hi-full {
+    grid-column: span 2;
+  }
+
+  /* ===== THANK YOU SLIDE ===== */
+  #slide-thankyou {
+    background: var(--navy);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ty-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 50%, rgba(37,99,235,0.08) 0%, transparent 70%);
+  }
+
+  .ty-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 80px;
+  }
+
+  .ty-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    margin-bottom: 20px;
+  }
+
+  .ty-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -2px;
+    margin-bottom: 32px;
+    line-height: 1;
+  }
+
+  .ty-message {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 44px;
+    letter-spacing: 0.3px;
+  }
+
+  .ty-divider {
+    width: 48px;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 28px;
+  }
+
+  .ty-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ty-company {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.5px;
+  }
+
+  .ty-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  /* Print / export hint */
+  .print-hint {
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media print {
+    body { background: white; padding: 0; gap: 0; }
+    .slide-wrapper { max-width: 100%; page-break-after: always; }
+    .slide { box-shadow: none; }
+    .slide-number, .print-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">COVER</div>
+  <div class="slide" id="slide-cover">
+    <div class="cover-bg"></div>
+    <div class="cover-grid"></div>
+    <div class="cover-accent-line"></div>
+    <div class="cover-content">
+      <div class="cover-label">Business Proposal · 2026</div>
+      <div class="cover-title">
+        人材紹介事業<br>成長支援のご提案
+        <span>求職者獲得と事業成長の仕組みづくり</span>
+      </div>
+      <div class="cover-divider"></div>
+      <div class="cover-sub">
+        採用市場の構造変化に対応し、持続的な成長を実現するための<br>戦略設計パートナーとして、ご支援させていただきます。
+      </div>
+      <div class="cover-presenter">
+        <div class="label">Presented by</div>
+        <div class="company">株式会社 Mr.sasuke</div>
+        <div class="name">西村 雄矢</div>
+      </div>
+    </div>
+    <div class="cover-right-deco">
+      <div class="cover-circle-outer">
+        <div class="cover-circle-inner">
+          <div class="cover-circle-core"></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 1 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">01 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Agenda</div>
+      <div class="slide-title">現状を把握し、<span class="highlight">最適な成長戦略</span>を設計する</div>
+      <div class="purpose-layout">
+        <div class="purpose-left">
+          <ul class="purpose-list">
+            <li>
+              <div class="li-icon"></div>
+              <span>求職者集客の課題整理<br><span style="font-weight:300;color:#94A3B8;font-size:11px;">集客チャネル・コスト・転換率の現状把握</span></span>
+            </li>
+            <li>
+              <div class="li-icon"></div>
+              <span>業務オペレーションの課題整理<br><span style="font-weight:300;color:#94A3B8;font-size:11px;">属人化・業務フロー・効率化余地の分析</span></span>
+            </li>
+            <li>
+              <div class="li-icon"></div>
+              <span>今後の成長可能性の整理<br><span style="font-weight:300;color:#94A3B8;font-size:11px;">市場機会・競合優位・スケール戦略の検討</span></span>
+            </li>
+          </ul>
+        </div>
+        <div class="purpose-right">
+          <div class="flow-steps">
+            <div class="flow-step current">
+              <div class="step-label">現在</div>
+              <div class="step-desc">現状把握フェーズ</div>
+            </div>
+            <div class="flow-arrow blue">
+              <div class="arr-line"></div>
+              <div class="arr-head"></div>
+            </div>
+            <div class="flow-step current">
+              <div class="step-label">課題把握</div>
+              <div class="step-desc">ボトルネック特定</div>
+            </div>
+            <div class="flow-arrow blue">
+              <div class="arr-line"></div>
+              <div class="arr-head"></div>
+            </div>
+            <div class="flow-step current">
+              <div class="step-label">改善設計</div>
+              <div class="step-desc">施策ロードマップ</div>
+            </div>
+            <div class="flow-arrow blue">
+              <div class="arr-line" style="background:var(--blue-light)"></div>
+              <div class="arr-head" style="border-top-color:var(--blue-light)"></div>
+            </div>
+            <div class="flow-step target">
+              <div class="step-label">成長</div>
+              <div class="step-desc">再現性ある拡大</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">01</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 2 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">02 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Market Environment</div>
+      <div class="slide-title">人材紹介市場は<span class="highlight">競争が激化</span>している</div>
+      <div class="three-col">
+        <div class="market-card c1">
+          <div class="card-number">↑</div>
+          <div class="card-title">広告費高騰</div>
+          <div class="card-desc">求人広告・リスティング広告のCPAが年々上昇。費用対効果の悪化が経営課題に直結している。</div>
+          <div class="card-tag">Cost Rising</div>
+        </div>
+        <div class="market-card c2">
+          <div class="card-number" style="font-size:36px;">競争</div>
+          <div class="card-title">求職者獲得競争</div>
+          <div class="card-desc">大手・中小問わず同質化が進み、求職者の選択肢が増加。登録から離脱するケースが増えている。</div>
+          <div class="card-tag">Competition</div>
+        </div>
+        <div class="market-card c3">
+          <div class="card-number" style="font-size:36px;">差別化</div>
+          <div class="card-title">差別化の重要性</div>
+          <div class="card-desc">特化型・ブランド力・体験価値による差別化が、持続的な求職者獲得の鍵になっている。</div>
+          <div class="card-tag">Differentiation</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">02</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 3 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">03 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Common Challenges</div>
+      <div class="slide-title">多くの人材紹介会社が抱える<span class="highlight">共通課題</span></div>
+      <div class="challenges-grid">
+        <div class="challenge-box b1">
+          <div class="box-icon">📉</div>
+          <div class="box-title">集客課題</div>
+          <ul class="box-list">
+            <li>登録数の伸び悩み・頭打ち</li>
+            <li>広告依存によるコスト増大</li>
+            <li>オーガニック流入の未整備</li>
+            <li>登録後の離脱率の高さ</li>
+          </ul>
+        </div>
+        <div class="challenge-box b2">
+          <div class="box-icon">⚙️</div>
+          <div class="box-title">運営課題</div>
+          <ul class="box-list">
+            <li>担当者への業務集中・属人化</li>
+            <li>手作業による業務効率低下</li>
+            <li>面談セッティングのロス</li>
+            <li>情報共有・引き継ぎの不備</li>
+          </ul>
+        </div>
+        <div class="challenge-box b3">
+          <div class="box-icon">📊</div>
+          <div class="box-title">経営課題</div>
+          <ul class="box-list">
+            <li>KPI・数値管理の不足</li>
+            <li>投資判断に必要なデータ不足</li>
+            <li>成長戦略の不明確さ</li>
+            <li>スケールの仕組み未整備</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">03</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 4 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">04 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Acquisition Funnel</div>
+      <div class="slide-title">重要なのはSNSではなく<span class="highlight">獲得導線全体の最適化</span></div>
+      <div class="funnel-layout">
+        <div class="funnel-left">
+          <div class="funnel-label">集客チャネル</div>
+          <div class="funnel-top-row">
+            <div class="funnel-top-item">広告</div>
+            <div class="funnel-top-item">SNS</div>
+            <div class="funnel-top-item">SEO</div>
+          </div>
+          <div style="text-align:center;font-size:18px;color:#CBD5E1;padding:4px 0;">↓</div>
+          <div class="funnel-items">
+            <div class="funnel-item f1">
+              <span class="fi-label">LP</span>
+              <span class="fi-badge">流入</span>
+            </div>
+            <div class="funnel-arrow-small">↓</div>
+            <div class="funnel-item f2">
+              <span class="fi-label">LINE 登録</span>
+              <span class="fi-badge">獲得</span>
+            </div>
+            <div class="funnel-arrow-small">↓</div>
+            <div class="funnel-item f3">
+              <span class="fi-label">面談予約</span>
+              <span class="fi-badge">予約</span>
+            </div>
+            <div class="funnel-arrow-small">↓</div>
+            <div class="funnel-item f4">
+              <span class="fi-label">キャリア面談</span>
+              <span class="fi-badge">対話</span>
+            </div>
+            <div class="funnel-arrow-small">↓</div>
+            <div class="funnel-item f5">
+              <span class="fi-label">成約</span>
+              <span class="fi-badge">成果</span>
+            </div>
+          </div>
+        </div>
+        <div class="funnel-right">
+          <div class="funnel-insight">
+            <div class="insight-title">Key Insight</div>
+            <div class="insight-text">各工程のCVR改善が<br>全体の成果を左右する</div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">LP → LINE</div>
+              <div class="kpi-value">登録率の<br>最大化</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">LINE → 予約</div>
+              <div class="kpi-value">自動化で<br>ロス削減</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">予約 → 面談</div>
+              <div class="kpi-value">リマインド<br>施策強化</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">面談 → 成約</div>
+              <div class="kpi-value">質の高い<br>マッチング</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">04</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 5 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">05 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hypothesis 01</div>
+      <div class="slide-title"><span class="highlight">特化型サービス</span>戦略</div>
+      <div class="hypo-layout">
+        <div class="hypo-left">
+          <div class="hypo-flow">
+            <div class="hf-step hf-start">
+              <div class="hf-label">求職者の悩み・ニーズ</div>
+              <div class="hf-sub">特定の職種・業界への転職希望</div>
+            </div>
+            <div class="hf-arrow-down">
+              <div class="ad-line"></div>
+              <div class="ad-head"></div>
+            </div>
+            <div class="hf-step">
+              <div class="hf-label">特化型ランディングページ</div>
+              <div class="hf-sub">ターゲットに響くメッセージ設計</div>
+            </div>
+            <div class="hf-arrow-down">
+              <div class="ad-line"></div>
+              <div class="ad-head"></div>
+            </div>
+            <div class="hf-step">
+              <div class="hf-label">登録・資料請求</div>
+              <div class="hf-sub">摩擦なく完了できる設計</div>
+            </div>
+            <div class="hf-arrow-down">
+              <div class="ad-line"></div>
+              <div class="ad-head"></div>
+            </div>
+            <div class="hf-step hf-end">
+              <div class="hf-label">キャリア面談・成約</div>
+              <div class="hf-sub">高い温度感での面談実施</div>
+            </div>
+          </div>
+        </div>
+        <div class="hypo-right">
+          <div class="sector-label">特化領域 例</div>
+          <div class="sector-tags">
+            <div class="sector-tag s1">介護・福祉職</div>
+            <div class="sector-tag s2">看護・医療職</div>
+            <div class="sector-tag s3">第二新卒</div>
+            <div class="sector-tag s4">未経験転職</div>
+            <div class="sector-tag s5">ハイクラス転職</div>
+          </div>
+          <div style="margin-top:16px;padding:14px 16px;background:var(--blue-pale);border-radius:6px;border:1px solid #BFDBFE;">
+            <div style="font-size:10px;color:var(--blue);font-weight:700;letter-spacing:1px;margin-bottom:4px;">POINT</div>
+            <div style="font-size:11px;color:#1D4ED8;line-height:1.6;">特化することで広告効率が改善し、求職者との<br>共鳴度が高まる</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">05</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 6 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">06 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hypothesis 02</div>
+      <div class="slide-title">LINEを活用した<span class="highlight">求職者獲得導線</span></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:0;margin-top:8px;">
+          <div class="line-step">
+            <div class="line-step-box">
+              <div class="ls-label">広告</div>
+              <div class="ls-sub">各媒体</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line"></div><div class="pc-head"></div></div></div>
+          <div class="line-step">
+            <div class="line-step-box">
+              <div class="ls-label">LP</div>
+              <div class="ls-sub">特化LP</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line"></div><div class="pc-head"></div></div></div>
+          <div class="line-step">
+            <div class="line-step-box ls-blue">
+              <div class="ls-label">LINE登録</div>
+              <div class="ls-sub">友達追加</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line"></div><div class="pc-head"></div></div></div>
+          <div class="line-step">
+            <div class="line-step-box ls-blue">
+              <div class="ls-label">自動ヒアリング</div>
+              <div class="ls-sub">シナリオ配信</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line"></div><div class="pc-head"></div></div></div>
+          <div class="line-step">
+            <div class="line-step-box">
+              <div class="ls-label">面談予約</div>
+              <div class="ls-sub">自動設定</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line"></div><div class="pc-head"></div></div></div>
+          <div class="line-step">
+            <div class="line-step-box ls-active">
+              <div class="ls-label">面談</div>
+              <div class="ls-sub">成約へ</div>
+            </div>
+          </div>
+        </div>
+        <div class="line-benefits">
+          <div class="line-benefit">
+            <div class="lb-dot"></div>
+            <div class="lb-text">登録率の向上</div>
+          </div>
+          <div class="line-benefit">
+            <div class="lb-dot"></div>
+            <div class="lb-text">面談率の向上</div>
+          </div>
+          <div class="line-benefit">
+            <div class="lb-dot"></div>
+            <div class="lb-text">業務の自動化</div>
+          </div>
+          <div class="line-benefit">
+            <div class="lb-dot"></div>
+            <div class="lb-text">データの蓄積</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">06</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 7 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">07 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hypothesis 03</div>
+      <div class="slide-title">SNSの役割は<span class="highlight">信頼形成</span></div>
+      <div class="compare-layout">
+        <div class="compare-col col-left">
+          <div class="col-badge">一般的な認識</div>
+          <div class="col-title">集客ツール<br>としてのSNS</div>
+          <ul class="col-list">
+            <li>フォロワー数を増やす</li>
+            <li>バズを狙った投稿</li>
+            <li>即時的な集客を期待</li>
+            <li>広告の代替として使用</li>
+          </ul>
+        </div>
+        <div class="compare-vs">
+          <div class="compare-vs-inner">VS</div>
+        </div>
+        <div class="compare-col col-right">
+          <div class="col-badge">戦略的活用</div>
+          <div class="col-title">信頼形成ツール<br>としてのSNS</div>
+          <ul class="col-list">
+            <li>転職成功事例の発信</li>
+            <li>面接ノウハウ・キャリア相談</li>
+            <li>専門性・実績の可視化</li>
+            <li>検討段階の求職者への訴求</li>
+          </ul>
+          <div style="margin-top:16px;padding:10px 14px;background:rgba(37,99,235,0.15);border-radius:4px;">
+            <div style="font-size:10px;color:var(--blue-light);line-height:1.7;">SNSは「最初の接点」ではなく「信頼の証明」として機能させることで、面談時の温度感が変わる</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">07</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 8 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">08 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hypothesis 04</div>
+      <div class="slide-title">マーケティング体制の<span class="highlight">再構築</span></div>
+      <div class="transform-layout">
+        <div class="transform-flow">
+          <div class="tf-box tf-from">
+            <div class="tf-label">属人的運営</div>
+            <div class="tf-sub">担当者依存・属人化・ブラックボックス</div>
+          </div>
+          <div class="tf-arrow">
+            <div class="ta-line"></div>
+            <div class="ta-head"></div>
+          </div>
+          <div class="tf-box tf-mid">
+            <div class="tf-label">仕組み化</div>
+            <div class="tf-sub">プロセス整備・データ連携・可視化</div>
+          </div>
+          <div class="tf-arrow">
+            <div class="ta-line"></div>
+            <div class="ta-head"></div>
+          </div>
+          <div class="tf-box tf-to">
+            <div class="tf-label">再現性ある成長</div>
+            <div class="tf-sub">スケール可能・予測可能・持続的</div>
+          </div>
+        </div>
+        <div class="transform-right">
+          <div class="infra-card">
+            <div class="ic-top">
+              <div class="ic-dot" style="background:#3B82F6;"></div>
+              <div class="ic-title">KPI 管理</div>
+            </div>
+            <div class="ic-desc">登録数・面談率・成約率などの指標を可視化し、意思決定を数値ベースで行う</div>
+          </div>
+          <div class="infra-card">
+            <div class="ic-top">
+              <div class="ic-dot" style="background:#8B5CF6;"></div>
+              <div class="ic-title">広告管理</div>
+            </div>
+            <div class="ic-desc">チャネル別CPA・ROAS を管理し、予算配分を最適化する</div>
+          </div>
+          <div class="infra-card">
+            <div class="ic-top">
+              <div class="ic-dot" style="background:#10B981;"></div>
+              <div class="ic-title">CRM 整備</div>
+            </div>
+            <div class="ic-desc">求職者情報の一元管理により、フォロー漏れ・重複対応を防ぐ</div>
+          </div>
+          <div class="infra-card">
+            <div class="ic-top">
+              <div class="ic-dot" style="background:#F59E0B;"></div>
+              <div class="ic-title">定例レポート</div>
+            </div>
+            <div class="ic-desc">週次・月次での振り返りにより、改善サイクルを高速化する</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">08</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 9 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">09 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hypothesis 05</div>
+      <div class="slide-title">業務効率化による<span class="highlight">生産性向上</span></div>
+      <div class="efficiency-layout">
+        <div class="eff-left">
+          <div class="eff-row er-before">
+            <div class="er-icon">😓</div>
+            <div class="er-text">手作業・手動対応</div>
+          </div>
+          <div class="eff-arrow-h">
+            <div class="eah-text">自動化・効率化</div>
+          </div>
+          <div class="eff-row er-after">
+            <div class="er-icon" style="color:white;">🚀</div>
+            <div class="er-text">生産性向上・スケール</div>
+          </div>
+        </div>
+        <div class="eff-right">
+          <div class="eff-card">
+            <div class="ec-icon" style="background:#EFF6FF;">💬</div>
+            <div class="ec-content">
+              <div class="ec-title">LINE 自動化</div>
+              <div class="ec-desc">登録後のヒアリング・リマインドを自動化し、担当者の工数を削減</div>
+            </div>
+          </div>
+          <div class="eff-card">
+            <div class="ec-icon" style="background:#F0FDF4;">🤖</div>
+            <div class="ec-content">
+              <div class="ec-title">AI 活用</div>
+              <div class="ec-desc">求人マッチング・文章生成・FAQ対応の自動化による業務負担軽減</div>
+            </div>
+          </div>
+          <div class="eff-card">
+            <div class="ec-icon" style="background:#FFFBEB;">📅</div>
+            <div class="ec-content">
+              <div class="ec-title">予約管理</div>
+              <div class="ec-desc">自動日程調整ツールの活用で、面談セッティングのロスをゼロに</div>
+            </div>
+          </div>
+          <div class="eff-card">
+            <div class="ec-icon" style="background:#F5F3FF;">📈</div>
+            <div class="ec-content">
+              <div class="ec-title">データ管理</div>
+              <div class="ec-desc">CRM・スプレッドシート連携により、情報を一元管理・即座に参照可能に</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">09</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 10 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">10 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Support Flow</div>
+      <div class="slide-title">ご支援の<span class="highlight">進め方</span></div>
+      <div class="phases-layout">
+        <div class="phase-timeline">
+          <div class="phase-block ph1">
+            <div class="phase-head">
+              <div class="ph-num">Phase 1</div>
+              <div class="ph-title">現状分析</div>
+            </div>
+            <div class="phase-body">
+              <ul class="pb-list">
+                <li>事業・市場の現状把握</li>
+                <li>集客チャネルの分析</li>
+                <li>業務フローのヒアリング</li>
+                <li>ボトルネックの特定</li>
+              </ul>
+              <div class="phase-duration">〜 1ヶ月目</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line" style="width:28px;background:#CBD5E1;"></div><div class="pc-head" style="border-left-color:#CBD5E1;"></div></div></div>
+          <div class="phase-block ph2">
+            <div class="phase-head">
+              <div class="ph-num">Phase 2</div>
+              <div class="ph-title">改善設計</div>
+            </div>
+            <div class="phase-body">
+              <ul class="pb-list">
+                <li>優先施策のロードマップ作成</li>
+                <li>KPI・指標設計</li>
+                <li>LP・LINE設計</li>
+                <li>広告戦略の立案</li>
+              </ul>
+              <div class="phase-duration">2 〜 3ヶ月目</div>
+            </div>
+          </div>
+          <div class="phase-connector"><div class="pc-arrow"><div class="pc-line" style="width:28px;background:#CBD5E1;"></div><div class="pc-head" style="border-left-color:#CBD5E1;"></div></div></div>
+          <div class="phase-block ph3">
+            <div class="phase-head">
+              <div class="ph-num">Phase 3</div>
+              <div class="ph-title">運用支援</div>
+            </div>
+            <div class="phase-body">
+              <ul class="pb-list">
+                <li>施策の実装・運用開始</li>
+                <li>データ計測・検証</li>
+                <li>定例MTGによる改善</li>
+                <li>体制構築・内製化支援</li>
+              </ul>
+              <div class="phase-duration">4ヶ月目〜</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">10</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 11 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">11 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">First Step</div>
+      <div class="slide-title">人材紹介事業<span class="highlight">診断</span></div>
+      <div class="diag-layout">
+        <div class="diag-left">
+          <div class="diag-section-title">実施内容</div>
+          <div class="diag-items">
+            <div class="diag-item">
+              <div class="di-num">1</div>
+              <div class="di-text">事業分析<br><span style="font-weight:300;color:#94A3B8;font-size:10px;">収益構造・成長フェーズ・強みの整理</span></div>
+            </div>
+            <div class="diag-item">
+              <div class="di-num">2</div>
+              <div class="di-text">集客分析<br><span style="font-weight:300;color:#94A3B8;font-size:10px;">チャネル・CPA・CVRの現状確認</span></div>
+            </div>
+            <div class="diag-item">
+              <div class="di-num">3</div>
+              <div class="di-text">業務分析<br><span style="font-weight:300;color:#94A3B8;font-size:10px;">オペレーション・属人化・効率化余地</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="diag-right">
+          <div class="diag-output-title">成果物</div>
+          <div class="diag-output-items">
+            <div class="diag-output-item">
+              <div class="doi-icon">📋</div>
+              <div class="doi-text">課題整理レポート<br><span style="font-size:10px;color:rgba(255,255,255,0.45);">現状の可視化と問題点の整理</span></div>
+            </div>
+            <div class="diag-output-item">
+              <div class="doi-icon">🎯</div>
+              <div class="doi-text">優先度マップ<br><span style="font-size:10px;color:rgba(255,255,255,0.45);">インパクト×実現性での優先順位整理</span></div>
+            </div>
+            <div class="diag-output-item">
+              <div class="doi-icon">🗺</div>
+              <div class="doi-text">改善ロードマップ<br><span style="font-size:10px;color:rgba(255,255,255,0.45);">3〜6ヶ月の具体的な行動計画</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">11</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 12 ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">12 / 12</div>
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-tag">Hearing Items</div>
+      <div class="slide-title">まずは<span class="highlight">現状を理解</span>したい</div>
+      <div class="hearing-grid">
+        <div class="hearing-item">
+          <div class="hi-num">01</div>
+          <div class="hi-content">
+            <div class="hi-question">主力領域・ターゲット</div>
+            <div class="hi-sub">特化している職種・業界はありますか？</div>
+          </div>
+        </div>
+        <div class="hearing-item">
+          <div class="hi-num">02</div>
+          <div class="hi-content">
+            <div class="hi-question">月間登録者数</div>
+            <div class="hi-sub">現在の求職者登録数の推移は？</div>
+          </div>
+        </div>
+        <div class="hearing-item">
+          <div class="hi-num">03</div>
+          <div class="hi-content">
+            <div class="hi-question">月間面談数</div>
+            <div class="hi-sub">登録から面談までの転換率は？</div>
+          </div>
+        </div>
+        <div class="hearing-item">
+          <div class="hi-num">04</div>
+          <div class="hi-content">
+            <div class="hi-question">月間成約数</div>
+            <div class="hi-sub">面談から成約までの転換率は？</div>
+          </div>
+        </div>
+        <div class="hearing-item">
+          <div class="hi-num">05</div>
+          <div class="hi-content">
+            <div class="hi-question">現在の集客チャネル</div>
+            <div class="hi-sub">広告・SNS・口コミ等の割合は？</div>
+          </div>
+        </div>
+        <div class="hearing-item">
+          <div class="hi-num">06</div>
+          <div class="hi-content">
+            <div class="hi-question">最も感じている課題</div>
+            <div class="hi-sub">集客・運営・経営で最も困っていることは？</div>
+          </div>
+        </div>
+        <div class="hearing-item hi-full">
+          <div class="hi-num">07</div>
+          <div class="hi-content">
+            <div class="hi-question">6ヶ月・1年後の目標</div>
+            <div class="hi-sub">数値目標・組織目標・事業目標として達成したいことは何ですか？</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-mark">Mr.sasuke</div>
+    <div class="page-num">12</div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<!-- ===================== THANK YOU ===================== -->
+<div class="slide-wrapper">
+  <div class="slide-number">CLOSING</div>
+  <div class="slide" id="slide-thankyou">
+    <div class="ty-bg"></div>
+    <div class="cover-grid"></div>
+    <div class="cover-accent-line"></div>
+    <div class="ty-content">
+      <div class="ty-label">Thank You</div>
+      <div class="ty-title">Thank You</div>
+      <div class="ty-message">
+        まずは現状を理解し、<br>最適な成長戦略を共に設計できればと思います。
+      </div>
+      <div class="ty-divider"></div>
+      <div class="ty-info">
+        <div class="ty-company">株式会社 Mr.sasuke</div>
+        <div class="ty-name">西村 雄矢</div>
+      </div>
+    </div>
+    <div class="slide-footer"></div>
+  </div>
+</div>
+
+<div class="print-hint">© 2026 株式会社Mr.sasuke — Confidential</div>
+
+</body>
+</html>
