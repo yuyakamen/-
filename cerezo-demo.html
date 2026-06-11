@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>セレッソ大阪 アプリ デモ</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -404,6 +404,43 @@
 
     /* ── Spacer ── */
     .space{height:24px;}
+
+    /* ══════════════════════════════
+       MOBILE: フルスクリーン表示
+    ══════════════════════════════ */
+    @media (max-width:540px) {
+      body{
+        padding:0;background:#fff;
+        justify-content:flex-start;align-items:stretch;
+        min-height:100dvh;
+      }
+      .demo-header{display:none;}
+      .phone{
+        width:100%;height:100dvh;
+        border-radius:0;padding:0;
+        box-shadow:none;background:#fff;
+        border:none;
+      }
+      .phone-screen{border-radius:0;}
+      .dynamic-island{display:none;}
+      /* ステータスバーはデバイス側に任せて非表示 */
+      .status-bar{display:none;}
+      /* セーフエリア対応：上はノッチ分 */
+      .app{
+        height:100dvh;
+        padding-top:env(safe-area-inset-top,0px);
+      }
+      /* ホームインジケーター分の余白 */
+      .bottom-nav{
+        height:auto;
+        padding-top:10px;
+        padding-bottom:max(16px, env(safe-area-inset-bottom,16px));
+      }
+      /* タップ領域を広く */
+      .nav-btn{padding:0 2px;}
+      /* 動画プレイヤーをもう少し大きく */
+      .vplayer{height:56vw;}
+    }
   </style>
 </head>
 <body>
