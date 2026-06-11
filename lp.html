@@ -126,19 +126,18 @@
     .hero-img-box {
       width: 100%; aspect-ratio: 4/5;
       border-radius: 32px;
-      background: linear-gradient(145deg, #FADADD 0%, #F9E4C8 100%);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      box-shadow: 0 20px 60px rgba(244,116,138,.2);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(244,116,138,.25);
+      position: relative;
     }
-    .hero-img-illustration {
-      font-size: 80px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    .hero-img-box img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
     }
-    .hero-img-illustration p {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 14px; color: var(--brown);
-      letter-spacing: .1em; margin-top: 8px;
+    .hero-img-box::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(244,116,138,.18) 100%);
+      pointer-events: none;
     }
     .hero-stats {
       display: flex; gap: 24px; margin-top: 36px;
@@ -187,7 +186,8 @@
       padding: 24px; display: flex; align-items: flex-start; gap: 16px;
       box-shadow: 0 2px 12px rgba(0,0,0,.06);
     }
-    .worry-icon { font-size: 32px; flex-shrink: 0; }
+    .worry-icon { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; overflow: hidden; background: var(--beige); }
+    .worry-icon img { width: 100%; height: 100%; object-fit: cover; }
     .worry-card p { font-size: 14px; line-height: 1.7; color: var(--dark); }
     .worry-card p strong { color: var(--pink); font-weight: 700; display: block; margin-bottom: 4px; }
 
@@ -231,7 +231,8 @@
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 16px;
     }
-    .feature-icon { font-size: 44px; margin-bottom: 16px; }
+    .feature-icon { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; margin: 0 auto 16px; box-shadow: 0 4px 14px rgba(244,116,138,.2); }
+    .feature-icon img { width: 100%; height: 100%; object-fit: cover; }
     .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
     .feature-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
 
@@ -254,7 +255,8 @@
       border-color: var(--pink-lt);
       box-shadow: var(--shadow);
     }
-    .jobtype-icon { font-size: 40px; margin-bottom: 14px; }
+    .jobtype-icon { width: 64px; height: 64px; border-radius: 16px; overflow: hidden; margin: 0 auto 14px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+    .jobtype-icon img { width: 100%; height: 100%; object-fit: cover; }
     .jobtype-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
     .jobtype-tag {
       display: inline-block;
@@ -284,12 +286,12 @@
       display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
     }
     .voice-avatar {
-      width: 52px; height: 52px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px;
-      background: linear-gradient(135deg, #FADADD, #F9E4C8);
-      flex-shrink: 0;
+      width: 56px; height: 56px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(244,116,138,.25);
+      border: 3px solid var(--pink-lt);
     }
+    .voice-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .voice-name { font-weight: 700; font-size: 14px; }
     .voice-info { font-size: 12px; color: var(--gray); margin-top: 2px; }
     .voice-text { font-size: 13px; line-height: 1.8; color: var(--dark); position: relative; z-index: 1; }
@@ -532,10 +534,7 @@
     </div>
     <div class="hero-img">
       <div class="hero-img-box">
-        <div class="hero-img-illustration">
-          <span>👩‍💼</span>
-          <p>あなたらしい<br>働き方へ</p>
-        </div>
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=840&q=80&auto=format&fit=crop" alt="笑顔の女性オフィスワーカー">
       </div>
     </div>
   </div>
@@ -550,27 +549,27 @@
   </div>
   <div class="worries-grid">
     <div class="worry-card">
-      <div class="worry-icon">😟</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1541199249251-f713e6145474?w=96&q=80&auto=format&fit=crop" alt="疲れた女性"></div>
       <p><strong>残業が多すぎる…</strong>毎日終電で帰宅。自分の時間が全くない。もっとゆとりを持って働きたい。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon">😔</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1586374579358-9d19d632b6df?w=96&q=80&auto=format&fit=crop" alt="パソコン操作"></div>
       <p><strong>事務職は未経験でも大丈夫？</strong>パソコンはある程度使えるけど、資格がないと採用されないのかな…</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon">😰</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=96&q=80&auto=format&fit=crop" alt="育児と仕事"></div>
       <p><strong>ブランクがあって不安…</strong>育児・介護でブランクがある。今さら転職できるか自信がない。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon">🤔</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=96&q=80&auto=format&fit=crop" alt="在宅ワーク"></div>
       <p><strong>在宅・時短勤務できる会社はある？</strong>家庭との両立を考えると、柔軟に働ける職場を探したい。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon">😣</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=96&q=80&auto=format&fit=crop" alt="履歴書"></div>
       <p><strong>転職活動の進め方がわからない</strong>履歴書の書き方、面接対策、何から始めればいいかわからない。</p>
     </div>
     <div class="worry-card">
-      <div class="worry-icon">💭</div>
+      <div class="worry-icon"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=96&q=80&auto=format&fit=crop" alt="悩む女性"></div>
       <p><strong>本当に転職していいのか迷っている</strong>今の会社を辞めることへの不安と、もっとよくなりたい気持ちが葛藤。</p>
     </div>
   </div>
@@ -606,32 +605,32 @@
   </div>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon">👩‍💼</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=144&q=80&auto=format&fit=crop&crop=face" alt="女性アドバイザー"></div>
       <div class="feature-title">女性専任アドバイザーが担当</div>
       <p class="feature-desc">同じ女性として、ライフイベントや職場環境への不安を共感しながらサポート。転職後のキャリアまで一緒に考えます。</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🔍</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=144&q=80&auto=format&fit=crop" alt="オフィス求人"></div>
       <div class="feature-title">事務職求人3,200件以上</div>
       <p class="feature-desc">一般事務・医療事務・経理事務など幅広い事務職に特化。残業少なめ・在宅・時短求人を豊富にご用意。</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📝</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=144&q=80&auto=format&fit=crop" alt="書類サポート"></div>
       <div class="feature-title">書類〜面接まで完全サポート</div>
       <p class="feature-desc">履歴書・職務経歴書の添削から面接練習まで、内定まで二人三脚でサポート。一人で悩まなくてOK。</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🏠</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=144&q=80&auto=format&fit=crop" alt="在宅ワーク"></div>
       <div class="feature-title">在宅・時短・産育休取得実績求人多数</div>
       <p class="feature-desc">フレックス・時短・リモートOKなど、家庭と両立しやすい環境の職場に絞って提案します。</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">💚</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=144&q=80&auto=format&fit=crop&crop=face" alt="内定取得"></div>
       <div class="feature-title">未経験・ブランクOK</div>
       <p class="feature-desc">育児・介護でのブランクや職種未経験でも多数の方が内定取得。あなたの強みを一緒に見つけます。</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🆓</div>
+      <div class="feature-icon"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=144&q=80&auto=format&fit=crop" alt="無料サポート"></div>
       <div class="feature-title">完全無料・しつこい連絡なし</div>
       <p class="feature-desc">サービス利用は完全無料。ペースはあなた主導で進められます。無理な求人紹介は一切しません。</p>
     </div>
@@ -647,42 +646,42 @@
   </div>
   <div class="jobtypes-grid">
     <div class="jobtype-card">
-      <div class="jobtype-icon">💻</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=128&q=80&auto=format&fit=crop" alt="一般事務"></div>
       <div class="jobtype-name">一般事務</div>
       <span class="jobtype-tag">未経験OK</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">🏥</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=128&q=80&auto=format&fit=crop" alt="医療事務"></div>
       <div class="jobtype-name">医療事務</div>
       <span class="jobtype-tag">資格サポートあり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">📊</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=128&q=80&auto=format&fit=crop" alt="経理事務"></div>
       <div class="jobtype-name">経理・財務事務</div>
       <span class="jobtype-tag">スキルアップ</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">📞</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=128&q=80&auto=format&fit=crop" alt="営業事務"></div>
       <div class="jobtype-name">営業事務</div>
       <span class="jobtype-tag">未経験OK</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">🏢</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=128&q=80&auto=format&fit=crop" alt="総務人事"></div>
       <div class="jobtype-name">総務・人事事務</div>
       <span class="jobtype-tag">正社員多数</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">💊</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=128&q=80&auto=format&fit=crop" alt="調剤薬局"></div>
       <div class="jobtype-name">調剤薬局事務</div>
       <span class="jobtype-tag">資格サポートあり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">🏦</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=128&q=80&auto=format&fit=crop" alt="金融事務"></div>
       <div class="jobtype-name">金融・保険事務</div>
       <span class="jobtype-tag">高収入あり</span>
     </div>
     <div class="jobtype-card">
-      <div class="jobtype-icon">🖥️</div>
+      <div class="jobtype-icon"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=128&q=80&auto=format&fit=crop" alt="英語事務"></div>
       <div class="jobtype-name">貿易・英語事務</div>
       <span class="jobtype-tag">スキル活用</span>
     </div>
@@ -718,7 +717,7 @@
   <div class="voices-grid">
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar">😊</div>
+        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=112&q=80&auto=format&fit=crop&crop=face" alt="Aさん"></div>
         <div>
           <div class="voice-name">Aさん（29歳）</div>
           <div class="voice-info">飲食業 → 一般事務｜未経験転職</div>
@@ -729,7 +728,7 @@
     </div>
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar">🌸</div>
+        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=112&q=80&auto=format&fit=crop&crop=face" alt="Bさん"></div>
         <div>
           <div class="voice-name">Bさん（34歳）</div>
           <div class="voice-info">3年のブランク → 医療事務</div>
@@ -740,7 +739,7 @@
     </div>
     <div class="voice-card">
       <div class="voice-profile">
-        <div class="voice-avatar">💼</div>
+        <div class="voice-avatar"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=112&q=80&auto=format&fit=crop&crop=face" alt="Cさん"></div>
         <div>
           <div class="voice-name">Cさん（26歳）</div>
           <div class="voice-info">販売職 → 営業事務（在宅勤務）</div>
