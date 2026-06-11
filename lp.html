@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事務職専門の転職エージェント｜女性のための転職サポート</title>
+  <meta name="description" content="女性のための事務職専門転職エージェント。未経験・ブランクOK。あなたのライフスタイルに合った事務職をご紹介します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:      #F4748A;
+      --pink-lt:   #FDE8EC;
+      --pink-pale: #FFF5F7;
+      --rose:      #E8527A;
+      --beige:     #F9F3EE;
+      --beige-dk:  #EFE4D8;
+      --brown:     #8B6B5A;
+      --dark:      #3A2E2A;
+      --gray:      #7A7268;
+      --white:     #FFFFFF;
+      --gold:      #C9A96E;
+      --radius:    16px;
+      --shadow:    0 4px 24px rgba(244,116,138,.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--pink-lt);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-family: 'Noto Serif JP', serif; font-size: 18px; color: var(--pink); font-weight: 700; letter-spacing: .04em; }
+    .logo span { color: var(--brown); }
+    .header-cta {
+      background: var(--pink); color: var(--white);
+      border: none; padding: 10px 22px;
+      border-radius: 50px; font-size: 13px; font-weight: 700;
+      cursor: pointer; letter-spacing: .06em;
+      transition: background .2s, transform .15s;
+      text-decoration: none; display: inline-block;
+    }
+    .header-cta:hover { background: var(--rose); transform: translateY(-1px); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #FFF0F3 0%, #FFF8F5 40%, #F9F3EE 100%);
+      display: flex; align-items: center;
+      padding: 100px 24px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(244,116,138,.18) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -60px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(201,169,110,.14) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center; gap: 48px;
+      position: relative; z-index: 1;
+    }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--pink-lt); color: var(--pink);
+      border: 1px solid rgba(244,116,138,.3);
+      border-radius: 50px; padding: 6px 18px;
+      font-size: 12px; font-weight: 700; letter-spacing: .1em;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.45;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .hero-title em { color: var(--pink); font-style: normal; }
+    .hero-sub {
+      font-size: 15px; color: var(--gray);
+      line-height: 1.9; margin-bottom: 32px;
+    }
+    .hero-cta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--rose) 100%);
+      color: var(--white); border: none;
+      padding: 18px 40px; border-radius: 50px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; letter-spacing: .06em;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(244,116,138,.4);
+      text-decoration: none;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,116,138,.5); }
+    .btn-primary svg { width: 18px; height: 18px; }
+    .hero-note { font-size: 12px; color: var(--gray); }
+    .hero-img {
+      flex: 0 0 420px; max-width: 420px;
+    }
+    .hero-img-box {
+      width: 100%; aspect-ratio: 4/5;
+      border-radius: 32px;
+      background: linear-gradient(145deg, #FADADD 0%, #F9E4C8 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(244,116,138,.2);
+    }
+    .hero-img-illustration {
+      font-size: 80px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .hero-img-illustration p {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px; color: var(--brown);
+      letter-spacing: .1em; margin-top: 8px;
+    }
+    .hero-stats {
+      display: flex; gap: 24px; margin-top: 36px;
+    }
+    .stat-item {
+      background: var(--white); border-radius: 12px;
+      padding: 14px 18px; box-shadow: var(--shadow);
+      text-align: center; flex: 1;
+    }
+    .stat-num { font-family: 'Noto Serif JP', serif; font-size: 22px; color: var(--pink); font-weight: 700; }
+    .stat-label { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+    /* ===== SECTION BASE ===== */
+    section { padding: 80px 24px; }
+    .section-title {
+      text-align: center;
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.5; margin-bottom: 12px;
+    }
+    .section-title em { color: var(--pink); font-style: normal; }
+    .section-sub {
+      text-align: center; color: var(--gray);
+      font-size: 14px; margin-bottom: 52px;
+      line-height: 1.8;
+    }
+    .section-label {
+      text-align: center;
+      display: inline-block;
+      background: var(--pink-lt); color: var(--pink);
+      border-radius: 50px; padding: 4px 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      margin-bottom: 14px;
+    }
+    .section-header { text-align: center; }
+
+    /* ===== WORRIES ===== */
+    .worries { background: var(--beige); }
+    .worries-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .worry-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px; display: flex; align-items: flex-start; gap: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .worry-icon { font-size: 32px; flex-shrink: 0; }
+    .worry-card p { font-size: 14px; line-height: 1.7; color: var(--dark); }
+    .worry-card p strong { color: var(--pink); font-weight: 700; display: block; margin-bottom: 4px; }
+
+    /* ===== SOLUTION ===== */
+    .solution { background: var(--white); }
+    .solution-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .solution-box {
+      background: linear-gradient(135deg, #FFF0F3 0%, #FFF8F0 100%);
+      border: 1.5px solid rgba(244,116,138,.2);
+      border-radius: 24px; padding: 40px;
+      font-size: 18px; line-height: 1.9;
+      color: var(--dark);
+      margin-bottom: 40px;
+    }
+    .solution-box em { color: var(--pink); font-style: normal; font-weight: 700; }
+
+    /* ===== FEATURES ===== */
+    .features { background: var(--pink-pale); }
+    .features-grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .feature-card {
+      background: var(--white); border-radius: 20px;
+      padding: 36px 28px; text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--pink), var(--gold));
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--pink-lt); color: var(--pink);
+      font-weight: 700; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .feature-icon { font-size: 44px; margin-bottom: 16px; }
+    .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+    .feature-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
+
+    /* ===== JOB TYPES ===== */
+    .jobtypes { background: var(--beige); }
+    .jobtypes-grid {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .jobtype-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px 20px; text-align: center;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+      transition: transform .2s, box-shadow .2s;
+      border: 2px solid transparent;
+    }
+    .jobtype-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--pink-lt);
+      box-shadow: var(--shadow);
+    }
+    .jobtype-icon { font-size: 40px; margin-bottom: 14px; }
+    .jobtype-name { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .jobtype-tag {
+      display: inline-block;
+      background: var(--pink-lt); color: var(--pink);
+      font-size: 11px; padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* ===== VOICES ===== */
+    .voices { background: var(--white); }
+    .voices-grid {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .voice-card {
+      background: var(--beige); border-radius: 20px;
+      padding: 28px; position: relative;
+    }
+    .voice-card::before {
+      content: '"';
+      font-family: Georgia, serif;
+      font-size: 80px; color: var(--pink-lt);
+      position: absolute; top: 8px; left: 16px;
+      line-height: 1;
+    }
+    .voice-profile {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .voice-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      background: linear-gradient(135deg, #FADADD, #F9E4C8);
+      flex-shrink: 0;
+    }
+    .voice-name { font-weight: 700; font-size: 14px; }
+    .voice-info { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .voice-text { font-size: 13px; line-height: 1.8; color: var(--dark); position: relative; z-index: 1; }
+    .stars { color: #F4C430; font-size: 14px; margin-top: 12px; }
+
+    /* ===== FLOW ===== */
+    .flow { background: var(--pink-pale); }
+    .flow-steps {
+      max-width: 700px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 24px;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute; left: 27px; top: 56px;
+      width: 2px; height: calc(100% - 16px);
+      background: linear-gradient(180deg, var(--pink) 0%, var(--pink-lt) 100%);
+    }
+    .flow-step-num {
+      width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: var(--white); font-weight: 700; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(244,116,138,.35);
+      position: relative; z-index: 1;
+    }
+    .flow-step-body {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 28px; flex: 1; margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .flow-step-title { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .flow-step-desc { font-size: 13px; color: var(--gray); line-height: 1.8; }
+    .flow-step-time {
+      display: inline-block; background: var(--pink-lt); color: var(--pink);
+      font-size: 11px; padding: 3px 10px; border-radius: 50px;
+      margin-top: 8px; font-weight: 700;
+    }
+
+    /* ===== FAQ ===== */
+    .faq { background: var(--white); }
+    .faq-list {
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .faq-item {
+      border: 1.5px solid var(--beige-dk);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .faq-q {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 24px; cursor: pointer;
+      background: var(--white);
+      transition: background .15s;
+    }
+    .faq-q:hover { background: var(--pink-pale); }
+    .faq-q-icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--pink); color: var(--white);
+      font-weight: 700; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .faq-q-text { font-size: 14px; font-weight: 700; flex: 1; }
+    .faq-a {
+      padding: 0 24px 20px 66px;
+      font-size: 13px; color: var(--gray); line-height: 1.8;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, #F4748A 0%, #E8527A 50%, #C9A96E 100%);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .cta-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(22px, 3.5vw, 38px);
+      color: var(--white); margin-bottom: 16px; line-height: 1.5;
+    }
+    .cta-sub { color: rgba(255,255,255,.85); font-size: 14px; margin-bottom: 36px; line-height: 1.8; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--white);
+      color: var(--pink); border: none;
+      padding: 20px 48px; border-radius: 50px;
+      font-size: 17px; font-weight: 700;
+      cursor: pointer; letter-spacing: .06em;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+      text-decoration: none;
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,.2); }
+    .cta-note { color: rgba(255,255,255,.7); font-size: 12px; margin-top: 16px; }
+    .cta-badges {
+      display: flex; justify-content: center; gap: 24px;
+      margin-top: 36px; flex-wrap: wrap;
+    }
+    .cta-badge {
+      background: rgba(255,255,255,.18); border-radius: 50px;
+      padding: 8px 20px; color: var(--white);
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      border: 1px solid rgba(255,255,255,.3);
+    }
+
+    /* ===== FORM ===== */
+    .form-section { background: var(--beige); padding: 80px 24px; }
+    .form-inner { max-width: 600px; margin: 0 auto; }
+    .form-card {
+      background: var(--white); border-radius: 24px;
+      padding: 48px 40px; box-shadow: 0 8px 40px rgba(0,0,0,.1);
+    }
+    .form-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px; text-align: center;
+      margin-bottom: 8px; color: var(--dark);
+    }
+    .form-sub { text-align: center; font-size: 13px; color: var(--gray); margin-bottom: 32px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--dark); margin-bottom: 6px;
+    }
+    .form-group label span { color: var(--pink); margin-left: 4px; font-size: 11px; }
+    .form-group input,
+    .form-group select {
+      width: 100%; padding: 14px 16px;
+      border: 1.5px solid var(--beige-dk);
+      border-radius: 10px; font-size: 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--dark); background: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(244,116,138,.12);
+    }
+    .form-group input::placeholder { color: #C0B8B0; }
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: var(--white); border: none;
+      padding: 18px; border-radius: 50px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; letter-spacing: .06em;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(244,116,138,.4);
+      margin-top: 8px;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,116,138,.5); }
+    .form-privacy { text-align: center; font-size: 11px; color: var(--gray); margin-top: 12px; }
+    .form-privacy a { color: var(--pink); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.6);
+      padding: 40px 24px;
+      text-align: center; font-size: 12px; line-height: 2;
+    }
+    footer .footer-logo { font-family: 'Noto Serif JP', serif; font-size: 20px; color: var(--pink); margin-bottom: 12px; }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+
+    /* ===== FIXED CTA ===== */
+    .fixed-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+      background: var(--white);
+      border-top: 1px solid var(--pink-lt);
+      padding: 12px 24px;
+      display: flex; justify-content: center;
+      box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+    }
+    .fixed-cta .btn-primary { font-size: 14px; padding: 14px 36px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; }
+      .hero-img { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
+      .hero-stats { flex-wrap: wrap; }
+      .header-cta { display: none; }
+      .form-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Office<span>Color</span></div>
+  <a href="#form" class="header-cta">無料登録はこちら</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">✨ 女性のための事務職専門エージェント</div>
+      <h1 class="hero-title">
+        「自分らしく働きたい」<br>
+        その気持ちに<em>寄り添う</em>、<br>
+        事務職転職サポート。
+      </h1>
+      <p class="hero-sub">
+        未経験・ブランクOK。残業少なめ・在宅OK・産育休取得実績あり。<br>
+        あなたのライフスタイルに合った事務職を、<br>
+        専任の女性アドバイザーが一緒に探します。
+      </p>
+      <div class="hero-cta-wrap">
+        <a href="#form" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          今すぐ無料で相談する
+        </a>
+        <p class="hero-note">登録無料・最短30秒・しつこい営業なし</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">利用者満足度</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3,200<small style="font-size:14px">件+</small></div>
+          <div class="stat-label">事務職専門求人</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">女性<small style="font-size:14px">特化</small></div>
+          <div class="stat-label">専任アドバイザー</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-img-box">
+        <div class="hero-img-illustration">
+          <span>👩‍💼</span>
+          <p>あなたらしい<br>働き方へ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORRIES -->
+<section class="worries">
+  <div class="section-header">
+    <span class="section-label">WORRIES</span>
+    <h2 class="section-title">こんな<em>お悩み</em>、ありませんか？</h2>
+    <p class="section-sub">多くの女性が転職前に感じていること。あなただけじゃありません。</p>
+  </div>
+  <div class="worries-grid">
+    <div class="worry-card">
+      <div class="worry-icon">😟</div>
+      <p><strong>残業が多すぎる…</strong>毎日終電で帰宅。自分の時間が全くない。もっとゆとりを持って働きたい。</p>
+    </div>
+    <div class="worry-card">
+      <div class="worry-icon">😔</div>
+      <p><strong>事務職は未経験でも大丈夫？</strong>パソコンはある程度使えるけど、資格がないと採用されないのかな…</p>
+    </div>
+    <div class="worry-card">
+      <div class="worry-icon">😰</div>
+      <p><strong>ブランクがあって不安…</strong>育児・介護でブランクがある。今さら転職できるか自信がない。</p>
+    </div>
+    <div class="worry-card">
+      <div class="worry-icon">🤔</div>
+      <p><strong>在宅・時短勤務できる会社はある？</strong>家庭との両立を考えると、柔軟に働ける職場を探したい。</p>
+    </div>
+    <div class="worry-card">
+      <div class="worry-icon">😣</div>
+      <p><strong>転職活動の進め方がわからない</strong>履歴書の書き方、面接対策、何から始めればいいかわからない。</p>
+    </div>
+    <div class="worry-card">
+      <div class="worry-icon">💭</div>
+      <p><strong>本当に転職していいのか迷っている</strong>今の会社を辞めることへの不安と、もっとよくなりたい気持ちが葛藤。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="solution-inner">
+    <div class="section-header">
+      <span class="section-label">SOLUTION</span>
+      <h2 class="section-title">OfficeColorが<em>解決</em>します</h2>
+    </div>
+    <div class="solution-box">
+      全ての悩みを一人で抱えなくて大丈夫。<br>
+      <em>女性アドバイザー</em>が、あなたの状況を丁寧にヒアリングして、<br>
+      <em>「働きやすさ」と「やりがい」</em>を両立できる<br>
+      事務職求人を一緒に探します。<br><br>
+      未経験・ブランクがある方も、<em>毎年多数の方が内定獲得</em>しています。
+    </div>
+    <a href="#form" class="btn-primary" style="margin: 0 auto;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      無料で相談してみる
+    </a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-header">
+    <span class="section-label">FEATURES</span>
+    <h2 class="section-title">OfficeColorが<em>選ばれる</em>理由</h2>
+    <p class="section-sub">女性が転職で感じる不安を、一つひとつ解消する仕組みがあります。</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">👩‍💼</div>
+      <div class="feature-title">女性専任アドバイザーが担当</div>
+      <p class="feature-desc">同じ女性として、ライフイベントや職場環境への不安を共感しながらサポート。転職後のキャリアまで一緒に考えます。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">事務職求人3,200件以上</div>
+      <p class="feature-desc">一般事務・医療事務・経理事務など幅広い事務職に特化。残業少なめ・在宅・時短求人を豊富にご用意。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📝</div>
+      <div class="feature-title">書類〜面接まで完全サポート</div>
+      <p class="feature-desc">履歴書・職務経歴書の添削から面接練習まで、内定まで二人三脚でサポート。一人で悩まなくてOK。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏠</div>
+      <div class="feature-title">在宅・時短・産育休取得実績求人多数</div>
+      <p class="feature-desc">フレックス・時短・リモートOKなど、家庭と両立しやすい環境の職場に絞って提案します。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💚</div>
+      <div class="feature-title">未経験・ブランクOK</div>
+      <p class="feature-desc">育児・介護でのブランクや職種未経験でも多数の方が内定取得。あなたの強みを一緒に見つけます。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🆓</div>
+      <div class="feature-title">完全無料・しつこい連絡なし</div>
+      <p class="feature-desc">サービス利用は完全無料。ペースはあなた主導で進められます。無理な求人紹介は一切しません。</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOB TYPES -->
+<section class="jobtypes">
+  <div class="section-header">
+    <span class="section-label">JOB TYPES</span>
+    <h2 class="section-title">取り扱い<em>事務職</em>の種類</h2>
+    <p class="section-sub">あなたに合った事務職のカテゴリをご紹介します。</p>
+  </div>
+  <div class="jobtypes-grid">
+    <div class="jobtype-card">
+      <div class="jobtype-icon">💻</div>
+      <div class="jobtype-name">一般事務</div>
+      <span class="jobtype-tag">未経験OK</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">🏥</div>
+      <div class="jobtype-name">医療事務</div>
+      <span class="jobtype-tag">資格サポートあり</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">📊</div>
+      <div class="jobtype-name">経理・財務事務</div>
+      <span class="jobtype-tag">スキルアップ</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">📞</div>
+      <div class="jobtype-name">営業事務</div>
+      <span class="jobtype-tag">未経験OK</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">🏢</div>
+      <div class="jobtype-name">総務・人事事務</div>
+      <span class="jobtype-tag">正社員多数</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">💊</div>
+      <div class="jobtype-name">調剤薬局事務</div>
+      <span class="jobtype-tag">資格サポートあり</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">🏦</div>
+      <div class="jobtype-name">金融・保険事務</div>
+      <span class="jobtype-tag">高収入あり</span>
+    </div>
+    <div class="jobtype-card">
+      <div class="jobtype-icon">🖥️</div>
+      <div class="jobtype-name">貿易・英語事務</div>
+      <span class="jobtype-tag">スキル活用</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA MID -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">まずは気軽に話してみませんか？</h2>
+    <p class="cta-sub">「転職するか迷っている」という段階でも大丈夫。<br>
+    女性アドバイザーが、あなたの状況を丁寧にお聞きします。</p>
+    <a href="#form" class="btn-white">
+      ✨ 無料で相談する（登録30秒）
+    </a>
+    <p class="cta-note">しつこい連絡・営業は一切行いません</p>
+    <div class="cta-badges">
+      <span class="cta-badge">✅ 完全無料</span>
+      <span class="cta-badge">✅ 未経験OK</span>
+      <span class="cta-badge">✅ ブランクOK</span>
+      <span class="cta-badge">✅ 在宅・時短求人あり</span>
+    </div>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="voices">
+  <div class="section-header">
+    <span class="section-label">VOICES</span>
+    <h2 class="section-title">転職に成功した<em>女性たちの声</em></h2>
+    <p class="section-sub">実際に利用した方のリアルな声をご紹介します。</p>
+  </div>
+  <div class="voices-grid">
+    <div class="voice-card">
+      <div class="voice-profile">
+        <div class="voice-avatar">😊</div>
+        <div>
+          <div class="voice-name">Aさん（29歳）</div>
+          <div class="voice-info">飲食業 → 一般事務｜未経験転職</div>
+        </div>
+      </div>
+      <p class="voice-text">「事務は未経験だったので不安でしたが、アドバイザーさんが履歴書の書き方から丁寧に教えてくれました。今は残業ほぼゼロで、週末は趣味に使える時間ができて本当に転職して良かったです！」</p>
+      <div class="stars">★★★★★</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-profile">
+        <div class="voice-avatar">🌸</div>
+        <div>
+          <div class="voice-name">Bさん（34歳）</div>
+          <div class="voice-info">3年のブランク → 医療事務</div>
+        </div>
+      </div>
+      <p class="voice-text">「育児で3年ブランクがあり、今更転職は無理と思っていました。でも担当の方が『ブランクは強みになる』と言ってくれて。今は時短勤務で子どもの行事にも参加できています。」</p>
+      <div class="stars">★★★★★</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-profile">
+        <div class="voice-avatar">💼</div>
+        <div>
+          <div class="voice-name">Cさん（26歳）</div>
+          <div class="voice-info">販売職 → 営業事務（在宅勤務）</div>
+        </div>
+      </div>
+      <p class="voice-text">「在宅で働ける事務職を探していましたが、自分では探し方がわからなくて。エージェントにお任せしたら、希望通りのほぼフルリモートの求人を複数提案してもらえました！」</p>
+      <div class="stars">★★★★★</div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow">
+  <div class="section-header">
+    <span class="section-label">FLOW</span>
+    <h2 class="section-title">転職までの<em>流れ</em></h2>
+    <p class="section-sub">最短2週間で内定を獲得した方もいます。</p>
+  </div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-step-num">1</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">📋 無料登録（30秒）</div>
+        <p class="flow-step-desc">フォームに入力するだけで登録完了。費用は一切かかりません。</p>
+        <span class="flow-step-time">所要時間：約30秒</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">2</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">👩‍💼 女性アドバイザーとのヒアリング</div>
+        <p class="flow-step-desc">あなたの希望・状況・不安を丁寧にお聞きします。電話・オンラインどちらでもOK。</p>
+        <span class="flow-step-time">所要時間：約30〜60分</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">3</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">🔍 求人提案・応募</div>
+        <p class="flow-step-desc">希望に合った事務職求人を厳選してご提案。興味のある求人に応募します。</p>
+        <span class="flow-step-time">期間：数日〜1週間</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">4</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">📝 書類・面接サポート</div>
+        <p class="flow-step-desc">履歴書添削・面接対策を徹底サポート。本番前に自信をつけましょう。</p>
+        <span class="flow-step-time">期間：1〜2週間</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">5</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">🎉 内定・入社</div>
+        <p class="flow-step-desc">給与交渉・入社日の調整もサポート。新しいステージへ羽ばたいてください！</p>
+        <span class="flow-step-time">最短2週間で内定も</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-header">
+    <span class="section-label">FAQ</span>
+    <h2 class="section-title">よくある<em>ご質問</em></h2>
+    <p class="section-sub">気になる疑問にお答えします。</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        <div class="faq-q-text">事務職は完全に未経験ですが、登録できますか？</div>
+      </div>
+      <p class="faq-a">もちろんです！当エージェントにご登録いただく方の約40%が事務職未経験の方です。基本的なPCスキルがあれば、多くの求人にご応募いただけます。必要なスキルアップについても一緒にサポートします。</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        <div class="faq-q-text">育児・家庭との両立ができる職場はありますか？</div>
+      </div>
+      <p class="faq-a">はい、豊富にあります！残業月10時間以下、時短勤務OK、在宅勤務可能、産育休取得実績ありなど、ライフスタイルに合った条件で絞り込んで求人をご提案します。</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        <div class="faq-q-text">ブランクがあっても転職できますか？</div>
+      </div>
+      <p class="faq-a">ブランクがある方も毎年多数が内定を獲得されています。育児・介護のブランクをマイナスに捉えず、その経験で身につけたスキルをどう伝えるか、アドバイザーが一緒に考えます。</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        <div class="faq-q-text">今すぐ転職するか迷っているのですが…</div>
+      </div>
+      <p class="faq-a">「迷っている」段階でのご相談がむしろ多いです。転職すべきかどうかも含めて中立的にアドバイスします。無理な求人紹介は一切行いませんのでご安心ください。</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">
+        <div class="faq-q-icon">Q</div>
+        <div class="faq-q-text">費用はかかりますか？</div>
+      </div>
+      <p class="faq-a">求職者の方への費用は完全無料です。ヒアリングから内定後のフォローまで、すべて無料でご利用いただけます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="form-inner">
+    <div class="form-card">
+      <h2 class="form-title">✨ 無料で転職相談する</h2>
+      <p class="form-sub">30秒で登録完了。女性アドバイザーが丁寧にサポートします。</p>
+      <form>
+        <div class="form-group">
+          <label>お名前 <span>必須</span></label>
+          <input type="text" placeholder="山田 花子">
+        </div>
+        <div class="form-group">
+          <label>メールアドレス <span>必須</span></label>
+          <input type="email" placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+          <label>電話番号 <span>必須</span></label>
+          <input type="tel" placeholder="090-0000-0000">
+        </div>
+        <div class="form-group">
+          <label>現在の状況 <span>必須</span></label>
+          <select>
+            <option value="" disabled selected>選択してください</option>
+            <option>在職中・すぐに転職したい</option>
+            <option>在職中・じっくり転職活動したい</option>
+            <option>離職中・すぐに転職したい</option>
+            <option>育休・産休中</option>
+            <option>ブランクあり（求職中）</option>
+            <option>まだ転職するか迷っている</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>希望の働き方 <span>任意</span></label>
+          <select>
+            <option value="" disabled selected>選択してください</option>
+            <option>正社員（フルタイム）</option>
+            <option>正社員（時短勤務希望）</option>
+            <option>契約社員・派遣</option>
+            <option>在宅・リモートワーク希望</option>
+            <option>パート・アルバイト</option>
+            <option>まだ決めていない</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">
+          無料で転職相談を申し込む →
+        </button>
+        <p class="form-privacy">
+          登録することで<a href="#">プライバシーポリシー</a>に同意したことになります。<br>
+          しつこい営業・連絡は一切行いません。
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">OfficeColor</div>
+  <p>女性のための事務職専門転職エージェント</p>
+  <p style="margin-top: 8px;">
+    <a href="#">プライバシーポリシー</a> ｜
+    <a href="#">利用規約</a> ｜
+    <a href="#">会社情報</a> ｜
+    <a href="#">お問い合わせ</a>
+  </p>
+  <p style="margin-top: 16px;">© 2024 OfficeColor. All Rights Reserved.</p>
+</footer>
+
+<!-- FIXED CTA -->
+<div class="fixed-cta">
+  <a href="#form" class="btn-primary">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    今すぐ無料で転職相談する
+  </a>
+</div>
+
+</body>
+</html>
