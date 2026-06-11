@@ -1,1181 +1,1010 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>セレッソ大阪 アプリ デモ</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-    body{
-      background:linear-gradient(160deg,#0f0f1a 0%,#1a0a25 50%,#0f1a0f 100%);
-      min-height:100vh;display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
-      padding:20px 0 40px;
-    }
-    .demo-header{
-      color:rgba(255,255,255,0.6);font-size:13px;margin-bottom:20px;
-      text-align:center;letter-spacing:0.5px;
-    }
-    .demo-header strong{color:#E8007D;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>セレッソ大阪</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+:root{--pink:#E8007D;--navy:#0B1340;--bg:#F5F5F7;--border:#EEEEEE;--txt:#111;--sub:#777;--lite:#BBB;}
+body{background:#1a1a2e;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;padding:24px 0 40px;}
+.demo-note{color:rgba(255,255,255,.5);font-size:12px;margin-bottom:18px;text-align:center;}
 
-    /* ── Phone Frame ── */
-    .phone{
-      width:393px;height:852px;
-      background:#111;border-radius:54px;
-      padding:13px;
-      box-shadow:0 40px 100px rgba(0,0,0,0.7),
-                 inset 0 0 0 1px rgba(255,255,255,0.12),
-                 0 0 0 3px #1a1a1a;
-      position:relative;flex-shrink:0;
-    }
-    .phone-screen{
-      width:100%;height:100%;background:#fff;
-      border-radius:44px;overflow:hidden;
-      position:relative;display:flex;flex-direction:column;
-    }
-    /* Dynamic Island */
-    .dynamic-island{
-      position:absolute;top:12px;left:50%;
-      transform:translateX(-50%);
-      width:120px;height:34px;
-      background:#000;border-radius:20px;
-      z-index:200;
-    }
+/* ── Phone Frame ── */
+.phone{width:393px;height:852px;background:#000;border-radius:54px;padding:12px;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 2px #222;
+  position:relative;flex-shrink:0;}
+.phone-screen{width:100%;height:100%;background:#fff;border-radius:43px;overflow:hidden;
+  position:relative;display:flex;flex-direction:column;}
+.di{position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:118px;height:33px;background:#000;border-radius:18px;z-index:200;}
 
-    /* ── Status Bar ── */
-    .status-bar{
-      height:50px;background:#fff;
-      display:flex;align-items:flex-end;
-      justify-content:space-between;
-      padding:0 22px 8px;
-      font-size:13px;font-weight:700;
-      flex-shrink:0;position:relative;z-index:100;
-    }
-    .status-icons{display:flex;align-items:center;gap:5px;}
+/* Status bar */
+.sb{height:50px;background:#fff;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 22px 8px;font-size:13px;font-weight:700;flex-shrink:0;z-index:100;}
+.sb-r{display:flex;align-items:center;gap:5px;}
 
-    /* ── App Container ── */
-    .app{height:calc(100% - 50px);display:flex;flex-direction:column;overflow:hidden;}
+/* App shell */
+.app{height:calc(100% - 50px);display:flex;flex-direction:column;overflow:hidden;}
 
-    /* ── Screens ── */
-    .screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
-    .screen.active{display:flex;}
-    .screen-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-    .screen-body::-webkit-scrollbar{display:none;}
+/* Screens */
+.screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.screen.on{display:flex;}
+.body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.body::-webkit-scrollbar{display:none;}
 
-    /* ── Header ── */
-    .app-header{
-      background:#fff;padding:10px 16px;
-      display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #f0f0f0;flex-shrink:0;
-    }
-    .logo-wrap{display:flex;align-items:center;gap:9px;}
-    .logo-mark{
-      width:38px;height:38px;background:#E8007D;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    }
-    .logo-mark svg{width:24px;height:24px;}
-    .logo-text-wrap{}
-    .logo-name{font-size:21px;font-style:italic;font-weight:900;color:#E8007D;letter-spacing:-0.5px;line-height:1;}
-    .logo-sub{font-size:8px;color:#999;letter-spacing:2.5px;text-transform:uppercase;}
-    .hdr-icons{display:flex;gap:14px;}
-    .hdr-icon{font-size:20px;cursor:pointer;color:#444;}
+/* ── HEADER ── */
+.hdr{background:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);flex-shrink:0;}
+.hdr-logo{display:flex;align-items:center;gap:8px;}
+.logo-badge{width:36px;height:36px;flex-shrink:0;}
+.logo-name{font-size:22px;font-style:italic;font-weight:900;color:var(--pink);letter-spacing:-.5px;line-height:1;}
+.logo-sub{font-size:8px;color:#aaa;letter-spacing:2px;text-transform:uppercase;}
+.hdr-ic{font-size:20px;color:#444;cursor:pointer;}
+.hdr-ics{display:flex;gap:14px;}
 
-    /* ── Bottom Nav ── */
-    .bottom-nav{
-      height:82px;background:#fff;border-top:1px solid #e8e8e8;
-      display:flex;align-items:flex-start;justify-content:space-around;
-      padding-top:10px;flex-shrink:0;
-    }
-    .nav-btn{
-      display:flex;flex-direction:column;align-items:center;gap:3px;
-      cursor:pointer;flex:1;padding:0 4px;position:relative;
-    }
-    .nav-btn .nb-icon{width:26px;height:26px;display:flex;align-items:center;justify-content:center;}
-    .nav-btn .nb-label{font-size:10px;color:#aaa;transition:color .15s;}
-    .nav-btn.active .nb-label{color:#E8007D;}
-    /* center button */
-    .nav-ctr{margin-top:-18px;}
-    .nav-ctr-disc{
-      width:52px;height:52px;border-radius:50%;background:#E8007D;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      box-shadow:0 4px 16px rgba(232,0,125,.45);
-      color:#fff;font-weight:900;font-size:12px;line-height:1;
-    }
+/* Back header */
+.bhdr{background:#fff;display:flex;align-items:center;gap:10px;padding:12px 16px;
+  border-bottom:1px solid var(--border);flex-shrink:0;}
+.back{color:var(--pink);font-size:24px;cursor:pointer;line-height:1;font-weight:300;}
+.bhdr-title{font-size:17px;font-weight:700;color:var(--txt);flex:1;}
+.bhdr-r{display:flex;gap:14px;align-items:center;}
+.bhdr-ic{color:#555;font-size:18px;cursor:pointer;}
 
-    /* ════════════════════════════
-       HOME SCREEN
-    ════════════════════════════ */
-    .match-hero{
-      background:linear-gradient(160deg,#08092e 0%,#12124a 60%,#1a0a2a 100%);
-      padding:18px 16px 16px;color:#fff;
-    }
-    .mh-label{font-size:11px;color:#aaa;letter-spacing:.5px;margin-bottom:8px;}
-    .mh-date{font-size:30px;font-weight:900;line-height:1;margin-bottom:4px;}
-    .mh-date span{font-size:16px;font-weight:500;}
-    .mh-ko{font-size:12px;font-weight:700;color:#FFD700;letter-spacing:1px;margin-bottom:16px;}
-    .mh-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-    .mh-team{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
-    .mh-emblem{
-      width:64px;height:64px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      font-size:28px;font-weight:900;
-    }
-    .emb-cerezo{background:radial-gradient(circle,#ff3d9a,#E8007D);}
-    .emb-rival{background:radial-gradient(circle,#2979ff,#1565C0);}
-    .mh-tname{font-size:12px;font-weight:700;text-align:center;line-height:1.3;}
-    .mh-vs{font-size:22px;font-weight:900;color:#FFD700;padding:0 8px;flex-shrink:0;}
-    .mh-venue{font-size:11px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:14px;}
-    .ticket-btn{
-      background:#E8007D;color:#fff;border:none;width:100%;
-      padding:13px;border-radius:10px;font-size:14px;font-weight:800;
-      cursor:pointer;letter-spacing:1px;transition:filter .15s;
-    }
-    .ticket-btn:active{filter:brightness(.9);}
+/* ── BOTTOM NAV ── */
+.bnav{height:82px;background:#fff;border-top:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-around;padding-top:10px;flex-shrink:0;}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;padding:0 2px;}
+.nb-ic{width:26px;height:26px;display:flex;align-items:center;justify-content:center;}
+.nb-lbl{font-size:10px;color:#aaa;}
+.nb.on .nb-lbl{color:var(--pink);}
+/* Center button */
+.nb-ctr{margin-top:-14px;}
+.nb-ctr-ring{width:50px;height:50px;border-radius:50%;background:var(--pink);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(232,0,125,.4);}
 
-    .sec-hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px;}
-    .sec-title{font-size:15px;font-weight:800;color:#111;}
-    .sec-more{font-size:12px;color:#E8007D;cursor:pointer;font-weight:600;}
+/* Section header */
+.shdr{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px;}
+.stitle{font-size:15px;font-weight:800;color:var(--txt);}
+.smore{font-size:12px;color:var(--pink);cursor:pointer;font-weight:600;}
 
-    .next-card{
-      margin:0 16px 16px;border:1px solid #ebebeb;border-radius:12px;
-      padding:12px 14px;display:flex;align-items:center;gap:12px;
-      cursor:pointer;background:#fafafa;transition:background .15s;
-    }
-    .next-card:active{background:#f0f0f0;}
-    .next-ico{width:44px;height:44px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:22px;}
-    .next-info{flex:1;}
-    .next-comp{font-size:11px;color:#999;margin-bottom:3px;}
-    .next-match{font-size:13px;font-weight:700;color:#222;margin-bottom:2px;}
-    .next-date{font-size:12px;color:#E8007D;font-weight:600;}
+/* Spacer */
+.sp{height:24px;}
 
-    .news-item{display:flex;padding:13px 16px;gap:12px;border-bottom:1px solid #f5f5f5;cursor:pointer;align-items:flex-start;}
-    .news-item:active{background:#fafafa;}
-    .news-thumb{width:84px;height:58px;border-radius:8px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px;}
-    .news-info{flex:1;}
-    .news-cat{font-size:10px;color:#E8007D;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
-    .news-ttl{font-size:13px;font-weight:500;color:#222;line-height:1.45;}
-    .news-date{font-size:11px;color:#bbb;margin-top:5px;}
+/* ═══════════════════════════
+   HOME
+═══════════════════════════ */
+.match-hero{background:linear-gradient(165deg,#0B1340 0%,#141e5c 55%,#1a0a3a 100%);padding:18px 16px 16px;color:#fff;}
+.mh-comp{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.5px;margin-bottom:10px;}
+.mh-date{font-size:32px;font-weight:900;line-height:1;}
+.mh-date em{font-size:16px;font-weight:500;font-style:normal;}
+.mh-ko{font-size:12px;font-weight:700;color:#FFD700;letter-spacing:1px;margin:4px 0 6px;}
+.mh-venue{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:14px;}
+.mh-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.mh-team{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
+.mh-emb{width:66px;height:66px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;text-align:center;line-height:1.3;flex-shrink:0;}
+.emb-c{background:radial-gradient(circle at 40% 35%,#ff4da6,#E8007D 50%,#a00055);}
+.emb-g{background:radial-gradient(circle at 40% 35%,#3a7ff5,#1a56cc 50%,#0a3a8a);}
+.mh-tname{font-size:12px;font-weight:700;text-align:center;}
+.mh-vs{font-size:14px;font-weight:900;color:rgba(255,255,255,.6);padding:0 8px;flex-shrink:0;}
+.ticket-btn{background:var(--pink);color:#fff;border:none;width:100%;padding:13px;
+  border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.5px;}
 
-    /* ════════════════════════════
-       TEAM SCREEN
-    ════════════════════════════ */
-    .standing-banner{
-      background:linear-gradient(135deg,#0a1248,#1a237e);
-      padding:14px 16px;color:#fff;
-      display:flex;align-items:center;justify-content:space-between;
-    }
-    .sb-rank{font-size:36px;font-weight:900;}
-    .sb-label{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:2px;}
-    .sb-stats{display:flex;gap:16px;margin-top:4px;}
-    .sb-stat{text-align:center;}
-    .sb-val{font-size:18px;font-weight:800;}
-    .sb-key{font-size:10px;color:rgba(255,255,255,.6);}
+.next-card{margin:0 16px 16px;border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#fafafa;}
+.next-thumb{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+.next-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.next-info{flex:1;}
+.next-comp{font-size:11px;color:var(--sub);margin-bottom:3px;}
+.next-teams{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:2px;}
+.next-date{font-size:12px;color:var(--pink);font-weight:600;}
+.next-arr{color:#ddd;font-size:18px;}
 
-    .player-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#ebebeb;}
-    .player-card{background:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:background .15s;}
-    .player-card:active{background:#fafafa;}
-    .p-num{font-size:24px;font-weight:900;color:#E8007D;line-height:1;}
-    .p-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#f5f5f5,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:26px;}
-    .p-name{font-size:12px;font-weight:700;text-align:center;color:#222;line-height:1.3;}
-    .p-pos{
-      font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;
-      background:#f0f0f0;color:#888;
-    }
-    .pos-gk{background:#fff3cd;color:#856404;}
-    .pos-df{background:#cfe2ff;color:#084298;}
-    .pos-mf{background:#d1e7dd;color:#0f5132;}
-    .pos-fw{background:#f8d7da;color:#842029;}
+.news-item{display:flex;padding:12px 16px;gap:12px;border-bottom:1px solid #f5f5f5;cursor:pointer;align-items:flex-start;}
+.news-thumb{width:88px;height:62px;border-radius:8px;flex-shrink:0;overflow:hidden;}
+.news-thumb-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:22px;}
+.news-info{flex:1;}
+.news-cat{font-size:10px;color:var(--pink);font-weight:700;margin-bottom:4px;letter-spacing:.3px;}
+.news-ttl{font-size:13px;font-weight:500;color:var(--txt);line-height:1.45;}
+.news-date{font-size:11px;color:var(--lite);margin-top:5px;}
 
-    /* ════════════════════════════
-       CEREZO+ SCREEN
-    ════════════════════════════ */
-    .plus-hdr{
-      background:#fff;padding:12px 16px;
-      display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #f0f0f0;flex-shrink:0;
-    }
-    .plus-title{font-size:19px;font-weight:900;color:#E8007D;}
+/* ═══════════════════════════
+   CEREZO PLUS TOP
+═══════════════════════════ */
+.plus-hdr{background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);flex-shrink:0;}
+.plus-title{font-size:19px;font-weight:900;color:var(--pink);}
+.tab-row{display:flex;border-bottom:2px solid var(--border);background:#fff;flex-shrink:0;overflow-x:auto;}
+.tab-row::-webkit-scrollbar{display:none;}
+.tab-item{flex-shrink:0;padding:11px 16px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;
+  position:relative;white-space:nowrap;}
+.tab-item.on{color:var(--pink);}
+.tab-item.on::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--pink);}
 
-    .hero-banner{
-      height:188px;position:relative;overflow:hidden;cursor:pointer;
-      background:linear-gradient(160deg,#050515 0%,#150530 50%,#200515 100%);
-    }
-    .hero-banner:active{filter:brightness(.92);}
-    .hero-bg-decor{
-      position:absolute;right:-10px;bottom:-10px;
-      font-size:120px;opacity:.06;line-height:1;user-select:none;
-    }
-    .hero-content{position:absolute;bottom:0;left:0;right:0;padding:16px;}
-    .hero-tag{
-      display:inline-block;background:#E8007D;color:#fff;
-      font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;
-      margin-bottom:8px;letter-spacing:.5px;
-    }
-    .hero-ttl{font-size:24px;font-weight:900;color:#fff;font-style:italic;text-transform:uppercase;line-height:1.2;margin-bottom:4px;}
-    .hero-sub{font-size:12px;color:rgba(255,255,255,.7);}
-    .hero-new{
-      position:absolute;top:14px;right:14px;
-      background:#FF3B30;color:#fff;font-size:10px;font-weight:700;
-      padding:3px 8px;border-radius:12px;
-    }
+/* Hero banner */
+.hero{position:relative;height:192px;overflow:hidden;cursor:pointer;}
+.hero-img{width:100%;height:100%;object-fit:cover;display:flex;align-items:flex-end;}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.75) 100%);}
+.hero-bg{position:absolute;inset:0;}
+.hero-body{position:absolute;bottom:0;left:0;right:0;padding:16px;}
+.hero-label{font-size:11px;color:rgba(255,255,255,.7);margin-bottom:4px;font-weight:600;letter-spacing:.5px;}
+.hero-ttl{font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.8);margin-bottom:10px;}
+.hero-btn{display:inline-flex;align-items:center;gap:6px;background:var(--pink);color:#fff;
+  font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;cursor:pointer;}
+.hero-new{position:absolute;top:12px;right:12px;background:#FF3B30;color:#fff;font-size:10px;font-weight:700;
+  padding:3px 9px;border-radius:12px;}
 
-    .scroll-row{display:flex;gap:12px;padding:0 16px;overflow-x:auto;}
-    .scroll-row::-webkit-scrollbar{display:none;}
-    .scroll-card{flex-shrink:0;width:148px;cursor:pointer;}
-    .sc-thumb{
-      width:148px;height:94px;border-radius:10px;overflow:hidden;
-      position:relative;margin-bottom:8px;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .sc-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:34px;}
-    .sc-play{
-      position:absolute;bottom:7px;right:7px;
-      background:rgba(0,0,0,.6);border-radius:50%;
-      width:28px;height:28px;display:flex;align-items:center;justify-content:center;
-      font-size:11px;color:#fff;
-    }
-    .sc-dur{
-      position:absolute;bottom:7px;left:7px;
-      background:rgba(0,0,0,.6);color:#fff;font-size:10px;
-      padding:2px 6px;border-radius:4px;
-    }
-    .sc-ttl{font-size:12px;font-weight:700;color:#222;line-height:1.4;margin-bottom:2px;}
-    .sc-series{font-size:11px;color:#E8007D;font-weight:600;}
+/* Content list (セレッソPLUS) */
+.clist-item{display:flex;padding:13px 16px;gap:14px;align-items:center;border-bottom:1px solid #f5f5f5;cursor:pointer;}
+.clist-thumb{width:64px;height:64px;border-radius:10px;flex-shrink:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+.clist-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.clist-lbl{font-size:8px;font-weight:900;color:#fff;text-align:center;line-height:1.2;text-transform:uppercase;letter-spacing:.3px;}
+.clist-info{flex:1;}
+.clist-name{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:3px;display:flex;align-items:center;gap:7px;}
+.new-tag{background:#FF3B30;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;}
+.clist-desc{font-size:12px;color:var(--sub);line-height:1.45;}
+.clist-arr{color:#ddd;font-size:18px;flex-shrink:0;}
 
-    .ch-list{background:#fff;}
-    .ch-item{
-      padding:14px 16px;display:flex;align-items:center;gap:14px;
-      border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .15s;
-      position:relative;
-    }
-    .ch-item:active{background:#fafafa;}
-    .ch-icon{
-      width:52px;height:52px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:10px;font-weight:800;color:#fff;text-align:center;line-height:1.3;
-      flex-shrink:0;
-    }
-    .ch-info{flex:1;}
-    .ch-name{font-size:14px;font-weight:700;color:#111;margin-bottom:3px;}
-    .ch-desc{font-size:12px;color:#999;line-height:1.4;}
-    .ch-new{
-      position:absolute;top:10px;right:32px;
-      background:#FF3B30;color:#fff;font-size:9px;font-weight:700;
-      padding:2px 6px;border-radius:10px;
-    }
-    .ch-arr{color:#ddd;font-size:16px;font-weight:300;}
+/* ═══════════════════════════
+   限定動画 LIST
+═══════════════════════════ */
+.prog-item{display:flex;padding:14px 16px;gap:14px;align-items:center;border-bottom:1px solid var(--border);cursor:pointer;}
+.prog-thumb{width:90px;height:62px;border-radius:8px;flex-shrink:0;overflow:hidden;position:relative;}
+.prog-thumb-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.prog-name-overlay{font-size:9px;font-weight:900;color:#fff;text-align:center;line-height:1.2;text-transform:uppercase;letter-spacing:.5px;padding:0 4px;}
+.prog-info{flex:1;}
+.prog-name{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:4px;}
+.prog-desc{font-size:12px;color:var(--sub);line-height:1.4;}
+.prog-arr{color:#ddd;font-size:18px;flex-shrink:0;}
 
-    .member-cta{
-      background:linear-gradient(135deg,#E8007D,#c2005a);
-      padding:22px 16px;color:#fff;
-    }
-    .mc-title{font-size:17px;font-weight:900;margin-bottom:10px;}
-    .mc-feats{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
-    .mc-feat{font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
-    .mc-price{font-size:26px;font-weight:900;margin-bottom:14px;}
-    .mc-price small{font-size:13px;font-weight:400;}
-    .mc-btn{
-      background:#fff;color:#E8007D;border:none;width:100%;
-      padding:14px;border-radius:10px;font-size:15px;font-weight:900;
-      cursor:pointer;transition:filter .15s;
-    }
-    .mc-btn:active{filter:brightness(.96);}
+/* ═══════════════════════════
+   EPISODE LIST
+═══════════════════════════ */
+.ph{height:160px;position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;justify-content:flex-end;}
+.ph-bg{position:absolute;inset:0;}
+.ph-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.7));}
+.ph-body{position:relative;z-index:1;padding:16px;}
+.ph-title{font-size:24px;font-weight:900;color:#fff;font-style:italic;text-transform:uppercase;margin-bottom:4px;}
+.ph-sub{font-size:13px;color:rgba(255,255,255,.8);}
 
-    /* ════════════════════════════
-       NEWS SCREEN
-    ════════════════════════════ */
-    .filter-row{
-      display:flex;gap:8px;padding:12px 16px;
-      overflow-x:auto;flex-shrink:0;
-      border-bottom:1px solid #f0f0f0;
-      background:#fff;
-    }
-    .filter-row::-webkit-scrollbar{display:none;}
-    .filter-chip{
-      padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;
-      white-space:nowrap;cursor:pointer;border:none;transition:all .15s;
-    }
-    .filter-chip.on{background:#E8007D;color:#fff;}
-    .filter-chip.off{background:#f2f2f2;color:#666;}
+.fav-btn{margin:12px 16px;border:1.5px solid var(--border);border-radius:8px;
+  padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+  font-size:14px;font-weight:600;color:var(--txt);}
+.fav-ic{color:var(--pink);font-size:16px;}
 
-    /* ════════════════════════════
-       EPISODE LIST SCREEN
-    ════════════════════════════ */
-    .back-hdr{
-      background:#fff;padding:12px 16px;
-      display:flex;align-items:center;gap:12px;
-      border-bottom:1px solid #f0f0f0;flex-shrink:0;
-    }
-    .back-btn{font-size:14px;color:#E8007D;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:2px;}
-    .back-hdr-title{font-size:16px;font-weight:700;color:#111;}
+.ep-tabs{display:flex;border-bottom:2px solid var(--border);background:#fff;flex-shrink:0;}
+.ep-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;position:relative;}
+.ep-tab.on{color:var(--pink);}
+.ep-tab.on::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--pink);}
 
-    .prog-hero{
-      height:150px;display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden;flex-shrink:0;
-    }
-    .ph-decor{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:90px;opacity:.06;}
-    .ph-title{font-size:26px;font-weight:900;color:#fff;font-style:italic;text-transform:uppercase;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,.5);}
+.ep-section-title{padding:14px 16px 8px;font-size:13px;font-weight:700;color:var(--txt);}
 
-    .ep-tabs{display:flex;border-bottom:1px solid #e0e0e0;background:#fff;flex-shrink:0;}
-    .ep-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#aaa;cursor:pointer;position:relative;}
-    .ep-tab.on{color:#E8007D;}
-    .ep-tab.on::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#E8007D;border-radius:2px 2px 0 0;}
+.ep-item{display:flex;padding:12px 16px;gap:12px;border-bottom:1px solid #f5f5f5;cursor:pointer;align-items:center;}
+.ep-thumb{width:112px;height:70px;border-radius:8px;flex-shrink:0;overflow:hidden;position:relative;}
+.ep-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.ep-info{flex:1;}
+.ep-title{font-size:13px;font-weight:600;color:var(--txt);line-height:1.45;margin-bottom:4px;}
+.ep-date{font-size:11px;color:var(--lite);}
+.ep-dl{color:var(--lite);font-size:18px;cursor:pointer;flex-shrink:0;padding:8px;}
 
-    .ep-item{display:flex;padding:14px 16px;gap:12px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .15s;}
-    .ep-item:active{background:#fafafa;}
-    .ep-thumb{width:116px;height:74px;border-radius:10px;flex-shrink:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
-    .ep-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;}
-    .ep-info{flex:1;}
-    .ep-title{font-size:13px;font-weight:700;color:#111;line-height:1.45;margin-bottom:5px;}
-    .ep-date{font-size:11px;color:#bbb;margin-bottom:4px;}
-    .ep-desc{font-size:12px;color:#999;line-height:1.4;}
+/* Action bar */
+.act-bar{display:flex;border-bottom:1px solid var(--border);padding:8px 0;}
+.act-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px 0;}
+.act-ic{font-size:22px;color:var(--sub);}
+.act-lbl{font-size:11px;color:var(--sub);font-weight:600;}
 
-    /* ════════════════════════════
-       VIDEO PLAYER SCREEN
-    ════════════════════════════ */
-    .vplayer{
-      background:#000;width:100%;height:216px;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      position:relative;overflow:hidden;flex-shrink:0;cursor:pointer;
-    }
-    .vp-bg{position:absolute;inset:0;}
-    .vp-bg-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.12;}
-    .vp-play-btn{
-      width:64px;height:64px;border-radius:50%;
-      background:rgba(255,255,255,.92);
-      display:flex;align-items:center;justify-content:center;
-      font-size:24px;z-index:2;transition:transform .15s;
-    }
-    .vp-play-btn:active{transform:scale(.92);}
-    .vp-pause-overlay{display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:2;}
-    .is-playing .vp-play-btn{display:none;}
-    .is-playing .vp-pause-overlay{display:flex;}
-    .vp-controls{position:absolute;bottom:0;left:0;right:0;padding:0 14px 12px;z-index:3;}
-    .vp-prog{height:3px;background:rgba(255,255,255,.25);border-radius:2px;margin-bottom:7px;cursor:pointer;position:relative;}
-    .vp-fill{height:100%;background:#E8007D;border-radius:2px;width:35%;transition:width .2s linear;}
-    .vp-times{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);}
+/* Related content (horizontal) */
+.rel-card{width:160px;flex-shrink:0;cursor:pointer;}
+.rel-thumb{width:160px;height:100px;border-radius:8px;overflow:hidden;margin-bottom:8px;position:relative;}
+.rel-thumb-inner{width:100%;height:100%;display:flex;align-items:flex-end;}
+.rel-thumb-bg{position:absolute;inset:0;}
+.rel-label{position:absolute;bottom:6px;left:8px;font-size:9px;font-weight:800;color:var(--pink);background:#fff;padding:2px 6px;border-radius:4px;}
+.rel-title{font-size:12px;font-weight:600;color:var(--txt);line-height:1.4;padding:0 2px;}
+.rel-meta{font-size:11px;color:var(--lite);margin-top:3px;padding:0 2px;}
 
-    .vid-info{padding:16px;border-bottom:1px solid #f5f5f5;}
-    .vid-title{font-size:16px;font-weight:800;color:#111;line-height:1.4;margin-bottom:7px;}
-    .vid-meta{font-size:12px;color:#aaa;margin-bottom:10px;}
-    .vid-badge{display:inline-block;background:#fff0f7;color:#E8007D;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;border:1px solid #f9c0dd;}
+/* ═══════════════════════════
+   VIDEO PLAYER
+═══════════════════════════ */
+.vplayer{background:#000;position:relative;overflow:hidden;flex-shrink:0;cursor:pointer;}
+.vp-bg{position:absolute;inset:0;}
+.vp-controls-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.vp-transport{display:flex;align-items:center;gap:20px;}
+.vp-skip-btn{color:rgba(255,255,255,.8);font-size:26px;cursor:pointer;}
+.vp-play-btn{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);
+  border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:22px;cursor:pointer;}
+.vp-prog-wrap{position:absolute;bottom:0;left:0;right:0;padding:0 14px 14px;}
+.vp-bar{height:3px;background:rgba(255,255,255,.25);border-radius:2px;margin-bottom:6px;cursor:pointer;position:relative;}
+.vp-fill{height:100%;background:var(--pink);border-radius:2px;width:33%;}
+.vp-fill::after{content:'';position:absolute;right:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--pink);}
+.vp-times{display:flex;justify-content:space-between;color:rgba(255,255,255,.7);font-size:11px;}
 
-    .vid-desc{padding:14px 16px;border-bottom:1px solid #f5f5f5;}
-    .vid-desc p{font-size:13px;color:#555;line-height:1.75;}
+.vid-info{padding:14px 16px;border-bottom:1px solid var(--border);}
+.vid-title{font-size:16px;font-weight:800;color:var(--txt);line-height:1.4;margin-bottom:5px;}
+.vid-meta{font-size:12px;color:var(--lite);}
 
-    .rel-item{display:flex;padding:12px 16px;gap:12px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .15s;}
-    .rel-item:active{background:#fafafa;}
-    .rel-thumb{width:104px;height:66px;border-radius:8px;flex-shrink:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
-    .rel-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;}
-    .rel-info{flex:1;}
-    .rel-title{font-size:13px;font-weight:600;color:#111;line-height:1.4;margin-bottom:4px;}
-    .rel-meta{font-size:11px;color:#bbb;}
+/* ═══════════════════════════
+   試合 SCREEN
+═══════════════════════════ */
+.match-item{padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;}
+.match-comp{font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:600;}
+.match-row{display:flex;align-items:center;justify-content:space-between;}
+.match-team-row{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.match-emb-sm{width:40px;height:40px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;text-align:center;line-height:1.2;}
+.match-tname-sm{font-size:11px;font-weight:700;text-align:center;}
+.match-score{display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 10px;}
+.match-score-num{font-size:28px;font-weight:900;color:var(--txt);}
+.match-score-date{font-size:11px;color:var(--sub);}
+.result-w{color:#2e7d32;font-size:11px;font-weight:700;text-align:center;}
+.result-l{color:#c62828;font-size:11px;font-weight:700;text-align:center;}
+.result-d{color:#777;font-size:11px;font-weight:700;text-align:center;}
+.upcoming-date{font-size:14px;font-weight:900;color:var(--pink);text-align:center;}
+.upcoming-time{font-size:11px;color:var(--sub);text-align:center;margin-top:2px;}
 
-    /* ════════════════════════════
-       SETTINGS SCREEN
-    ════════════════════════════ */
-    .set-section{padding:14px 16px 8px;background:#f5f5f5;}
-    .set-section-label{font-size:11px;color:#888;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-    .set-item{
-      background:#fff;padding:16px;border-bottom:1px solid #f5f5f5;
-      display:flex;align-items:center;justify-content:space-between;cursor:pointer;
-      transition:background .15s;
-    }
-    .set-item:active{background:#fafafa;}
-    .set-item-label{font-size:14px;color:#111;font-weight:500;}
-    .set-item-sub{font-size:12px;color:#E8007D;margin-top:2px;font-weight:600;}
-    .set-item-val{font-size:14px;color:#bbb;}
-    .toggle{width:50px;height:30px;background:#E8007D;border-radius:15px;position:relative;cursor:pointer;}
-    .toggle-knob{position:absolute;right:3px;top:3px;width:24px;height:24px;background:#fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-    .toggle.off{background:#ddd;}
-    .toggle.off .toggle-knob{right:auto;left:3px;}
+/* ═══════════════════════════
+   会員証
+═══════════════════════════ */
+.member-card{margin:20px 16px;border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,var(--pink) 0%,#a00055 100%);
+  box-shadow:0 8px 24px rgba(232,0,125,.35);}
+.mc-top{padding:20px;color:#fff;}
+.mc-logo{font-size:22px;font-style:italic;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;}
+.mc-type{font-size:12px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.mc-body{padding:20px;border-top:1px solid rgba(255,255,255,.2);}
+.mc-name{font-size:22px;font-weight:900;color:#fff;margin-bottom:4px;}
+.mc-id{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:16px;}
+.mc-fields{display:flex;gap:20px;}
+.mc-field label{font-size:10px;color:rgba(255,255,255,.6);display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px;}
+.mc-field span{font-size:14px;font-weight:700;color:#fff;}
+.mc-qr{margin:16px;background:#fff;border-radius:12px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.qr-placeholder{width:100px;height:100px;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.qr-cell{background:#111;border-radius:1px;}
+.qr-cell.w{background:#fff;}
+.mc-qr-label{font-size:11px;color:var(--sub);}
 
-    /* ── Toast ── */
-    .toast{
-      position:absolute;bottom:95px;left:50%;transform:translateX(-50%);
-      background:rgba(0,0,0,.82);color:#fff;font-size:13px;
-      padding:10px 18px;border-radius:20px;
-      white-space:nowrap;opacity:0;transition:opacity .25s;
-      z-index:999;pointer-events:none;backdrop-filter:blur(8px);
-    }
-    .toast.show{opacity:1;}
+/* ── Toast ── */
+.toast{position:absolute;bottom:92px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.8);color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;
+  white-space:nowrap;opacity:0;transition:opacity .25s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;}
 
-    /* ── Spacer ── */
-    .space{height:24px;}
+/* ══════════════════
+   MOBILE RESPONSIVE
+══════════════════ */
+@media(max-width:540px){
+  body{padding:0;background:#fff;justify-content:flex-start;align-items:stretch;min-height:100dvh;}
+  .demo-note{display:none;}
+  .phone{width:100%;height:100dvh;border-radius:0;padding:0;box-shadow:none;background:#fff;}
+  .phone-screen{border-radius:0;}
+  .di{display:none;}
+  .sb{display:none;}
+  .app{height:100dvh;padding-top:env(safe-area-inset-top,0px);}
+  .bnav{padding-bottom:max(12px,env(safe-area-inset-bottom,12px));height:auto;}
+  .vplayer{height:56vw!important;}
+}
 
-    /* ══════════════════════════════
-       MOBILE: フルスクリーン表示
-    ══════════════════════════════ */
-    @media (max-width:540px) {
-      body{
-        padding:0;background:#fff;
-        justify-content:flex-start;align-items:stretch;
-        min-height:100dvh;
-      }
-      .demo-header{display:none;}
-      .phone{
-        width:100%;height:100dvh;
-        border-radius:0;padding:0;
-        box-shadow:none;background:#fff;
-        border:none;
-      }
-      .phone-screen{border-radius:0;}
-      .dynamic-island{display:none;}
-      /* ステータスバーはデバイス側に任せて非表示 */
-      .status-bar{display:none;}
-      /* セーフエリア対応：上はノッチ分 */
-      .app{
-        height:100dvh;
-        padding-top:env(safe-area-inset-top,0px);
-      }
-      /* ホームインジケーター分の余白 */
-      .bottom-nav{
-        height:auto;
-        padding-top:10px;
-        padding-bottom:max(16px, env(safe-area-inset-bottom,16px));
-      }
-      /* タップ領域を広く */
-      .nav-btn{padding:0 2px;}
-      /* 動画プレイヤーをもう少し大きく */
-      .vplayer{height:56vw;}
-    }
-  </style>
+/* ── Thumb color presets ── */
+.t-ic{background:linear-gradient(135deg,#0a0820,#2d0a40,#3d0a18);}
+.t-cl{background:linear-gradient(135deg,#051528,#0a2850,#0f3a6a);}
+.t-pc{background:linear-gradient(135deg,#180505,#400a0a,#5a0f0f);}
+.t-tp{background:linear-gradient(135deg,#150510,#3a0a2a,#520f3a);}
+.t-mt{background:linear-gradient(135deg,#05180a,#0a3a14,#0f5018);}
+.t-ac{background:linear-gradient(135deg,#080520,#150a40,#1a0f5a);}
+.t-cx{background:linear-gradient(135deg,#180f05,#3a2008,#5a3010);}
+</style>
 </head>
 <body ontouchstart="">
-
-<div class="demo-header">
-  <strong>セレッソ大阪 アプリ — インタラクティブ デモ</strong><br>
-  タップ・クリックして操作できます
-</div>
+<div class="demo-note">セレッソ大阪 アプリ デモ — タップして操作</div>
 
 <div class="phone">
-  <div class="dynamic-island"></div>
-  <div class="phone-screen">
+<div class="di"></div>
+<div class="phone-screen">
 
-    <!-- Status Bar -->
-    <div class="status-bar">
-      <span>12:00</span>
-      <div class="status-icons">
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="#111"><rect x="0" y="3" width="2.5" height="9" rx=".8"/><rect x="3.5" y="2" width="2.5" height="10" rx=".8"/><rect x="7" y="0.5" width="2.5" height="11.5" rx=".8"/><rect x="10.5" y="0" width="2.5" height="12" rx=".8"/></svg>
-        <svg width="16" height="12" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
-        <span>🔋</span>
+<!-- Status bar -->
+<div class="sb">
+  <span>12:00</span>
+  <div class="sb-r">
+    <svg width="16" height="11" viewBox="0 0 16 11" fill="#111"><rect x="0" y="3" width="2.5" height="8" rx=".7"/><rect x="3.5" y="2" width="2.5" height="9" rx=".7"/><rect x="7" y=".5" width="2.5" height="10.5" rx=".7"/><rect x="10.5" y="0" width="2.5" height="11" rx=".7"/></svg>
+    <svg width="16" height="12" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+    <span>🔋</span>
+  </div>
+</div>
+
+<div class="app">
+
+<!-- ═══ HOME ═══ -->
+<div id="s-home" class="screen on">
+  <div class="hdr">
+    <div class="hdr-logo">
+      <svg class="logo-badge" viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="18" fill="#0B1340"/>
+        <circle cx="18" cy="18" r="14" fill="#E8007D"/>
+        <path d="M18 6 L22 14 L30 14 L24 19 L26 27 L18 22 L10 27 L12 19 L6 14 L14 14Z" fill="#fff" opacity=".9"/>
+      </svg>
+      <div>
+        <div class="logo-name">Cerezo</div>
+        <div class="logo-sub">Osaka</div>
+      </div>
+    </div>
+    <div class="hdr-ics">
+      <span class="hdr-ic" onclick="toast('通知')">🔔</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="match-hero">
+      <div class="mh-comp">2024 明治安田 J1リーグ 第16節</div>
+      <div class="mh-date">5.12 <em>（日）</em></div>
+      <div class="mh-ko">16:00 KICKOFF</div>
+      <div class="mh-venue">📍 ヨドコウ桜スタジアム</div>
+      <div class="mh-teams">
+        <div class="mh-team">
+          <div class="mh-emb emb-c">
+            <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E8007D"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg>
+          </div>
+          <div class="mh-tname">セレッソ大阪</div>
+        </div>
+        <div class="mh-vs">VS</div>
+        <div class="mh-team">
+          <div class="mh-emb emb-g">
+            <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1a56cc"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="18" font-weight="900" font-family="Arial">G</text></svg>
+          </div>
+          <div class="mh-tname">ガンバ大阪</div>
+        </div>
+      </div>
+      <button class="ticket-btn" onclick="toast('チケット購入サイトへ')">チケット購入</button>
+    </div>
+
+    <div class="shdr"><div class="stitle">NEXT MATCH</div><div class="smore" onclick="navTo('matches')">すべて見る</div></div>
+    <div class="next-card" onclick="navTo('matches')">
+      <div class="next-thumb">
+        <div class="next-thumb-inner" style="background:linear-gradient(135deg,#0B1340,#1a237e);">
+          <svg width="30" height="30" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E8007D"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="next-info">
+        <div class="next-comp">2024 明治安田 J1リーグ 第17節</div>
+        <div class="next-teams">5.18（土） 15:00 KICKOFF vs FC東京</div>
+        <div class="next-date">ヨドコウ桜スタジアム</div>
+      </div>
+      <div class="next-arr">›</div>
+    </div>
+
+    <div class="shdr"><div class="stitle">NEWS</div><div class="smore" onclick="tab('news')">すべて見る</div></div>
+
+    <div class="news-item" onclick="toast('記事を開く')">
+      <div class="news-thumb"><div class="news-thumb-inner" style="background:linear-gradient(135deg,#E8007D,#ff5fa5);">⚽<span style="font-size:10px;color:#fff;font-weight:700;">試合結果</span></div></div>
+      <div class="news-info">
+        <div class="news-cat">試合結果</div>
+        <div class="news-ttl">5/12（日）ガンバ大阪戦のチケット販売について</div>
+        <div class="news-date">2024.05.08</div>
+      </div>
+    </div>
+    <div class="news-item" onclick="toast('記事を開く')">
+      <div class="news-thumb"><div class="news-thumb-inner" style="background:linear-gradient(135deg,#0B1340,#1a3a6a);">📋<span style="font-size:10px;color:#fff;font-weight:700;">お知らせ</span></div></div>
+      <div class="news-info">
+        <div class="news-cat">お知らせ</div>
+        <div class="news-ttl">セレッソ大阪ヤンマーレディース 5/11（土）試合情報</div>
+        <div class="news-date">2024.05.07</div>
+      </div>
+    </div>
+    <div class="news-item" onclick="toast('記事を開く')">
+      <div class="news-thumb"><div class="news-thumb-inner" style="background:linear-gradient(135deg,#f57c00,#ffb74d);">🎤<span style="font-size:10px;color:#fff;font-weight:700;">選手情報</span></div></div>
+      <div class="news-info">
+        <div class="news-cat">選手インタビュー</div>
+        <div class="news-ttl">レオ セアラ「チームの連携がうまくいっている」</div>
+        <div class="news-date">2024.05.06</div>
+      </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
+
+<!-- ═══ TEAM ═══ -->
+<div id="s-team" class="screen">
+  <div class="hdr">
+    <div class="hdr-logo"><div style="font-size:17px;font-weight:800;color:var(--txt);">チーム</div></div>
+    <span class="hdr-ic" onclick="toast('検索')">🔍</span>
+  </div>
+  <div class="body">
+    <div style="background:linear-gradient(135deg,#0B1340,#1a237e);padding:16px;color:#fff;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:4px;">2024 J1リーグ 現在順位</div>
+        <div style="font-size:40px;font-weight:900;line-height:1;">3<span style="font-size:20px;font-weight:500;">位</span></div>
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;">7</div><div style="font-size:10px;color:rgba(255,255,255,.6);">勝</div></div>
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;">3</div><div style="font-size:10px;color:rgba(255,255,255,.6);">分</div></div>
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;">2</div><div style="font-size:10px;color:rgba(255,255,255,.6);">敗</div></div>
+      </div>
+    </div>
+    <div class="shdr"><div class="stitle">選手一覧</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#eee;">
+      <div style="background:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="toast('キム ジンヒョン')">
+        <div style="font-size:22px;font-weight:900;color:var(--pink);">1</div>
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:24px;">🧤</div>
+        <div style="font-size:12px;font-weight:700;text-align:center;">キム ジンヒョン</div>
+        <div style="font-size:10px;font-weight:700;background:#fff3cd;color:#856404;padding:2px 8px;border-radius:8px;">GK</div>
+      </div>
+      <div style="background:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="toast('レオ セアラ')">
+        <div style="font-size:22px;font-weight:900;color:var(--pink);">9</div>
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:24px;">⚽</div>
+        <div style="font-size:12px;font-weight:700;text-align:center;">レオ セアラ</div>
+        <div style="font-size:10px;font-weight:700;background:#f8d7da;color:#842029;padding:2px 8px;border-radius:8px;">FW</div>
+      </div>
+      <div style="background:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="toast('カピシャーバ')">
+        <div style="font-size:22px;font-weight:900;color:var(--pink);">10</div>
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:24px;">⚽</div>
+        <div style="font-size:12px;font-weight:700;text-align:center;">カピシャーバ</div>
+        <div style="font-size:10px;font-weight:700;background:#f8d7da;color:#842029;padding:2px 8px;border-radius:8px;">FW</div>
+      </div>
+      <div style="background:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="toast('田中駿汰')">
+        <div style="font-size:22px;font-weight:900;color:var(--pink);">25</div>
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:24px;">⚽</div>
+        <div style="font-size:12px;font-weight:700;text-align:center;">田中駿汰</div>
+        <div style="font-size:10px;font-weight:700;background:#d1e7dd;color:#0f5132;padding:2px 8px;border-radius:8px;">MF</div>
+      </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
+
+<!-- ═══ CEREZO PLUS ═══ -->
+<div id="s-plus" class="screen">
+  <div class="plus-hdr">
+    <div class="plus-title">セレッソPLUS</div>
+    <span class="hdr-ic" onclick="toast('検索')">🔍</span>
+  </div>
+  <div class="tab-row">
+    <div class="tab-item on" onclick="toast('限定動画')">限定動画</div>
+    <div class="tab-item" onclick="toast('読み物')">読み物</div>
+    <div class="tab-item" onclick="toast('フォトアルバム')">フォトアルバム</div>
+    <div class="tab-item" onclick="toast('会員限定')">会員限定</div>
+  </div>
+
+  <div class="body">
+    <!-- Hero -->
+    <div class="hero" onclick="navTo('episodes')">
+      <div class="hero-bg t-ic" style="background:linear-gradient(155deg,#080820 0%,#1e0a3c 40%,#3d0a20 80%,#200a10 100%)"></div>
+      <div class="hero-grad"></div>
+      <div style="position:absolute;top:16px;left:16px;background:var(--pink);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:.5px;">今週の注目</div>
+      <div class="hero-new">NEW</div>
+      <div class="hero-body">
+        <div class="hero-ttl">INSIDE CEREZO</div>
+        <div class="hero-sub">アウェイ遠征に完全密着</div>
+        <div class="hero-btn">▶ 今すぐ視聴</div>
       </div>
     </div>
 
-    <!-- App -->
-    <div class="app">
+    <div class="shdr"><div class="stitle">新着コンテンツ</div><div class="smore" onclick="navTo('videos')">すべて見る</div></div>
 
-      <!-- ═══════════ HOME ═══════════ -->
-      <div id="s-home" class="screen active">
-        <div class="app-header">
-          <div class="logo-wrap">
-            <div class="logo-mark">
-              <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#E8007D"/><text x="20" y="27" text-anchor="middle" fill="#fff" font-size="22" font-weight="900" font-family="Georgia,serif">C</text></svg>
-            </div>
-            <div class="logo-text-wrap">
-              <div class="logo-name">Cerezo</div>
-              <div class="logo-sub">Osaka</div>
-            </div>
-          </div>
-          <div class="hdr-icons">
-            <span class="hdr-icon" onclick="toast('通知')">🔔</span>
-            <span class="hdr-icon" onclick="toast('検索')">🔍</span>
-          </div>
+    <div class="clist-item" onclick="navTo('episodes')">
+      <div class="clist-thumb t-ic"><div class="clist-inner"><div style="font-size:18px;">📹</div><div class="clist-lbl">INSIDE<br>CEREZO</div></div></div>
+      <div class="clist-info">
+        <div class="clist-name">INSIDE CEREZO <span class="new-tag">NEW</span></div>
+        <div class="clist-desc">アウェイ遠征に完全密着</div>
+      </div>
+      <div class="clist-arr">›</div>
+    </div>
+    <div class="clist-item" onclick="navTo('episodes')">
+      <div class="clist-thumb t-cl"><div class="clist-inner"><div style="font-size:18px;">🎬</div><div class="clist-lbl">CEREZO<br>LABO</div></div></div>
+      <div class="clist-info">
+        <div class="clist-name">CEREZO LABO <span class="new-tag">NEW</span></div>
+        <div class="clist-desc">監督 × OBスペシャル対談</div>
+      </div>
+      <div class="clist-arr">›</div>
+    </div>
+    <div class="clist-item" onclick="navTo('episodes')">
+      <div class="clist-thumb t-pc"><div class="clist-inner"><div style="font-size:18px;">🎙️</div><div class="clist-lbl">POD<br>CAST</div></div></div>
+      <div class="clist-info">
+        <div class="clist-name">PODCAST <span class="new-tag">NEW</span></div>
+        <div class="clist-desc">サポーターからの質問に回答</div>
+      </div>
+      <div class="clist-arr">›</div>
+    </div>
+    <div class="clist-item" onclick="toast('TOPICS')">
+      <div class="clist-thumb t-tp"><div class="clist-inner"><div style="font-size:18px;">📌</div><div class="clist-lbl">TOPICS</div></div></div>
+      <div class="clist-info">
+        <div class="clist-name">TOPICS</div>
+        <div class="clist-desc">ドルトムントやアルメレの試合をお届け</div>
+      </div>
+      <div class="clist-arr">›</div>
+    </div>
+    <div class="clist-item" onclick="toast('MATCHS')">
+      <div class="clist-thumb t-mt"><div class="clist-inner"><div style="font-size:18px;">⚽</div><div class="clist-lbl">MATCHS</div></div></div>
+      <div class="clist-info">
+        <div class="clist-name">MATCHS</div>
+        <div class="clist-desc">紀布会員ントやアルメレの試合を配信</div>
+      </div>
+      <div class="clist-arr">›</div>
+    </div>
+
+    <!-- Member CTA -->
+    <div style="background:linear-gradient(135deg,var(--pink),#a00055);margin:16px;border-radius:14px;overflow:hidden;">
+      <div style="padding:20px;">
+        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:6px;">ここでしか見られない特別な体験をあなたに。</div>
+        <div style="font-size:22px;font-weight:900;color:#fff;font-style:italic;margin-bottom:14px;">セレッソPLUS</div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;">
+          <div style="font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;">✓ 会員限定の動画・LIVE・記事・写真が見放題！</div>
+          <div style="font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;">✓ 試合や練習のリアルな裏側が楽しめる！</div>
+          <div style="font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;">✓ いつでもどこでも、セレッソをもっと身近に！</div>
         </div>
+        <div style="font-size:11px;color:rgba(255,255,255,.7);margin-bottom:4px;">月額プラン</div>
+        <div style="font-size:28px;font-weight:900;color:#fff;margin-bottom:14px;">¥900 <span style="font-size:13px;font-weight:400;">（税込）</span></div>
+        <button style="background:#fff;color:var(--pink);border:none;width:100%;padding:13px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;" onclick="toast('会員登録ページへ')">今すぐ会員登録</button>
+        <div style="font-size:11px;color:rgba(255,255,255,.6);text-align:center;margin-top:8px;">※ いつでも解約可能です。</div>
+      </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
 
-        <div class="screen-body">
-          <!-- Match Hero -->
-          <div class="match-hero">
-            <div class="mh-label">2024 J1リーグ 第12節</div>
-            <div class="mh-date">5.12 <span>（日）</span></div>
-            <div class="mh-ko">⏰ 16:00 KICKOFF</div>
-            <div class="mh-teams">
-              <div class="mh-team">
-                <div class="mh-emblem emb-cerezo">🌸</div>
-                <div class="mh-tname">セレッソ大阪</div>
-              </div>
-              <div class="mh-vs">VS</div>
-              <div class="mh-team">
-                <div class="mh-emblem emb-rival">G</div>
-                <div class="mh-tname">ガンバ大阪</div>
-              </div>
-            </div>
-            <div class="mh-venue">📍 ヨドコウ桜スタジアム</div>
-            <button class="ticket-btn" onclick="toast('チケット購入サイトへ移動します')">チケット購入</button>
-          </div>
+<!-- ═══ 限定動画 LIST ═══ -->
+<div id="s-videos" class="screen">
+  <div class="bhdr">
+    <div class="back" onclick="back()">‹</div>
+    <div class="bhdr-title">限定動画</div>
+    <div class="bhdr-r"><span class="bhdr-ic" onclick="toast('検索')">🔍</span></div>
+  </div>
+  <div class="body">
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-cl"><div class="prog-thumb-inner"><div style="font-size:20px;">🎬</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">CEREZO LABO</div></div></div>
+      <div class="prog-info"><div class="prog-name">CEREZO LABO</div><div class="prog-desc">選手・監督・OB・外部ゲストとの対談番組</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-pc"><div class="prog-thumb-inner"><div style="font-size:20px;">🎙️</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">PODCAST</div></div></div>
+      <div class="prog-info"><div class="prog-name">PODCAST</div><div class="prog-desc">ライトに聞ける雑談・裏話・テーマトーク番組</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-ic"><div class="prog-thumb-inner"><div style="font-size:20px;">📹</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">INSIDE CEREZO</div></div></div>
+      <div class="prog-info"><div class="prog-name">INSIDE CEREZO</div><div class="prog-desc">選手への密着や、クラブを裏で支えるスタッフのドキュメンタリーなど</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-tp"><div class="prog-thumb-inner"><div style="font-size:20px;">📌</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">TOPICS</div></div></div>
+      <div class="prog-info"><div class="prog-name">TOPICS</div><div class="prog-desc">公開練習や特別イベントなど動画をお届け</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-mt"><div class="prog-thumb-inner"><div style="font-size:20px;">⚽</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">MATCHS</div></div></div>
+      <div class="prog-info"><div class="prog-name">MATCHS</div><div class="prog-desc">ドルトムントやアルメレの試合を配信</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-ac"><div class="prog-thumb-inner"><div style="font-size:20px;">🏅</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">ACADEMY</div></div></div>
+      <div class="prog-info"><div class="prog-name">ACADEMY</div><div class="prog-desc">アカデミーの試合や育成現場に密着する番組</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="prog-item" onclick="navTo('episodes')">
+      <div class="prog-thumb t-cx"><div class="prog-thumb-inner"><div style="font-size:20px;">🏆</div></div><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;"><div class="prog-name-overlay">CLASSICS</div></div></div>
+      <div class="prog-info"><div class="prog-name">CEREZO CLASSICS</div><div class="prog-desc">過去の名勝負や伝説の試合をアーカイブ配信</div></div>
+      <div class="prog-arr">›</div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
 
-          <!-- Next Match -->
-          <div class="sec-hdr">
-            <div class="sec-title">NEXT MATCH</div>
-            <div class="sec-more" onclick="toast('試合日程一覧')">もっと見る ›</div>
-          </div>
-          <div class="next-card" onclick="toast('試合詳細')">
-            <div class="next-ico">⚽</div>
-            <div class="next-info">
-              <div class="next-comp">2024 J1リーグ 第13節</div>
-              <div class="next-match">セレッソ大阪 vs 鹿島アントラーズ</div>
-              <div class="next-date">5/18（土） 18:00</div>
-            </div>
-            <span style="color:#ddd;">›</span>
-          </div>
+<!-- ═══ EPISODES ═══ -->
+<div id="s-episodes" class="screen">
+  <div class="bhdr">
+    <div class="back" onclick="back()">‹</div>
+    <div class="bhdr-title"></div>
+    <div class="bhdr-r"><span class="bhdr-ic" onclick="toast('シェア')">⬆</span></div>
+  </div>
 
-          <!-- News -->
-          <div class="sec-hdr">
-            <div class="sec-title">NEWS</div>
-            <div class="sec-more" onclick="tab('news')">もっと見る ›</div>
-          </div>
+  <div class="body">
+    <div class="ph" style="height:160px;">
+      <div class="ph-bg t-ic" style="background:linear-gradient(155deg,#080820 0%,#1e0a3c 40%,#3d0a20 80%)"></div>
+      <div class="ph-overlay"></div>
+      <div class="ph-body">
+        <div class="ph-title">INSIDE CEREZO</div>
+        <div class="ph-sub">密着ドキュメンタリー</div>
+      </div>
+    </div>
 
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#E8007D,#ff5fa5);">⚽</div>
-            <div class="news-info">
-              <div class="news-cat">試合結果</div>
-              <div class="news-ttl">【第12節】セレッソ大阪 2-1 ガンバ大阪 大阪ダービー制す！</div>
-              <div class="news-date">2024.05.12</div>
-            </div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#1565C0,#42a5f5);">📸</div>
-            <div class="news-info">
-              <div class="news-cat">フォトギャラリー</div>
-              <div class="news-ttl">第12節 フォトギャラリー（50枚）ダービーの熱戦を写真で振り返る</div>
-              <div class="news-date">2024.05.12</div>
-            </div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#f57c00,#ffb74d);">🎤</div>
-            <div class="news-info">
-              <div class="news-cat">選手インタビュー</div>
-              <div class="news-ttl">上門知樹「ダービーで点を取れて最高の気分」試合後コメント</div>
-              <div class="news-date">2024.05.12</div>
-            </div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#2e7d32,#66bb6a);">🏋️</div>
-            <div class="news-info">
-              <div class="news-cat">練習情報</div>
-              <div class="news-ttl">5/13（月）練習レポート — 鹿島戦へ向けて始動</div>
-              <div class="news-date">2024.05.13</div>
-            </div>
-          </div>
-          <div class="space"></div>
+    <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;color:var(--sub);line-height:1.65;">
+      選手への密着や、クラブを裏で支えるスタッフのドキュメンタリーなど
+    </div>
+
+    <div class="fav-btn" onclick="toast('お気に入りに追加しました')">
+      <span class="fav-ic">♡</span> お気に入りに追加
+    </div>
+
+    <div class="ep-tabs">
+      <div class="ep-tab on">エピソード</div>
+      <div class="ep-tab" onclick="toast('関連コンテンツ')">関連コンテンツ</div>
+    </div>
+
+    <div class="ep-section-title">エピソード一覧</div>
+
+    <div class="ep-item" onclick="navTo('player')">
+      <div class="ep-thumb t-ic"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#080820,#1e0a3c)"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;">33:55</div></div></div>
+      <div class="ep-info">
+        <div class="ep-title">アウェイ遠征の裏側</div>
+        <div class="ep-date">2024.05.07 配信</div>
+      </div>
+      <div class="ep-dl" onclick="toast('ダウンロード')">↓</div>
+    </div>
+    <div class="ep-item" onclick="navTo('player')">
+      <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#0a1520,#1a3050)"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;">28:12</div></div></div>
+      <div class="ep-info">
+        <div class="ep-title">練習場の1日に密着</div>
+        <div class="ep-date">2024.04.30 配信</div>
+      </div>
+      <div class="ep-dl" onclick="toast('ダウンロード')">↓</div>
+    </div>
+    <div class="ep-item" onclick="navTo('player')">
+      <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#200a0a,#4a1010)"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;">22:48</div></div></div>
+      <div class="ep-info">
+        <div class="ep-title">選手インタビュー 前編</div>
+        <div class="ep-date">2024.04.22 配信</div>
+      </div>
+      <div class="ep-dl" onclick="toast('ダウンロード')">↓</div>
+    </div>
+    <div class="ep-item" onclick="navTo('player')">
+      <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#0a1828,#142840)"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;">41:00</div></div></div>
+      <div class="ep-info">
+        <div class="ep-title">ドキュメント：リハビリの日々</div>
+        <div class="ep-date">2024.04.15 配信</div>
+      </div>
+      <div class="ep-dl" onclick="toast('ダウンロード')">↓</div>
+    </div>
+    <div class="ep-item" onclick="navTo('player')">
+      <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#051808,#0a3010)"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;">19:30</div></div></div>
+      <div class="ep-info">
+        <div class="ep-title">クラブを支えるスタッフたち</div>
+        <div class="ep-date">2024.04.08 配信</div>
+      </div>
+      <div class="ep-dl" onclick="toast('ダウンロード')">↓</div>
+    </div>
+
+    <!-- Related content -->
+    <div class="shdr"><div class="stitle">関連コンテンツ</div></div>
+    <div style="display:flex;gap:12px;padding:0 16px 16px;overflow-x:auto;">
+      <div class="rel-card" onclick="toast('フォトアルバム')">
+        <div class="rel-thumb"><div class="rel-thumb-bg t-tp" style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0a30,#3d0a50)"></div><div class="rel-label">フォトアルバム</div></div>
+        <div class="rel-title">アウェイ遠征オフショット（45枚）</div>
+        <div class="rel-meta">写真集</div>
+      </div>
+      <div class="rel-card" onclick="navTo('player')">
+        <div class="rel-thumb"><div class="rel-thumb-bg t-pc" style="position:absolute;inset:0;background:linear-gradient(135deg,#180505,#400a0a)"></div><div class="rel-label">PODCAST</div></div>
+        <div class="rel-title">#11 アウェイの過ごし方</div>
+        <div class="rel-meta">22:15</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIDEO PLAYER ═══ -->
+<div id="s-player" class="screen">
+  <div class="bhdr">
+    <div class="back" onclick="back()">‹</div>
+    <div class="bhdr-title"></div>
+    <div class="bhdr-r"><span class="bhdr-ic" onclick="toast('全画面')">⤢</span></div>
+  </div>
+
+  <div class="body">
+    <!-- Player -->
+    <div class="vplayer" id="vp" style="height:210px;" onclick="togglePlay()">
+      <div class="vp-bg t-ic" style="background:linear-gradient(155deg,#080820 0%,#1e0a3c 40%,#3d0a20 80%)"></div>
+      <div class="vp-controls-wrap">
+        <div class="vp-transport">
+          <div class="vp-skip-btn" onclick="seekBack(event)">⏮</div>
+          <div class="vp-play-btn" id="vp-playbtn">⏸</div>
+          <div class="vp-skip-btn" onclick="seekFwd(event)">⏭</div>
         </div>
       </div>
-
-      <!-- ═══════════ TEAM ═══════════ -->
-      <div id="s-team" class="screen">
-        <div class="app-header">
-          <div class="logo-wrap">
-            <div class="logo-mark"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#E8007D"/><text x="20" y="27" text-anchor="middle" fill="#fff" font-size="22" font-weight="900" font-family="Georgia,serif">C</text></svg></div>
-            <div class="logo-text-wrap"><div class="logo-name" style="font-size:18px;">チーム</div></div>
-          </div>
-          <span class="hdr-icon" onclick="toast('検索')">🔍</span>
+      <div class="vp-prog-wrap">
+        <div class="vp-bar" id="vp-bar" onclick="seekVid(event)">
+          <div class="vp-fill" id="vp-fill" style="position:relative;"></div>
         </div>
-
-        <div class="screen-body">
-          <!-- Standing Banner -->
-          <div class="standing-banner">
-            <div>
-              <div style="font-size:12px;color:rgba(255,255,255,.6);margin-bottom:2px;">2024 J1 現在順位</div>
-              <div style="display:flex;align-items:baseline;gap:4px;">
-                <div class="sb-rank">3</div>
-                <div style="font-size:16px;color:rgba(255,255,255,.7);">位</div>
-              </div>
-            </div>
-            <div class="sb-stats">
-              <div class="sb-stat"><div class="sb-val">7</div><div class="sb-key">勝</div></div>
-              <div class="sb-stat"><div class="sb-val">3</div><div class="sb-key">分</div></div>
-              <div class="sb-stat"><div class="sb-val">2</div><div class="sb-key">敗</div></div>
-              <div class="sb-stat"><div class="sb-val">24</div><div class="sb-key">得点</div></div>
-            </div>
-          </div>
-
-          <div class="sec-hdr">
-            <div class="sec-title">選手一覧</div>
-            <div class="sec-more" onclick="toast('全選手一覧')">全員見る ›</div>
-          </div>
-
-          <div class="player-grid">
-            <div class="player-card" onclick="toast('選手プロフィール — キム ジンヒョン')">
-              <div class="p-num">1</div><div class="p-avatar">🧤</div>
-              <div class="p-name">キム ジンヒョン</div><div class="p-pos pos-gk">GK</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — 鳥海晃司')">
-              <div class="p-num">3</div><div class="p-avatar">🛡️</div>
-              <div class="p-name">鳥海晃司</div><div class="p-pos pos-df">DF</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — 奥埜博亮')">
-              <div class="p-num">8</div><div class="p-avatar">⚽</div>
-              <div class="p-name">奥埜博亮</div><div class="p-pos pos-mf">MF</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — レオ セアラ')">
-              <div class="p-num">9</div><div class="p-avatar">⚽</div>
-              <div class="p-name">レオ セアラ</div><div class="p-pos pos-fw">FW</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — カピシャーバ')">
-              <div class="p-num">10</div><div class="p-avatar">⚽</div>
-              <div class="p-name">カピシャーバ</div><div class="p-pos pos-fw">FW</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — 上門知樹')">
-              <div class="p-num">11</div><div class="p-avatar">⚽</div>
-              <div class="p-name">上門知樹</div><div class="p-pos pos-fw">FW</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — 為田大貴')">
-              <div class="p-num">14</div><div class="p-avatar">⚽</div>
-              <div class="p-name">為田大貴</div><div class="p-pos pos-mf">MF</div>
-            </div>
-            <div class="player-card" onclick="toast('選手プロフィール — 田中駿汰')">
-              <div class="p-num">25</div><div class="p-avatar">⚽</div>
-              <div class="p-name">田中駿汰</div><div class="p-pos pos-mf">MF</div>
-            </div>
-          </div>
-          <div class="space"></div>
+        <div class="vp-times">
+          <span id="vp-cur">11:25</span>
+          <span id="vp-tot">33:55</span>
         </div>
       </div>
+    </div>
 
-      <!-- ═══════════ CEREZO+ ═══════════ -->
-      <div id="s-plus" class="screen">
-        <div class="plus-hdr">
-          <div class="plus-title">セレッソPLUS</div>
-          <span class="hdr-icon" onclick="toast('検索')">🔍</span>
+    <div class="vid-info">
+      <div class="vid-title">アウェイ遠征の裏側</div>
+      <div class="vid-meta">2024.05.07 配信</div>
+    </div>
+
+    <div style="padding:12px 16px;font-size:13px;color:var(--sub);line-height:1.7;border-bottom:1px solid var(--border);">
+      アウェイ遠征に同行し、移動・ホテル・試合前の様子まで、普段は見られない舞台裏をお届けします。
+    </div>
+
+    <!-- Action bar -->
+    <div class="act-bar">
+      <div class="act-btn" onclick="toast('お気に入りに追加')"><div class="act-ic">♡</div><div class="act-lbl">お気に入り</div></div>
+      <div class="act-btn" onclick="toast('ダウンロード開始')"><div class="act-ic">↓</div><div class="act-lbl">ダウンロード</div></div>
+      <div class="act-btn" onclick="toast('シェア')"><div class="act-ic">⬆</div><div class="act-lbl">シェア</div></div>
+    </div>
+
+    <div class="shdr"><div class="stitle">関連コンテンツ</div></div>
+    <div style="display:flex;gap:12px;padding:0 16px 16px;overflow-x:auto;">
+      <div class="rel-card" onclick="toast('練習場の1日に密着')">
+        <div class="rel-thumb" style="height:100px;border-radius:8px;overflow:hidden;margin-bottom:8px;position:relative;">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0a1520,#1a3050)"></div>
+          <div class="rel-label">INSIDE CEREZO</div>
         </div>
+        <div class="rel-title">練習場の1日に密着</div>
+        <div class="rel-meta">28:12</div>
+      </div>
+      <div class="rel-card" onclick="toast('アウェイ遠征オフショット')">
+        <div class="rel-thumb" style="height:100px;border-radius:8px;overflow:hidden;margin-bottom:8px;position:relative;">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0a30,#3d0a50)"></div>
+          <div class="rel-label">フォトアルバム</div>
+        </div>
+        <div class="rel-title">アウェイ遠征オフショット（45枚）</div>
+        <div class="rel-meta">写真集</div>
+      </div>
+      <div class="rel-card" onclick="toast('選手インタビュー 前編')">
+        <div class="rel-thumb" style="height:100px;border-radius:8px;overflow:hidden;margin-bottom:8px;position:relative;">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#200a0a,#4a1010)"></div>
+          <div class="rel-label">INSIDE CEREZO</div>
+        </div>
+        <div class="rel-title">選手インタビュー 前編</div>
+        <div class="rel-meta">22:48</div>
+      </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
 
-        <div class="screen-body">
-          <!-- Hero -->
-          <div class="hero-banner" onclick="navTo('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
-            <div class="hero-bg-decor">🌸</div>
-            <div class="hero-content">
-              <div class="hero-tag">INSIDE CEREZO</div>
-              <div class="hero-ttl">試合に至るまでの<br>全過程</div>
-              <div class="hero-sub">選手・スタッフの素顔をお届け — EP.12</div>
-            </div>
-            <div class="hero-new">NEW</div>
-          </div>
-
-          <!-- Latest Content -->
-          <div class="sec-hdr">
-            <div class="sec-title">最新コンテンツ</div>
-            <div class="sec-more" onclick="toast('最新コンテンツ一覧')">もっと見る ›</div>
-          </div>
-          <div class="scroll-row" style="padding-bottom:12px;">
-            <div class="scroll-card" onclick="navTo('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
-              <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#050515,#150530)">✈️</div><div class="sc-play">▶</div><div class="sc-dur">12:34</div></div>
-              <div class="sc-ttl">アウェイ遠征の裏側</div><div class="sc-series">INSIDE CEREZO</div>
-            </div>
-            <div class="scroll-card" onclick="navTo('player','練習の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','CEREZO LABO')">
-              <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play">▶</div><div class="sc-dur">09:50</div></div>
-              <div class="sc-ttl">練習の舞台裏</div><div class="sc-series">CEREZO LABO</div>
-            </div>
-            <div class="scroll-card" onclick="navTo('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
-              <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎙️</div><div class="sc-play">▶</div><div class="sc-dur">24:10</div></div>
-              <div class="sc-ttl">ポッドキャスト #42</div><div class="sc-series">PODCAST</div>
-            </div>
-            <div class="scroll-card" onclick="navTo('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
-              <div class="sc-thumb"><div class="sc-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">⚽</div><div class="sc-play">▶</div><div class="sc-dur">18:20</div></div>
-              <div class="sc-ttl">第12節マッチレビュー</div><div class="sc-series">MATCH</div>
-            </div>
-          </div>
-
-          <!-- Channels -->
-          <div class="sec-hdr">
-            <div class="sec-title">チャンネル</div>
-          </div>
-          <div class="ch-list">
-            <div class="ch-item" onclick="navTo('episodes','INSIDE CEREZO','linear-gradient(160deg,#050515,#150530,#200515)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#080820,#1a0535)">INSIDE<br>CEREZO</div>
-              <div class="ch-info"><div class="ch-name">INSIDE CEREZO</div><div class="ch-desc">選手・スタッフに密着した本格ドキュメント</div></div>
-              <div class="ch-new">NEW</div><div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','CEREZO LABO','linear-gradient(160deg,#051505,#0a3510)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">CEREZO<br>LABO</div>
-              <div class="ch-info"><div class="ch-name">CEREZO LABO</div><div class="ch-desc">戦術・技術を深掘り解説</div></div>
-              <div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','PODCAST','linear-gradient(160deg,#1f0505,#4a0a0a)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#2a0505,#6a1010)">POD<br>CAST</div>
-              <div class="ch-info"><div class="ch-name">PODCAST</div><div class="ch-desc">選手・スタッフが語る音声コンテンツ</div></div>
-              <div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','TOPICS','linear-gradient(160deg,#101005,#2a2a00)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#1a1a05,#4a4a00)">TOPICS</div>
-              <div class="ch-info"><div class="ch-name">TOPICS</div><div class="ch-desc">クラブのトピックスをいち早くお届け</div></div>
-              <div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','MATCH','linear-gradient(160deg,#050f1f,#0a1f40)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#05101f,#0a2040)">MATCH</div>
-              <div class="ch-info"><div class="ch-name">MATCH</div><div class="ch-desc">試合のマッチレビューをお届け</div></div>
-              <div class="ch-new">NEW</div><div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','CEREZO CLASSICS','linear-gradient(160deg,#1f0f05,#4a2a10)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#1f0f05,#4a2a10)">CLASSICS</div>
-              <div class="ch-info"><div class="ch-name">CEREZO CLASSICS</div><div class="ch-desc">名試合・名場面を厳選アーカイブ</div></div>
-              <div class="ch-arr">›</div>
-            </div>
-            <div class="ch-item" onclick="navTo('episodes','ACADEMY','linear-gradient(160deg,#05151f,#0a3040)')">
-              <div class="ch-icon" style="background:linear-gradient(135deg,#05151f,#0a3040)">ACADEMY</div>
-              <div class="ch-info"><div class="ch-name">ACADEMY</div><div class="ch-desc">育成組織の活躍・練習に密着</div></div>
-              <div class="ch-arr">›</div>
-            </div>
-          </div>
-
-          <!-- Member CTA -->
-          <div class="member-cta">
-            <div class="mc-title">セレッソPLUSになると</div>
-            <div class="mc-feats">
-              <div class="mc-feat">✓ 会員限定の LIVE 中継・動画が見放題</div>
-              <div class="mc-feat">✓ 試合のリアルタイム速報が受け取れる</div>
-              <div class="mc-feat">✓ フォトアルバム・読み物も会員限定</div>
-              <div class="mc-feat">✓ いつでもどこでも、セレッソをもっと身近に</div>
-            </div>
-            <div class="mc-price">¥900 <small>（税込）/ 月</small></div>
-            <button class="mc-btn" onclick="toast('会員登録ページへ移動します')">今すぐ会員登録</button>
-          </div>
-          <div class="space"></div>
+<!-- ═══ 試合 ═══ -->
+<div id="s-matches" class="screen">
+  <div class="hdr">
+    <div class="hdr-logo"><div style="font-size:17px;font-weight:800;color:var(--txt);">試合</div></div>
+  </div>
+  <div class="body">
+    <div class="shdr"><div class="stitle">直近の結果</div></div>
+    <div class="match-item" onclick="toast('試合詳細')">
+      <div class="match-comp">2024 J1リーグ 第12節 · 2024.04.27</div>
+      <div class="match-row">
+        <div class="match-team-row">
+          <div class="match-emb-sm emb-c"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E8007D"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg></div>
+          <div class="match-tname-sm">セレッソ大阪</div>
+        </div>
+        <div class="match-score">
+          <div class="match-score-num">2 - 1</div>
+          <div class="result-w">WIN</div>
+        </div>
+        <div class="match-team-row">
+          <div class="match-emb-sm" style="background:radial-gradient(circle,#3a7ff5,#1a56cc)"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1a56cc"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="16" font-weight="900" font-family="Arial">G</text></svg></div>
+          <div class="match-tname-sm">ガンバ大阪</div>
         </div>
       </div>
-
-      <!-- ═══════════ NEWS ═══════════ -->
-      <div id="s-news" class="screen">
-        <div class="app-header">
-          <div class="logo-wrap">
-            <div class="logo-mark"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#E8007D"/><text x="20" y="27" text-anchor="middle" fill="#fff" font-size="22" font-weight="900" font-family="Georgia,serif">C</text></svg></div>
-            <div class="logo-text-wrap"><div class="logo-name" style="font-size:18px;">ニュース</div></div>
-          </div>
-          <span class="hdr-icon" onclick="toast('検索')">🔍</span>
+    </div>
+    <div class="match-item" onclick="toast('試合詳細')">
+      <div class="match-comp">2024 J1リーグ 第11節 · 2024.04.20</div>
+      <div class="match-row">
+        <div class="match-team-row">
+          <div class="match-emb-sm emb-c"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E8007D"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg></div>
+          <div class="match-tname-sm">セレッソ大阪</div>
         </div>
-        <div class="filter-row">
-          <button class="filter-chip on" onclick="filterChip(this,'すべて')">すべて</button>
-          <button class="filter-chip off" onclick="filterChip(this,'試合結果')">試合結果</button>
-          <button class="filter-chip off" onclick="filterChip(this,'選手情報')">選手情報</button>
-          <button class="filter-chip off" onclick="filterChip(this,'クラブ情報')">クラブ情報</button>
-          <button class="filter-chip off" onclick="filterChip(this,'アカデミー')">アカデミー</button>
+        <div class="match-score">
+          <div class="match-score-num">1 - 1</div>
+          <div class="result-d">DRAW</div>
         </div>
-        <div class="screen-body">
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#E8007D,#ff5fa5);">⚽</div>
-            <div class="news-info"><div class="news-cat">試合結果</div><div class="news-ttl">【第12節】セレッソ大阪 2-1 ガンバ大阪 大阪ダービー制す！</div><div class="news-date">2024.05.12</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#1565C0,#42a5f5);">📸</div>
-            <div class="news-info"><div class="news-cat">フォトギャラリー</div><div class="news-ttl">第12節 ダービーフォトギャラリー（50枚）熱戦を写真で振り返る</div><div class="news-date">2024.05.12</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#f57c00,#ffb74d);">🎤</div>
-            <div class="news-info"><div class="news-cat">選手インタビュー</div><div class="news-ttl">上門知樹「ダービーで点を取れて最高の気分」試合後コメント全文</div><div class="news-date">2024.05.12</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#2e7d32,#66bb6a);">🏋️</div>
-            <div class="news-info"><div class="news-cat">練習情報</div><div class="news-ttl">5/13（月）練習レポート — 鹿島アントラーズ戦へ向けて始動</div><div class="news-date">2024.05.13</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#6a1b9a,#ce93d8);">👕</div>
-            <div class="news-info"><div class="news-cat">クラブ情報</div><div class="news-ttl">2024シーズン サードユニフォーム発表 — ピンクグラデーションデザイン</div><div class="news-date">2024.05.10</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#0097a7,#80deea);">🌸</div>
-            <div class="news-info"><div class="news-cat">クラブ情報</div><div class="news-ttl">セレッソ大阪 創立30周年記念イベント開催決定</div><div class="news-date">2024.05.09</div></div>
-          </div>
-          <div class="news-item" onclick="toast('記事を開きます')">
-            <div class="news-thumb" style="background:linear-gradient(135deg,#37474f,#78909c);">🏆</div>
-            <div class="news-info"><div class="news-cat">アカデミー</div><div class="news-ttl">U-18 プリンスリーグ関西 首位浮上！</div><div class="news-date">2024.05.08</div></div>
-          </div>
-          <div class="space"></div>
+        <div class="match-team-row">
+          <div class="match-emb-sm" style="background:#c62828"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#c62828"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="14" font-weight="900" font-family="Arial">浦</text></svg></div>
+          <div class="match-tname-sm">浦和レッズ</div>
         </div>
       </div>
+    </div>
 
-      <!-- ═══════════ SETTINGS ═══════════ -->
-      <div id="s-settings" class="screen">
-        <div class="app-header">
-          <div style="font-size:17px;font-weight:800;color:#111;">設定</div>
+    <div class="shdr"><div class="stitle">今後の試合</div></div>
+    <div class="match-item" onclick="toast('チケット購入')">
+      <div class="match-comp">2024 J1リーグ 第17節</div>
+      <div class="match-row">
+        <div class="match-team-row">
+          <div class="match-emb-sm emb-c"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#E8007D"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg></div>
+          <div class="match-tname-sm">セレッソ大阪</div>
         </div>
-        <div class="screen-body">
-          <div class="set-section"><div class="set-section-label">アカウント</div></div>
-          <div class="set-item" onclick="toast('プロフィール設定')">
-            <div><div class="set-item-label">プロフィール</div></div><div class="set-item-val">›</div>
-          </div>
-          <div class="set-item" onclick="toast('会員情報を確認')">
-            <div><div class="set-item-label">会員情報</div><div class="set-item-sub">セレッソPLUS 会員</div></div><div class="set-item-val">›</div>
-          </div>
-          <div class="set-item" onclick="toast('お気に入り選手設定')">
-            <div><div class="set-item-label">お気に入り選手</div></div><div class="set-item-val">›</div>
-          </div>
-
-          <div class="set-section" style="margin-top:8px;"><div class="set-section-label">通知</div></div>
-          <div class="set-item">
-            <div class="set-item-label">プッシュ通知</div>
-            <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
-          </div>
-          <div class="set-item">
-            <div class="set-item-label">試合開始リマインダー</div>
-            <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
-          </div>
-          <div class="set-item">
-            <div class="set-item-label">得点通知</div>
-            <div class="toggle off" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
-          </div>
-
-          <div class="set-section" style="margin-top:8px;"><div class="set-section-label">アプリ情報</div></div>
-          <div class="set-item">
-            <div class="set-item-label">バージョン</div><div class="set-item-val">2.4.1</div>
-          </div>
-          <div class="set-item" onclick="toast('利用規約を開きます')">
-            <div class="set-item-label">利用規約</div><div class="set-item-val">›</div>
-          </div>
-          <div class="set-item" onclick="toast('プライバシーポリシーを開きます')">
-            <div class="set-item-label">プライバシーポリシー</div><div class="set-item-val">›</div>
-          </div>
-          <div class="set-item" onclick="toast('ログアウトしますか？')">
-            <div style="font-size:14px;color:#E8007D;font-weight:500;">ログアウト</div>
-          </div>
-          <div class="space"></div>
+        <div class="match-score">
+          <div class="upcoming-date">5.18</div>
+          <div class="upcoming-time">15:00</div>
+        </div>
+        <div class="match-team-row">
+          <div class="match-emb-sm" style="background:#1a1a6a"><svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1a1a6a"/><text x="20" y="26" text-anchor="middle" fill="#fff" font-size="14" font-weight="900" font-family="Arial">FC</text></svg></div>
+          <div class="match-tname-sm">FC東京</div>
         </div>
       </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
 
-      <!-- ═══════════ EPISODES (Program Detail) ═══════════ -->
-      <div id="s-episodes" class="screen">
-        <div class="back-hdr">
-          <div class="back-btn" onclick="back()">‹ 戻る</div>
-          <div class="back-hdr-title" id="ep-title">INSIDE CEREZO</div>
-        </div>
-
-        <div class="screen-body">
-          <div class="prog-hero" id="ep-hero" style="background:linear-gradient(160deg,#050515,#150530,#200515)">
-            <div class="ph-decor">🌸</div>
-            <div class="ph-title" id="ep-hero-title">INSIDE CEREZO</div>
+<!-- ═══ 会員証 ═══ -->
+<div id="s-member" class="screen">
+  <div class="hdr">
+    <div class="hdr-logo"><div style="font-size:17px;font-weight:800;color:var(--txt);">会員証</div></div>
+  </div>
+  <div class="body">
+    <div class="member-card">
+      <div class="mc-top">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <svg width="32" height="32" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="rgba(255,255,255,.2)"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg>
+          <div>
+            <div class="mc-logo">Cerezo PLUS</div>
+            <div class="mc-type">MEMBER CARD</div>
           </div>
-
-          <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0;font-size:13px;color:#666;line-height:1.65;" id="ep-desc">
-            選手・スタッフの素顔に迫る密着ドキュメンタリーシリーズ。試合に至るまでの全過程を記録します。
-          </div>
-
-          <div class="ep-tabs">
-            <div class="ep-tab on">エピソード</div>
-            <div class="ep-tab" onclick="toast('関連コンテンツ')">関連コンテンツ</div>
-          </div>
-
-          <div class="ep-item" onclick="navTo('player','アウェイ遠征の裏側','linear-gradient(135deg,#050515,#150530)','12:34','INSIDE CEREZO')">
-            <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#050515,#150530)">✈️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">12:34</div></div>
-            <div class="ep-info">
-              <div class="ep-title">アウェイ遠征の裏側</div>
-              <div class="ep-date">2024.05.07</div>
-              <div class="ep-desc">アウェイ遠征の準備から試合終了まで密着</div>
-            </div>
-          </div>
-
-          <div class="ep-item" onclick="navTo('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
-            <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">09:50</div></div>
-            <div class="ep-info">
-              <div class="ep-title">練習試合の舞台裏</div>
-              <div class="ep-date">2024.04.30</div>
-              <div class="ep-desc">キャンプ地での練習試合を選手目線で記録</div>
-            </div>
-          </div>
-
-          <div class="ep-item" onclick="navTo('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
-            <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎤</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">15:22</div></div>
-            <div class="ep-info">
-              <div class="ep-title">選手インタビュー特集</div>
-              <div class="ep-date">2024.04.22</div>
-              <div class="ep-desc">レオ セアラ・カピシャーバ選手に迫る</div>
-            </div>
-          </div>
-
-          <div class="ep-item" onclick="navTo('player','ドキュメント「いのちの日」の記録','linear-gradient(135deg,#05101f,#0a2040)','22:10','INSIDE CEREZO')">
-            <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">📽️</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">22:10</div></div>
-            <div class="ep-info">
-              <div class="ep-title">ドキュメント「いのちの日」の記録</div>
-              <div class="ep-date">2024.04.15</div>
-              <div class="ep-desc">クラブが大切にする「いのちの日」活動に密着</div>
-            </div>
-          </div>
-
-          <div class="ep-item" onclick="navTo('player','シーズン開幕直前特集','linear-gradient(135deg,#05150a,#0a3515)','18:45','INSIDE CEREZO')">
-            <div class="ep-thumb"><div class="ep-thumb-inner" style="background:linear-gradient(135deg,#05150a,#0a3515)">🌸</div><div class="sc-play" style="position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div><div class="sc-dur" style="position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 5px;border-radius:4px;">18:45</div></div>
-            <div class="ep-info">
-              <div class="ep-title">シーズン開幕直前特集</div>
-              <div class="ep-date">2024.02.20</div>
-              <div class="ep-desc">2024シーズンへの意気込みを各選手が語る</div>
-            </div>
-          </div>
-
-          <div class="space"></div>
         </div>
       </div>
-
-      <!-- ═══════════ VIDEO PLAYER ═══════════ -->
-      <div id="s-player" class="screen">
-        <div class="back-hdr">
-          <div class="back-btn" onclick="back()">‹ 戻る</div>
-          <div class="back-hdr-title">動画再生</div>
-        </div>
-
-        <div class="screen-body">
-          <!-- Player -->
-          <div class="vplayer" id="vplayer" onclick="togglePlay()">
-            <div class="vp-bg" id="vp-bg" style="background:linear-gradient(135deg,#050515,#150530)"></div>
-            <div class="vp-bg-emoji" id="vp-emoji">✈️</div>
-            <div class="vp-play-btn" id="vp-play">▶</div>
-            <div class="vp-pause-overlay" id="vp-pause">
-              <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;">⏸</div>
-            </div>
-            <div class="vp-controls">
-              <div class="vp-prog" id="vp-prog" onclick="seekVid(event)">
-                <div class="vp-fill" id="vp-fill"></div>
-              </div>
-              <div class="vp-times">
-                <span id="vp-cur">4:20</span>
-                <span id="vp-tot">12:34</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Info -->
-          <div class="vid-info">
-            <div class="vid-title" id="vp-title">アウェイ遠征の裏側</div>
-            <div class="vid-meta">2024.05.07 · 12,450 回視聴</div>
-            <div class="vid-badge" id="vp-series">INSIDE CEREZO</div>
-          </div>
-
-          <!-- Description -->
-          <div class="vid-desc">
-            <p id="vp-desc">アウェイ遠征の準備から試合終了まで、選手・スタッフに密着したドキュメンタリー。移動中の様子や試合前のロッカールームなど、普段は見られない舞台裏をお届けします。</p>
-          </div>
-
-          <!-- Related -->
-          <div class="sec-hdr">
-            <div class="sec-title">関連動画</div>
-          </div>
-          <div class="rel-item" onclick="navTo('player','練習試合の舞台裏','linear-gradient(135deg,#0a1f05,#1a4a0a)','09:50','INSIDE CEREZO')">
-            <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#0a1f05,#1a4a0a)">🏟️</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
-            <div class="rel-info"><div class="rel-title">練習試合の舞台裏</div><div class="rel-meta">INSIDE CEREZO · 09:50</div></div>
-          </div>
-          <div class="rel-item" onclick="navTo('player','選手インタビュー特集','linear-gradient(135deg,#2a0505,#6a1010)','15:22','INSIDE CEREZO')">
-            <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎤</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
-            <div class="rel-info"><div class="rel-title">選手インタビュー特集</div><div class="rel-meta">INSIDE CEREZO · 15:22</div></div>
-          </div>
-          <div class="rel-item" onclick="navTo('player','第12節マッチレビュー','linear-gradient(135deg,#05101f,#0a2040)','18:20','MATCH')">
-            <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#05101f,#0a2040)">⚽</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
-            <div class="rel-info"><div class="rel-title">第12節マッチレビュー</div><div class="rel-meta">MATCH · 18:20</div></div>
-          </div>
-          <div class="rel-item" onclick="navTo('player','ポッドキャスト #42','linear-gradient(135deg,#2a0505,#6a1010)','24:10','PODCAST')">
-            <div class="rel-thumb"><div class="rel-thumb-inner" style="background:linear-gradient(135deg,#2a0505,#6a1010)">🎙️</div><div class="sc-play" style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">▶</div></div>
-            <div class="rel-info"><div class="rel-title">ポッドキャスト #42</div><div class="rel-meta">PODCAST · 24:10</div></div>
-          </div>
-          <div class="space"></div>
+      <div class="mc-body">
+        <div class="mc-name">サンプル 太郎</div>
+        <div class="mc-id">会員ID: C2024-00001234</div>
+        <div class="mc-fields">
+          <div class="mc-field"><label>プラン</label><span>月額プラン</span></div>
+          <div class="mc-field"><label>有効期限</label><span>2025.03.31</span></div>
         </div>
       </div>
-
-      <!-- ═══════════ BOTTOM NAV ═══════════ -->
-      <div class="bottom-nav">
-        <div class="nav-btn active" id="nb-home" onclick="tab('home')">
-          <div class="nb-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" fill="#E8007D"/>
-              <path d="M9 21V12h6v9" fill="white"/>
-            </svg>
-          </div>
-          <div class="nb-label" style="color:#E8007D;">ホーム</div>
+      <div class="mc-qr">
+        <!-- Simple QR-like pattern -->
+        <div style="width:90px;height:90px;background:#111;border-radius:4px;padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;">
+          <div style="background:#fff;"></div><div style="background:#111;"></div><div style="background:#111;"></div><div style="background:#111;"></div><div style="background:#fff;"></div>
+          <div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div>
+          <div style="background:#111;"></div><div style="background:#fff;"></div><div style="background:#111;"></div><div style="background:#fff;"></div><div style="background:#111;"></div>
+          <div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div><div style="background:#fff;"></div>
+          <div style="background:#fff;"></div><div style="background:#111;"></div><div style="background:#111;"></div><div style="background:#111;"></div><div style="background:#fff;"></div>
         </div>
-        <div class="nav-btn" id="nb-team" onclick="tab('team')">
-          <div class="nb-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="9" cy="7" r="4" fill="#bbb"/>
-              <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" fill="none" stroke="#bbb" stroke-width="2"/>
-              <circle cx="17" cy="9" r="3" fill="#bbb"/>
-              <path d="M21 21v-1.5a4 4 0 00-2-3.46" stroke="#bbb" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="nb-label">チーム</div>
-        </div>
-        <div class="nav-btn nav-ctr" id="nb-plus" onclick="tab('plus')">
-          <div class="nav-ctr-disc">C<span style="font-size:14px;">+</span></div>
-          <div class="nb-label" style="margin-top:4px;">セレッソ+</div>
-        </div>
-        <div class="nav-btn" id="nb-news" onclick="tab('news')">
-          <div class="nb-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="16" rx="2" fill="#bbb"/>
-              <rect x="7" y="8" width="10" height="1.5" rx=".75" fill="white"/>
-              <rect x="7" y="12" width="10" height="1.5" rx=".75" fill="white"/>
-              <rect x="7" y="16" width="6" height="1.5" rx=".75" fill="white"/>
-            </svg>
-          </div>
-          <div class="nb-label">ニュース</div>
-        </div>
-        <div class="nav-btn" id="nb-settings" onclick="tab('settings')">
-          <div class="nb-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="3" fill="#bbb"/>
-              <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#bbb" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="nb-label">設定</div>
-        </div>
+        <div class="mc-qr-label">入場・特典確認用QRコード</div>
       </div>
+    </div>
 
-    </div><!-- .app -->
+    <div style="margin:0 16px 16px;padding:16px;background:#fff8fc;border-radius:12px;border:1px solid #fdd0e8;">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:8px;">会員特典</div>
+      <div style="font-size:13px;color:var(--sub);display:flex;flex-direction:column;gap:6px;">
+        <div>✓ ホームゲーム優先チケット購入権</div>
+        <div>✓ グッズ10%割引</div>
+        <div>✓ セレッソPLUS コンテンツ見放題</div>
+        <div>✓ 選手サイン会・イベント優先案内</div>
+      </div>
+    </div>
+    <div class="sp"></div>
+  </div>
+</div>
 
-    <div class="toast" id="toast-el"></div>
-  </div><!-- .phone-screen -->
-</div><!-- .phone -->
+<!-- ═══ BOTTOM NAV ═══ -->
+<div class="bnav">
+  <div class="nb on" id="nb-home" onclick="tab('home')">
+    <div class="nb-ic">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1z" fill="#E8007D"/>
+        <path d="M9 21V12h6v9" fill="white"/>
+      </svg>
+    </div>
+    <div class="nb-lbl" style="color:var(--pink);">ホーム</div>
+  </div>
+  <div class="nb" id="nb-team" onclick="tab('team')">
+    <div class="nb-ic">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="9" cy="7" r="4" fill="#bbb"/>
+        <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" stroke="#bbb" stroke-width="2" fill="none"/>
+        <circle cx="17" cy="9" r="3" fill="#bbb"/>
+        <path d="M21 21v-1.5a4 4 0 00-2-3.46" stroke="#bbb" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="nb-lbl">チーム</div>
+  </div>
+  <div class="nb nb-ctr" id="nb-plus" onclick="tab('plus')">
+    <div class="nb-ctr-ring">
+      <svg width="26" height="26" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#fff" stroke-width="2"/><path d="M20 6 L24 15 L33 15 L26 21 L29 30 L20 24 L11 30 L14 21 L7 15 L16 15Z" fill="#fff"/></svg>
+    </div>
+    <div class="nb-lbl" style="margin-top:4px;">セレッソ<br>PLUS</div>
+  </div>
+  <div class="nb" id="nb-matches" onclick="tab('matches')">
+    <div class="nb-ic">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="#bbb" stroke-width="2"/>
+        <path d="M12 3c0 0-4 3-4 9s4 9 4 9" stroke="#bbb" stroke-width="1.5"/>
+        <path d="M12 3c0 0 4 3 4 9s-4 9-4 9" stroke="#bbb" stroke-width="1.5"/>
+        <line x1="3" y1="12" x2="21" y2="12" stroke="#bbb" stroke-width="1.5"/>
+        <line x1="3.5" y1="7" x2="20.5" y2="7" stroke="#bbb" stroke-width="1.2"/>
+        <line x1="3.5" y1="17" x2="20.5" y2="17" stroke="#bbb" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <div class="nb-lbl">試合</div>
+  </div>
+  <div class="nb" id="nb-member" onclick="tab('member')">
+    <div class="nb-ic">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="5" width="20" height="14" rx="3" stroke="#bbb" stroke-width="2"/>
+        <circle cx="9" cy="12" r="3" fill="#bbb"/>
+        <line x1="14" y1="10" x2="19" y2="10" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="14" x2="17" y2="14" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="nb-lbl">会員証</div>
+  </div>
+</div>
+
+</div><!-- app -->
+
+<div class="toast" id="toast-el"></div>
+</div><!-- phone-screen -->
+</div><!-- phone -->
 
 <script>
-  // ── State ──
-  let curTab = 'home';
-  let history = ['home'];
-  let playing = false;
-  let prog = 35;
-  let ticker = null;
+let curTab='home', hist=['home'], playing=false, prog=33.7, ticker=null;
 
-  const TOTAL_SEC = { '12:34':754, '09:50':590, '15:22':922, '22:10':1330, '18:45':1125, '24:10':1450, '18:20':1100, '08:45':525 };
+function tab(id){
+  stopVid();
+  _show('s-'+id);
+  curTab=id; hist=[id];
+  document.querySelectorAll('.nb').forEach(b=>{
+    b.classList.remove('on');
+    const l=b.querySelector('.nb-lbl');
+    if(l)l.style.color='';
+  });
+  const nb=document.getElementById('nb-'+id);
+  if(nb){nb.classList.add('on');const l=nb.querySelector('.nb-lbl');if(l)l.style.color='var(--pink)';}
+}
 
-  // ── Tab switch ──
-  function tab(id) {
-    stopVid();
-    _showScreen('s-' + id);
-    curTab = id;
-    history = [id];
-    _setNav(id);
-  }
+function navTo(id){
+  stopVid();
+  _show('s-'+id);
+  hist.push(id);
+}
 
-  function _showScreen(sid) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(sid).classList.add('active');
-  }
+function back(){
+  stopVid();
+  hist.pop();
+  _show('s-'+(hist[hist.length-1]||curTab));
+}
 
-  function _setNav(id) {
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.classList.remove('active');
-      const lbl = b.querySelector('.nb-label');
-      if (lbl) lbl.style.color = '';
-    });
-    const nb = document.getElementById('nb-' + id);
-    if (nb) {
-      nb.classList.add('active');
-      const lbl = nb.querySelector('.nb-label');
-      if (lbl) lbl.style.color = '#E8007D';
-    }
-  }
+function _show(sid){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById(sid);
+  if(el){el.classList.add('on');el.querySelector('.body')?.scrollTo(0,0);}
+}
 
-  // ── Navigate to sub-screen ──
-  function navTo(target, title, bg, dur, series) {
-    stopVid();
-    if (target === 'episodes') {
-      document.getElementById('ep-title').textContent = title;
-      document.getElementById('ep-hero-title').textContent = title;
-      document.getElementById('ep-hero').style.background = bg || '';
-      const descs = {
-        'INSIDE CEREZO':'選手・スタッフの素顔に迫る密着ドキュメンタリーシリーズ。試合に至るまでの全過程を記録します。',
-        'CEREZO LABO':'サッカーの戦術・技術を深掘り解説するプログラム。勝利の哲学を徹底分析します。',
-        'PODCAST':'選手・スタッフがリラックスした雰囲気で語るトーク番組。本音トークが満載。',
-        'TOPICS':'クラブのトピックスを誰よりも早くお届けする情報チャンネル。',
-        'MATCH':'各試合のマッチレビュー・ハイライトをお届けします。',
-        'CEREZO CLASSICS':'クラブの歴史を彩った名試合・名場面を厳選アーカイブ。',
-        'ACADEMY':'セレッソ大阪育成組織の日常・試合・活躍に密着します。'
-      };
-      document.getElementById('ep-desc').textContent = descs[title] || '';
-    }
-    if (target === 'player') {
-      document.getElementById('vp-title').textContent = title || 'アウェイ遠征の裏側';
-      document.getElementById('vp-series').textContent = series || 'INSIDE CEREZO';
-      document.getElementById('vp-bg').style.background = bg || 'linear-gradient(135deg,#050515,#150530)';
-      document.getElementById('vp-tot').textContent = dur || '12:34';
-      // emoji map
-      const emojis = {'✈️':title.includes('遠征'),'🏟️':title.includes('練習'),'🎤':title.includes('インタビュー')||title.includes('ポッドキャスト'),'📽️':title.includes('ドキュメント'),'🌸':title.includes('開幕'),'⚽':title.includes('マッチ')||title.includes('節'),'🎙️':series==='PODCAST'};
-      let em = '📹';
-      if (title.includes('遠征')) em = '✈️';
-      else if (title.includes('マッチ') || title.includes('節')) em = '⚽';
-      else if (title.includes('インタビュー')) em = '🎤';
-      else if (title.includes('ドキュメント')) em = '📽️';
-      else if (title.includes('開幕')) em = '🌸';
-      else if (title.includes('練習')) em = '🏟️';
-      else if (series === 'PODCAST') em = '🎙️';
-      document.getElementById('vp-emoji').textContent = em;
-      prog = 35;
-      updateProg();
-    }
-    _showScreen('s-' + target);
-    history.push(target);
-  }
+function toast(msg){
+  const el=document.getElementById('toast-el');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),1800);
+}
 
-  // ── Back ──
-  function back() {
-    stopVid();
-    history.pop();
-    const prev = history[history.length - 1] || curTab;
-    _showScreen('s-' + prev);
-  }
+function togglePlay(){
+  playing?stopVid():startVid();
+}
+function startVid(){
+  playing=true;
+  document.getElementById('vp-playbtn').textContent='⏸';
+  ticker=setInterval(()=>{prog=Math.min(prog+.15,100);updProg();if(prog>=100){stopVid();prog=0;updProg();}},150);
+}
+function stopVid(){
+  playing=false;
+  const b=document.getElementById('vp-playbtn');if(b)b.textContent='▶';
+  clearInterval(ticker);ticker=null;
+}
+function updProg(){
+  const fill=document.getElementById('vp-fill');
+  const cur=document.getElementById('vp-cur');
+  if(!fill)return;
+  fill.style.width=prog+'%';
+  const total=33*60+55;
+  const elapsed=Math.floor(total*prog/100);
+  cur.textContent=Math.floor(elapsed/60)+':'+String(elapsed%60).padStart(2,'0');
+}
+function seekVid(e){
+  e.stopPropagation();
+  const bar=document.getElementById('vp-bar');
+  const r=bar.getBoundingClientRect();
+  prog=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100));
+  updProg();
+}
+function seekBack(e){e.stopPropagation();prog=Math.max(0,prog-5);updProg();toast('10秒戻し');}
+function seekFwd(e){e.stopPropagation();prog=Math.min(100,prog+5);updProg();toast('10秒送り');}
 
-  // ── Toast ──
-  function toast(msg) {
-    const el = document.getElementById('toast-el');
-    el.textContent = msg;
-    el.classList.add('show');
-    clearTimeout(el._t);
-    el._t = setTimeout(() => el.classList.remove('show'), 1800);
-  }
-
-  // ── Filter chips ──
-  function filterChip(el, label) {
-    document.querySelectorAll('.filter-chip').forEach(c => { c.className = 'filter-chip off'; });
-    el.className = 'filter-chip on';
-    toast(label + 'でフィルター中');
-  }
-
-  // ── Toggle switch ──
-  function toggleSwitch(el) {
-    if (el.classList.contains('off')) {
-      el.classList.remove('off');
-      toast('通知をオンにしました');
-    } else {
-      el.classList.add('off');
-      toast('通知をオフにしました');
-    }
-  }
-
-  // ── Video ──
-  function togglePlay() {
-    playing ? stopVid() : startVid();
-  }
-
-  function startVid() {
-    playing = true;
-    document.getElementById('vplayer').classList.add('is-playing');
-    ticker = setInterval(() => {
-      prog = Math.min(prog + 0.3, 100);
-      updateProg();
-      if (prog >= 100) { stopVid(); prog = 0; updateProg(); }
-    }, 150);
-  }
-
-  function stopVid() {
-    playing = false;
-    const vp = document.getElementById('vplayer');
-    if (vp) vp.classList.remove('is-playing');
-    clearInterval(ticker); ticker = null;
-  }
-
-  function updateProg() {
-    const fill = document.getElementById('vp-fill');
-    const cur = document.getElementById('vp-cur');
-    const tot = document.getElementById('vp-tot');
-    if (!fill) return;
-    fill.style.width = prog + '%';
-    const totStr = tot.textContent;
-    const [m, s] = totStr.split(':').map(Number);
-    const totalS = m * 60 + s;
-    const elapsedS = Math.floor(totalS * prog / 100);
-    cur.textContent = Math.floor(elapsedS / 60) + ':' + String(elapsedS % 60).padStart(2, '0');
-  }
-
-  function seekVid(e) {
-    e.stopPropagation();
-    const bar = document.getElementById('vp-prog');
-    const rect = bar.getBoundingClientRect();
-    prog = Math.max(0, Math.min(100, (e.clientX - rect.left) / rect.width * 100));
-    updateProg();
-  }
+// news screen redirect
+function tabNews(){tab('home');}
 </script>
 </body>
 </html>
