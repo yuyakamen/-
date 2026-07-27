@@ -1,116 +1,82 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>マリオ風ゲーム</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #1a1a2e;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      font-family: 'Courier New', monospace;
-      overflow: hidden;
-      touch-action: none;
-    }
-    #ui {
-      display: flex;
-      gap: 24px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 8px 0 4px;
-      text-shadow: 2px 2px 4px #000;
-    }
-    #canvas-wrap {
-      width: 100%;
-      max-width: 800px;
-      position: relative;
-    }
-    canvas {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 3px solid #fff;
-      border-radius: 4px;
-    }
-    #message {
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 6px;
-      text-shadow: 2px 2px 4px #000;
-      height: 24px;
-      text-align: center;
-    }
-    /* Touch controls */
-    #touch-controls {
-      display: none;
-      width: 100%;
-      max-width: 800px;
-      padding: 12px 16px;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-    .btn-group { display: flex; gap: 12px; }
-    .btn {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.6);
-      background: rgba(255,255,255,0.15);
-      color: white;
-      font-size: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      transition: background 0.1s;
-    }
-    .btn:active, .btn.pressed {
-      background: rgba(255,255,255,0.4);
-    }
-    #btn-jump {
-      width: 72px;
-      height: 72px;
-      background: rgba(255, 80, 80, 0.3);
-      border-color: rgba(255,150,150,0.8);
-      font-size: 28px;
-    }
-    @media (max-width: 600px) {
-      #touch-controls { display: flex; }
-      #ui { font-size: 14px; gap: 16px; }
-    }
-    @media (pointer: coarse) {
-      #touch-controls { display: flex; }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ローカルガイドブック｜Mr.sasuken</title>
+  <meta name="description" content="Mr.sasukenが実際に歩いて確かめた、地元民だけが知るスポットをまとめたPDFガイドブックの販売ページです。" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div id="ui">
-    <span>スコア: <span id="score">0</span></span>
-    <span>コイン: <span id="coins">0</span></span>
-    <span>ライフ: <span id="lives">3</span></span>
-  </div>
-  <div id="canvas-wrap">
-    <canvas id="gameCanvas" width="800" height="450"></canvas>
-  </div>
-  <div id="message"></div>
-
-  <div id="touch-controls">
-    <div class="btn-group">
-      <div class="btn" id="btn-left">◀</div>
-      <div class="btn" id="btn-right">▶</div>
+  <header class="site-header">
+    <a href="#" class="brand" id="brand-name">Mr.sasuken</a>
+    <div class="header-links">
+      <a href="#" class="icon-link" id="instagram-link" target="_blank" rel="noopener">Instagram</a>
     </div>
-    <div class="btn" id="btn-jump">↑</div>
-  </div>
+  </header>
 
-  <script src="game.js"></script>
+  <main>
+    <section class="hero">
+      <div class="hero-icon">📖</div>
+      <span class="badge" id="status-badge">PDFガイドブック</span>
+      <h1 id="guidebook-title">ローカルガイドブック</h1>
+      <p class="subtitle" id="guidebook-subtitle">地元民だけが知る、とっておきの街歩きガイド</p>
+      <a href="#buy" class="icon-link">詳しく見る ↓</a>
+    </section>
+
+    <section id="about">
+      <h2>この本について</h2>
+      <p class="lead" id="guidebook-description"></p>
+    </section>
+
+    <section class="section-alt" id="contents">
+      <h2>収録内容</h2>
+      <ul class="contents-list" id="contents-list"></ul>
+    </section>
+
+    <section id="preview">
+      <h2>サンプルページ</h2>
+      <p class="lead">プレビュー画像は準備中です。完成次第こちらに掲載予定です。</p>
+      <div class="preview-grid">
+        <div class="preview-box">サンプル<br />準備中</div>
+        <div class="preview-box">サンプル<br />準備中</div>
+        <div class="preview-box">サンプル<br />準備中</div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="buy">
+      <h2>購入する</h2>
+      <div class="price-card">
+        <div class="format" id="format-note"></div>
+        <div class="price" id="price"></div>
+        <a href="#" class="buy-button" id="buy-button" target="_blank" rel="noopener">購入する</a>
+        <p class="price-note">Stripeによる安全な決済でお支払いいただけます。決済完了後、ダウンロード方法をご案内します。</p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>よくある質問</h2>
+      <div class="faq-list" id="faq-list"></div>
+    </section>
+
+    <section class="section-alt" id="seller">
+      <h2>販売者について</h2>
+      <div class="seller-card">
+        <p id="seller-desc">Mr.sasukenが実際に足を運んで確かめた情報だけをまとめています。日々の発見はInstagramでも発信中です。</p>
+        <a href="#" class="icon-link" id="instagram-link-2" target="_blank" rel="noopener">Instagramをフォロー</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <a href="legal.html">特定商取引法に基づく表記</a>
+      <a href="#" id="contact-link">お問い合わせ</a>
+    </div>
+    <p id="copyright"></p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
